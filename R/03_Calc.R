@@ -319,11 +319,15 @@ calc <- function (
 #' @export
 getData <- function() {
 
-    data_input <- system.file("data", "building.input.data.rda", package = "mobasycalc")
-    data_output <- system.file("data", "building.output.data.rda", package = "mobasycalc")
+    ## TL: wird jetzt direkt aus dem Package "MobasyBuildingData" geladen, siehe unten
+    data_input <- MobasyBuildingData::Data_Input  ["Example.01" , ]
+    data_output <-MobasyBuildingData::Data_Output ["Example.01" , ]
+    # data_input <- system.file("data", "building.input.data.rda", package = "mobasycalc")
+    # data_output <- system.file("data", "building.output.data.rda", package = "mobasycalc")
+    #
+    # load(data_input, verbose = TRUE)
+    # load(data_output, verbose = TRUE)
 
-    load(data_input, verbose = TRUE)
-    load(data_output, verbose = TRUE)
 
     # Prepare data
     Code_ParTab_EnvAreaEst_ParameterSet = "EU.01"
@@ -347,10 +351,10 @@ getData <- function() {
                                     Code_ParTab_ConstrYearClass_Country) &
                                 (tabuladata::constryearclass$Number_ConstructionYearClass > 0), ]
 
-
+    ## Die Zuordnung des Beispielgebäudes erfolg schon oben
     # Assign the first row
-    data_input <- buildingDataInput[1,]
-    data_output <- buildingDataOutput[1,]
+    #data_input <- buildingDataInput[1,]
+    #data_output <- buildingDataOutput[1,]
 
     # Strange cleansing
     n_Row_Data_Input <- nrow (data_input)
@@ -365,7 +369,9 @@ getData <- function() {
     }
 
     # data_calc <- data_input
-    n_Dataset <- 1
+
+    ## TL:wird nicht mehr benötigt, da dies in den einzelnen Funktionen ermittelt wird
+    #   n_Dataset <- 1
 
     return (list(
         input = data_input,
