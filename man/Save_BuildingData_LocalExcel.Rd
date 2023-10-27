@@ -15,10 +15,19 @@ Save all current building data including calculation results to an Excel workboo
 }
 \details{
 The following tables are exported to the respective subfolders:
-"Data_Input":                "Output/Result/"
-"Data_Output":               "Output/Result/"
-"Data_Output_PreCalculated": "Output/Result/"
-"Data_Calc":                 "Output/Calc/"
+
+Subfolder "Output/Calc/":
+
+> "Data_Calc_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+
+
+Subfolder "Output/Result/":
+
+> "Data_Input_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+
+> "Data_Output_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+
+> "Data_Output_PreCalculated_{YYYY-MM-DD_hh-mm-ss}.xlsx"
 }
 \examples{
 
@@ -37,8 +46,8 @@ myOutputTables <- EnergyProfileCalc (
    )
 
 Save_BuildingData_LocalExcel (
-   myBuildingDataTables$Data_Output,
-   myBuildingDataTables$Data_Calc,
+   myOutputTables$Data_Output,
+   myOutputTables$Data_Calc,
    myBuildingDataTables$Data_Output_PreCalculated
 )
 

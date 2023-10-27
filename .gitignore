@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+/internal-Test/
+/Output/Calc/*
+/Output/Result/*
+! /Output/Calc/
+! /Output/Result/
+

@@ -31,56 +31,6 @@
 #  <Ctrl>-<Enter>         Run current line or selected script range
 
 
-#####################################################################################################X
-## R Libraries  -------------------------------------------------------------------------------------
-#####################################################################################################X
-
-# Load needed packages - have to be installed before first use
-
-#library ("openxlsx") # Comment: is hundred times faster than "xlsx", large files (30 MB) did not work at all with "xlsx"
-
-
-#####################################################################################################X
-## Constants  ---------------------------------------------------------------------------------------
-#####################################################################################################X
-
-## Can be deleted:
-#
-# n_Row_Header_DataBuilding <- 100
-# #i_Row_Code_Type_DataFlow <- 97
-# n_Row_Header_Data_PreCalc_CalcBuilding <- 1
-# n_Row_Header_Data_PreCalc_SuSysConf <- 1
-#
-# Value_Numeric_Error <- -99999
-# Value_String_Error <- "_ERROR_"
-
-
-#####################################################################################################X
-## Directories / file names  ------------------------------------------------------------------------
-#####################################################################################################X
-
-
-# + + + + Das muss gelöscht bzw. in den Infobereich der Funktion überführt werden + + + +
-
-
-# Name_File_BuildingData <- "Building-Data"
-# Name_Sheet_BuildingData <- "Data.Building"
-# Subfolder_BuildingData <- "Input/BuildingData"
-# Path_File_BuildingData <- paste (WorkingDir, "/", Subfolder_BuildingData, "/", Name_File_BuildingData, ".xlsx", sep = "")
-
-## Can be deleted:
-#
-# myFileName_Lib_TABULA      <- "copy_tabula-values"
-# mySubDir_Lib_TABULA     <- "Input/Lib_TABULA"
-#
-# Subfolder_Output_Calc     <- "Output/Calc"
-# Name_File_Output_Calc     <- "Calc"
-# Name_Sheet_Output_Calc    <- "Data"
-#
-# Subfolder_Result          <- "Output/Result"
-# #Name_File_Result          <- "Result_Model1_MonitoringTable" 2022-04-22: Changed to parameter of function
-# Name_Sheet_Result         <- "Data"
-
 
 #. ---------------------------------------------------------------------------------
 
@@ -1426,16 +1376,16 @@ GetDataMobasy <- function (
 #'
 #' This function provides a filtered version of all 4 building MOBASY data tables
 #'
-#' @param Data_Input                the 1st building dataframe to be filtered
-#' @param Data_Output_Precalculated the 2nd building dataframe to be filtered
-#' @param Data_Output               the 3rd building dataframe to be filtered
-#' @param Data_Calc                 the 4th building dataframe to be filtered
-#' @param Header_BuildingData       a data frame with meta information (no changes will be appled)
+#' @param Data_Input                one of the building data frames to be filtered
+#' @param Data_Output_Precalculated one of the building data frames to be filtered
+#' @param Data_Output               one of the building data frames to be filtered
+#' @param Data_Calc                 one of the building data frames to be filtered
+#' @param Header_BuildingData       a data frame with meta information (no changes will be applied)
 #' @param DF_FilterBuildingData     a data frame containing the available filter lists
 #' @param myFilterName              a character string specifying the filter list to be used
 #'
-#' @return myBuildingDataTables     a list of the dataframes used as parameter of the function,
-#'                                  4 tables modified if a filter is applied
+#' @return myBuildingDataTables     a list of all data frames used as arguments of the function,
+#'                                  4 tables are modified if a filter is applied
 #'
 #' @examples
 #'
@@ -1553,7 +1503,7 @@ ApplyFilterBuildingDatasets <- function (
 #'
 #' @param myFilterName a character string using predefined lists of datasets.
 #' The currently defined subsets are:
-#' "MOBASY_Sample":    Datasets of more than 100 multi-family houses used for target / actual
+#' "MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
 #'                     comparison and benchmarking in the MOBASY project
 #'                     (see https://www.iwu.de/forschung/energie/mobasy/)
 #' "WebTool":          One dataset used for the webtool
@@ -1580,28 +1530,27 @@ ApplyFilterBuildingDatasets <- function (
 #'
 #' @examples
 #'
-#' ## Load data
+#' ## Get data from weather stations
+#' StationClimateTables <- GetStationClimate_LocalExcel ()
+#'
+#'
+#' ## Get local building data
 #' # Different options of dataset selection:
 #'
 #' # (1) Load all available datasets from the MOBASY building data table
 #' myBuildingDataTables <- GetBuildingData_LocalExcel ()
-#' or
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("All")
 #'
 #' # (2) Load all datasets from the MOBASY sample
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY_Sample")
+#' myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample")
 #'
 #' # (3) Load dataset of 1 building (example for webtool)
 #' myBuildingDataTables <- GetBuildingData_LocalExcel ("WebTool")
 #'
-#' # (4) Load some example datasets
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("Examples")
-#'
-#' # (5) Load dataset of the target/actual comparison study performed
-#' # for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
+#' # (4) Load dataset of the target/actual comparison study performed
+#' #     for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
 #' myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
 #'
-#' # (6) Load datasets of 6 buildings from a parameter study on climate types
+#' # (5) Load datasets of 6 buildings from a parameter study on uncertainties
 #' myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
 #'
 #'
@@ -1680,7 +1629,7 @@ GetBuildingData_LocalExcel <- function (
 #'
 #' @param myFilterName a character string using predefined lists of datasets.
 #' The currently defined subsets are:
-#' "MOBASY_Sample":    Datasets of more than 100 multi-family houses used for target / actual
+#' "MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
 #'                     comparison and benchmarking in the MOBASY project
 #'                     (see https://www.iwu.de/forschung/energie/mobasy/)
 #' "WebTool":          One dataset used for the webtool
@@ -1694,8 +1643,8 @@ GetBuildingData_LocalExcel <- function (
 #'                     Acta Polytechnica CTU Proceedings 38:470–477, 2022, published 2023
 #'                     https://doi.org/10.14311/APP.2022.38.0470
 #' "ParameterStudy-PHSP-2023": 32 datasets of a parameter study on the
-#'                    "PassivHausSozialPlus" buildings, implemented in the MOBASY project
-#' "All" (default):       All datasets listed above
+#'                     "PassivHausSozialPlus" buildings, implemented in the MOBASY project
+#' "All" (default):    All datasets listed above
 #'
 #' @return BuildingDataTables a list of dataframes including the calculation input data
 #' "Data_Input", an empty dataframe "Data_Output" providing the structure for the output,
@@ -1716,7 +1665,7 @@ GetBuildingData_LocalExcel <- function (
 #' myBuildingDataTables <- GetBuildingData_RDataPackage ("All")
 #'
 #' # (2) Load all datasets from the MOBASY sample
-#' myBuildingDataTables <- GetBuildingData_RDataPackage ("MOBASY_Sample")
+#' myBuildingDataTables <- GetBuildingData_RDataPackage ("MOBASY-Sample")
 #'
 #' # (3) Load dataset of 1 building (example for webtool)
 #' myBuildingDataTables <- GetBuildingData_RDataPackage ("WebTool")
@@ -1993,10 +1942,20 @@ DetectDifferencesToPrecalculatedResult <- function (
 #' Save all current building data including calculation results to an Excel workbook
 #'
 #' The following tables are exported to the respective subfolders:
-#' "Data_Input":                "Output/Result/"
-#' "Data_Output":               "Output/Result/"
-#' "Data_Output_PreCalculated": "Output/Result/"
-#' "Data_Calc":                 "Output/Calc/"
+#'
+#' Subfolder "Output/Calc/":
+#'
+#' > "Data_Calc_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+#'
+#'
+#'Subfolder "Output/Result/":
+#'
+#' > "Data_Input_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+#'
+#' > "Data_Output_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+#'
+#' > "Data_Output_PreCalculated_{YYYY-MM-DD_hh-mm-ss}.xlsx"
+#'
 #'
 #' @param myBuildingDataTables a list of data frames. THese are:
 #' Data_Input, Data_Output_PreCalculated, Data_Output, Data_Calc
@@ -2018,8 +1977,8 @@ DetectDifferencesToPrecalculatedResult <- function (
 #'    )
 #'
 #' Save_BuildingData_LocalExcel (
-#'    myBuildingDataTables$Data_Output,
-#'    myBuildingDataTables$Data_Calc,
+#'    myOutputTables$Data_Output,
+#'    myOutputTables$Data_Calc,
 #'    myBuildingDataTables$Data_Output_PreCalculated
 #' )
 #'
@@ -2075,20 +2034,29 @@ Save_Result_MonitoringTable (
 #'
 #' Save all current building data including calculation results as *.rda files
 #'
-#' The following tables are exported to the respective subfolders:
-#' "Data_Input":                "Output/RDA/"
-#' "Data_Output":               "Output/RDA/"
-#' "Data_Output_PreCalculated": "Output/RDA/"
-#' "Data_Calc":                 "Output/RDA/"
+#' The following tables are exported to the subfolder "Output/RDA/":
+#'
+#'     Data_Input.rda
+#'
+#'     Data_Output_PreCalculated.rda
+#'
+#'     Data_Output.rda
+#'
+#'     DF_FilterBuildingData.rda
+#'
+#'     myFilterName.rda
+#'
+#'     InfoVariables.rda
+#'
 #'
 #' @param myBuildingDataTables a list of data frames. It includes:
 #' Data_Input, Data_Output_PreCalculated, Data_Output, Data_Calc
 #'
 #' @examples
 #'
-#' ## Load building data tables and calculation parameters
+#' ## Example 1:
+#' ## Load parameters and building data, calculate and save input and output to RDA files
 #'
-#' ## Get parameter tables
 #' TabulaTables <-
 #'    GetParameterTables_RDataPackage ()
 #'
@@ -2104,6 +2072,24 @@ Save_Result_MonitoringTable (
 #'    myBuildingDataTables$Data_Input,
 #'    myBuildingDataTables$Data_Output_PreCalculated,
 #'    myOutputTables$Data_Output,
+#'    myBuildingDataTables$Header_BuildingData,
+#'    myBuildingDataTables$DF_FilterBuildingData,
+#'    myBuildingDataTables$myFilterName
+#' )
+#'
+#'
+#' ## Example 2:
+#' ## Load local building data from Excel and save as RDA files used for input of calculation
+#'
+#' # The data frame "Data_Output" is empty and is used frame for the calculation output
+#'
+#' myBuildingDataTables <-
+#'    GetBuildingData_LocalExcel ("All")
+#'
+#' Save_BuildingData_rda (
+#'    myBuildingDataTables$Data_Input,
+#'    myBuildingDataTables$Data_Output_PreCalculated,
+#'    myBuildingDataTables$Data_Output,
 #'    myBuildingDataTables$Header_BuildingData,
 #'    myBuildingDataTables$DF_FilterBuildingData,
 #'    myBuildingDataTables$myFilterName

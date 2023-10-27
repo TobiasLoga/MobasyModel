@@ -21,17 +21,25 @@ Data_Input, Data_Output_PreCalculated, Data_Output, Data_Calc}
 Save all current building data including calculation results as *.rda files
 }
 \details{
-The following tables are exported to the respective subfolders:
-"Data_Input":                "Output/RDA/"
-"Data_Output":               "Output/RDA/"
-"Data_Output_PreCalculated": "Output/RDA/"
-"Data_Calc":                 "Output/RDA/"
+The following tables are exported to the subfolder "Output/RDA/":
+
+    Data_Input.rda
+
+    Data_Output_PreCalculated.rda
+
+    Data_Output.rda
+
+    DF_FilterBuildingData.rda
+
+    myFilterName.rda
+
+    InfoVariables.rda
 }
 \examples{
 
-## Load building data tables and calculation parameters
+## Example 1:
+## Load parameters and building data, calculate and save input and output to RDA files
 
-## Get parameter tables
 TabulaTables <-
    GetParameterTables_RDataPackage ()
 
@@ -47,6 +55,24 @@ Save_BuildingData_rda (
    myBuildingDataTables$Data_Input,
    myBuildingDataTables$Data_Output_PreCalculated,
    myOutputTables$Data_Output,
+   myBuildingDataTables$Header_BuildingData,
+   myBuildingDataTables$DF_FilterBuildingData,
+   myBuildingDataTables$myFilterName
+)
+
+
+## Example 2:
+## Load local building data from Excel and save as RDA files used for input of calculation
+
+# The data frame "Data_Output" is empty and is used frame for the calculation output
+
+myBuildingDataTables <-
+   GetBuildingData_LocalExcel ("All")
+
+Save_BuildingData_rda (
+   myBuildingDataTables$Data_Input,
+   myBuildingDataTables$Data_Output_PreCalculated,
+   myBuildingDataTables$Data_Output,
    myBuildingDataTables$Header_BuildingData,
    myBuildingDataTables$DF_FilterBuildingData,
    myBuildingDataTables$myFilterName

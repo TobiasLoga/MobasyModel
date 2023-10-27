@@ -9,7 +9,7 @@ GetBuildingData_LocalExcel(myFilterName = "All")
 \arguments{
 \item{myFilterName}{a character string using predefined lists of datasets.
 The currently defined subsets are:
-"MOBASY_Sample":    Datasets of more than 100 multi-family houses used for target / actual
+"MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
                     comparison and benchmarking in the MOBASY project
                     (see https://www.iwu.de/forschung/energie/mobasy/)
 "WebTool":          One dataset used for the webtool
@@ -47,28 +47,27 @@ and the building datasets to be loaded.
 }
 \examples{
 
-## Load data
+## Get data from weather stations
+StationClimateTables <- GetStationClimate_LocalExcel ()
+
+
+## Get local building data
 # Different options of dataset selection:
 
 # (1) Load all available datasets from the MOBASY building data table
 myBuildingDataTables <- GetBuildingData_LocalExcel ()
-or
-myBuildingDataTables <- GetBuildingData_LocalExcel ("All")
 
 # (2) Load all datasets from the MOBASY sample
-myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY_Sample")
+myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample")
 
 # (3) Load dataset of 1 building (example for webtool)
 myBuildingDataTables <- GetBuildingData_LocalExcel ("WebTool")
 
-# (4) Load some example datasets
-myBuildingDataTables <- GetBuildingData_LocalExcel ("Examples")
-
-# (5) Load dataset of the target/actual comparison study performed
-# for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
+# (4) Load dataset of the target/actual comparison study performed
+#     for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
 myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
 
-# (6) Load datasets of 6 buildings from a parameter study on climate types
+# (5) Load datasets of 6 buildings from a parameter study on uncertainties
 myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
 
 

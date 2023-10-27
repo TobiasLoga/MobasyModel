@@ -2,7 +2,7 @@
 % Please edit documentation in R/01_Main.R
 \name{EnergyProfileCalc}
 \alias{EnergyProfileCalc}
-\title{Perform Energy Profile calculation  (MOBASY energy performance calculation without local climate, uncertainties and target/actual comparison)}
+\title{Perform Energy Profile calculation - use state indicators to estimate the input data of a physical model and calculate the energy demand for heating and DHW}
 \usage{
 EnergyProfileCalc(TabulaTables, myBuildingDataTables)
 }

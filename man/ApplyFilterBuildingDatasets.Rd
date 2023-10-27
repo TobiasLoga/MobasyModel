@@ -15,23 +15,23 @@ ApplyFilterBuildingDatasets(
 )
 }
 \arguments{
-\item{Data_Input}{the 1st building dataframe to be filtered}
+\item{Data_Input}{one of the building data frames to be filtered}
 
-\item{Data_Output}{the 3rd building dataframe to be filtered}
+\item{Data_Output}{one of the building data frames to be filtered}
 
-\item{Data_Calc}{the 4th building dataframe to be filtered}
+\item{Data_Calc}{one of the building data frames to be filtered}
 
-\item{Header_BuildingData}{a data frame with meta information (no changes will be appled)}
+\item{Header_BuildingData}{a data frame with meta information (no changes will be applied)}
 
 \item{DF_FilterBuildingData}{a data frame containing the available filter lists}
 
 \item{myFilterName}{a character string specifying the filter list to be used}
 
-\item{Data_Output_Precalculated}{the 2nd building dataframe to be filtered}
+\item{Data_Output_Precalculated}{one of the building data frames to be filtered}
 }
 \value{
-myBuildingDataTables     a list of the dataframes used as parameter of the function,
-                                 4 tables modified if a filter is applied
+myBuildingDataTables     a list of all data frames used as arguments of the function,
+                                 4 tables are modified if a filter is applied
 }
 \description{
 This function provides a filtered version of all 4 building MOBASY data tables

@@ -77,14 +77,16 @@ UValEst <- function (
   ###################################################################################X
   ## After debugging: Comment this section
 
-  # myInputData <- Data_Input
-  # myCalcData  <- Data_Calc
-
-  ## Test specific datasets
-  # myInputData    <- Data_Input ["DE.MOBASY.NH.0020.05", ]
-  # myCalcData     <- Data_Calc  ["DE.MOBASY.NH.0020.05", ]
-  # myInputData    <- Data_Input ["DE.MOBASY.WBG.0007.05", ]
-  # myCalcData     <- Data_Calc  ["DE.MOBASY.WBG.0007.05", ]
+  # myInputData <- myBuildingDataTables$Data_Input
+  # myCalcData  <- myBuildingDataTables$Data_Calc
+  #
+  # ParTab_ConstrYearClass  <- TabulaTables$ParTab_ConstrYearClass
+  # ParTab_Infiltration      <- TabulaTables$ParTab_Infiltration
+  # ParTab_UClassConstr      <- TabulaTables$ParTab_UClassConstr
+  # ParTab_InsulationDefault <- TabulaTables$ParTab_InsulationDefault
+  # ParTab_MeasurefDefault   <- TabulaTables$ParTab_MeasurefDefault
+  # ParTab_WindowTypePeriods <- TabulaTables$ParTab_WindowTypePeriods
+  # ParTab_ThermalBridging   <- TabulaTables$ParTab_ThermalBridging
 
 
   ###################################################################################X
@@ -453,8 +455,9 @@ UValEst <- function (
   ###################################################################################X
   ## . Windows: Assign and convert input quantities for calculation -----
 
-  Data_Calc_UValEst$f_Area_WindowType2 <-
-      myInputData$f_Area_WindowType2 # <ED11>
+  # 2023-10-27
+  # Data_Calc_UValEst$f_Area_WindowType2 <-
+  #     myInputData$f_Area_WindowType2 # <ED11>
   Data_Calc_UValEst$Code_NumberPanes_WindowType1 <-
       myInputData$Code_NumberPanes_WindowType1 # <EE11>
   Data_Calc_UValEst$Code_NumberPanes_WindowType2 <-

@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+/Output/Calc/*
+/Output/Result/*
+/internal-Test/

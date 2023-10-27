@@ -68,7 +68,7 @@ myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
 myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
 
 
-## Calculate energy performance (Energy Profile procedure)
+## Calculate energy performance (MOBASY calculation)
 
 myOutputTables <- MobasyCalc (
    TabulaTables,

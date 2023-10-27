@@ -179,7 +179,12 @@ PrepareDFMeterValues <- function (
   ## After debugging: Comment this section
 
 
-  # myDS    <- myDataset     # defined in MeterCalcSingleBuilding ()
+  # myDS <-
+  #   myDataset     # defined in MeterCalcSingleBuilding ()
+  # #  myBuildingDataTables$Data_Calc [1, ]
+  #
+  # myParTab_Meter_EnergyDensity <-
+  #   TabulaTables$ParTab_Meter_EnergyDensity
 
 
   ###################################################################################X
@@ -331,10 +336,24 @@ PrepareDFMeterValues <- function (
 
   colnames (DF_MeterDevice) <-  c("Code_BuildingMeter")
 
+  DF_MeterDevice$A_C_Meter	<- NA
+  DF_MeterDevice$Code_EC	<- NA
+  DF_MeterDevice$Unit_EC	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_Heating	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_DHW	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_Cooling	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_VentilationAux	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_HeatingPlantAux	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_HouseholdEl	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_Cooking	<- NA
+  DF_MeterDevice$Indicator_Utilisation_Metering_Other	<- NA
+
+
   #Test
-  #i_Device <- 1
+  i_Device <- 1
 
   for (i_Device in c(1,2,3)) {
+
 
     DF_MeterDevice$A_C_Meter [i_Device] <-
       myDS [myIndex_Dataset ,paste0 ("A_C_Meter", "_M", i_Device)]
@@ -344,6 +363,7 @@ PrepareDFMeterValues <- function (
 
     DF_MeterDevice$Unit_EC [i_Device] <-
       myDS [myIndex_Dataset , paste0 ("Code_Unit_Metering", "_M", i_Device)]
+
 
     DF_MeterDevice$Indicator_Utilisation_Metering_Heating [i_Device] <-
       AuxFunctions::Reformat_InputData_Boolean (
@@ -726,9 +746,11 @@ AllocateMeterAmountsToMonths <- function (
   ###################################################################################X
   ## After debugging: Comment this section
 
-
-  # myDF_MeterAmount  <- DF_MonthlyAmounts # defined in MeterCalcSingleBuilding ()
-  # myDF_MeterAmount  <- myDF_MeterValues # defined in PrepareDFMeterValues ()
+  # myDF_MeterAmount <-
+  #   DF_MonthlyAmountsByDevice
+  #
+  # # myDF_MeterAmount  <- DF_MonthlyAmounts # defined in MeterCalcSingleBuilding ()
+  # # myDF_MeterAmount  <- myDF_MeterValues # defined in PrepareDFMeterValues ()
 
 
   ###################################################################################X
@@ -738,6 +760,7 @@ AllocateMeterAmountsToMonths <- function (
   ###################################################################################X
   ## 0  Constants   -----
 
+  n_Row_DFMeterAmount <- nrow (myDF_MeterAmount)
 
   ID_TemperatureData_Station_Default <-
    "DE.MET.003987" # default station: Potsdam
@@ -752,7 +775,7 @@ AllocateMeterAmountsToMonths <- function (
 
 
   Days_12MonthsAllocation <-
-    c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    c(31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
 
   HeatingDegreeDays_12MonthsAllocation <-
@@ -1155,6 +1178,45 @@ AllocateMeterAmountsToMonths <- function (
         HeatingDegreeDays_12MonthsAllocation  [i_Month]
 
 
+
+    } # End loop by i_Month
+  } # End loop by i_AllocationYear
+
+  # 2023-10-27: Changed from 1 to 2 loops by month and allocation year
+  # and supplemented a loop by row to calculate the missing variable
+  # myDF_MeterAmount$DegreeDays_Sum_Year
+
+
+  i_Col_Start_DegreeDays <-
+    which (colnames (myDF_MeterAmount) == "DegreeDays_Year1_Month_01")
+
+  i_Col_Start_Days <-
+    which (colnames (myDF_MeterAmount) == "Days_Year1_Month_01")
+
+  i_Row <- 1
+  for (i_Row in (1 : n_Row_DFMeterAmount)) {
+    myDF_MeterAmount$DegreeDays_Sum_Year [i_Row] <-
+      sum (
+        as.numeric(
+          myDF_MeterAmount [
+            i_Row,
+            i_Col_Start_DegreeDays : (i_Col_Start_DegreeDays + n_Year_MeterAllocation * 12 -1)] *
+            myDF_MeterAmount [
+              i_Row,
+              i_Col_Start_Days : (i_Col_Start_Days + n_Year_MeterAllocation * 12 -1)] /
+            cbind (Days_12MonthsAllocation,
+                   Days_12MonthsAllocation,
+                   Days_12MonthsAllocation,
+                   Days_12MonthsAllocation)
+        )
+      )
+  } # End loop by i_Row
+
+
+  for (i_AllocationYear in (1:n_Year_MeterAllocation)) {
+
+    for (i_Month in (1:12)) {
+
       ## Variables "Consumption_Assigned_Year1_Month_01" etc.
       #  Assign degree days from default climate
 
@@ -1163,20 +1225,20 @@ AllocateMeterAmountsToMonths <- function (
                    "_Year",  i_AllocationYear,
                    "_Month_", AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] <-
         myDF_MeterAmount [ , paste0 ("Days_Year", i_AllocationYear,
-                                   "_Month_",
-                                   AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] *
+                                     "_Month_",
+                                     AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] *
         myDF_MeterAmount$Q_const_day +
         AuxFunctions::Replace_NA (
           myDF_MeterAmount [ , paste0 ("Days_Year", i_AllocationYear,
-                                     "_Month_",
-                                     AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] /
-            Days_12MonthsAllocation [i_Month] *
-            myDF_MeterAmount [ , paste0 ("DegreeDays_Year", i_AllocationYear,
                                        "_Month_",
                                        AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] /
-            sum (HeatingDegreeDays_12MonthsAllocation) *
-# +++ Diese Zeile entspricht nicht der Formel in der Mappe, Fehler? +++
-# In der Mappe wird die Summation mit den Messtagen gewichtet
+            Days_12MonthsAllocation [i_Month] *
+            myDF_MeterAmount [ , paste0 ("DegreeDays_Year", i_AllocationYear,
+                                         "_Month_",
+                                         AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] /
+            myDF_MeterAmount$DegreeDays_Sum_Year * # Sum of actually allocated degree days
+            # 2023-10-27 corrected
+            # sum (HeatingDegreeDays_12MonthsAllocation) *
             myDF_MeterAmount$Q_WeatherDependent ,
           0
         ) # <AM13> | 1 | kWh
@@ -1192,12 +1254,23 @@ AllocateMeterAmountsToMonths <- function (
       ## Variables "Code_Year1_Month_01" etc.
 
       myDF_MeterAmount [ , paste0 ("Code",
-                                 "_Year",  i_AllocationYear,
-                                 "_Month_",
-                                 AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] <-
+                                   "_Year",  i_AllocationYear,
+                                   "_Month_",
+                                   AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] <-
         as.character (
-          AuxFunctions::xl_DATE(myDF_MeterAmount$Year_1, i_Month, 1) # <GD13> | 1 | 31
+          AuxFunctions::xl_DATE (
+            myDF_MeterAmount$Year_1 + i_AllocationYear - 1, # 2023-10-20 added two missing terms
+            i_Month,
+            1) # <GD13> | 1 | 31
         )
+      ## 2023-10-20 Correction
+      # myDF_MeterAmount [ , paste0 ("Code",
+      #                            "_Year",  i_AllocationYear,
+      #                            "_Month_",
+      #                            AuxFunctions::Format_Integer_LeadingZeros (i_Month, 2))] <-
+      #   as.character (
+      #     AuxFunctions::xl_DATE(myDF_MeterAmount$Year_1, i_Month, 1) # <GD13> | 1 | 31
+      #   )
 
 
     } # End loop by i_Month
@@ -1309,30 +1382,35 @@ PrepareMeterCalcSlots <- function (
   ###################################################################################X
   ## After debugging: Comment this section
 
-  ## After debugging: Comment this section
-  #
   # myClimateData_PostCodes <-
-  #   as.data.frame (clidamonger::tab.stationmapping)
+  #   as.data.frame (StationClimateTables$ClimateData_PostCodes)
+  # #  as.data.frame (clidamonger::tab.stationmapping)
   # # Name of the original table is misleading --> better to be changed
   # # (also in the Excel workbook)
   #
   # myClimateData_StationTA <-
-  #   as.data.frame (clidamonger::list.station.ta)
+  #   as.data.frame (StationClimateTables$ClimateData_StationTA)
+  #   #as.data.frame (clidamonger::list.station.ta)
   #
   # myClimateData_TA_HD <-
-  #   as.data.frame (clidamonger::data.ta.hd)
+  #   as.data.frame (StationClimateTables$ClimateData_TA_HD)
+  #   #as.data.frame (clidamonger::data.ta.hd)
   #
   # myClimateData_Sol <-
-  #   as.data.frame (clidamonger::data.sol)
+  #   as.data.frame (StationClimateTables$ClimateData_Sol)
+  #   #as.data.frame (clidamonger::data.sol)
   #
   # myParTab_SolOrientEst <-
-  #   as.data.frame (clidamonger::tab.estim.sol.orient)
+  #   as.data.frame (StationClimateTables$ParTab_SolOrientEst)
+  #   #as.data.frame (clidamonger::tab.estim.sol.orient)
   #
   #
-  # myGeneralData <- myDataset
+  # myGeneralData <-
+  #   myDataset
   # # Dataset from Data_Calc of one building, defined in MeterCalcSingleBuilding ()
   #
-  # myConsumption <- DF_MonthlyAmountsByDevice
+  # myConsumption <-
+  #   DF_MonthlyAmountsByDevice
   # # by device: consumption allocated to months, defined in MeterCalcSingleBuilding ()
 
 
@@ -1349,6 +1427,14 @@ PrepareMeterCalcSlots <- function (
   ###################################################################################X
 
   n_Slot_MeterCalcComparison <- 9
+
+  n_MeteringDevice <- 3
+  ID_MeteringDevice_M0   <- AuxFunctions::Format_Integer_LeadingZeros (1:n_MeteringDevice, 1, "M")
+  ID_MeteringDevice_M00 <- AuxFunctions::Format_Integer_LeadingZeros (1:n_MeteringDevice, 2, "M")
+
+  n_Sequence_MeterAmount <- 40
+
+  n_Year_MonthlyConsumption <- 4
 
 
 
@@ -1676,71 +1762,207 @@ PrepareMeterCalcSlots <- function (
   ## 2.5 Calculation of annual consumption values for devices M1, M2 and M3   -----
 
 
+  StartIndex_Col_CodeMonths <-
+    which (colnames (myConsumption) == "Code_Year1_Month_01")
+
+  Indices_Col_CodeMonths <-
+    StartIndex_Col_CodeMonths : (StartIndex_Col_CodeMonths +
+                                   n_Year_MonthlyConsumption * 12 - 1)
+
+  StartIndex_Col_ConsumptionMonths <-
+    which (colnames (myConsumption) == "Consumption_Assigned_Year1_Month_01")
+
+  Indices_Col_ConsumptionMonths <-
+    StartIndex_Col_ConsumptionMonths : (StartIndex_Col_ConsumptionMonths +
+                                          n_Year_MonthlyConsumption * 12 - 1)
+
+  ## M01
+  StartIndex_Col_ConsumptionMonths_M01_SumYears <-
+    which (colnames (mySlotData) == "Consumption_SumYears_M01_Month01")
+  Indices_Col_ConsumptionMonths_M01_SumYears <-
+    StartIndex_Col_ConsumptionMonths_M01_SumYears : (
+      StartIndex_Col_ConsumptionMonths_M01_SumYears + 12 - 1)
+
+  ## M02
+  StartIndex_Col_ConsumptionMonths_M02_SumYears <-
+    which (colnames (mySlotData) == "Consumption_SumYears_M02_Month01")
+  Indices_Col_ConsumptionMonths_M02_SumYears <-
+    StartIndex_Col_ConsumptionMonths_M02_SumYears : (
+      StartIndex_Col_ConsumptionMonths_M02_SumYears + 12 - 1)
+
+  ## M03
+  StartIndex_Col_ConsumptionMonths_M03_SumYears <-
+    which (colnames (mySlotData) == "Consumption_SumYears_M03_Month01")
+  Indices_Col_ConsumptionMonths_M03_SumYears <-
+    StartIndex_Col_ConsumptionMonths_M03_SumYears : (
+      StartIndex_Col_ConsumptionMonths_M03_SumYears + 12 - 1)
+
   i_Slot <- 1
   for (i_Slot in (1 : n_Slot_MeterCalcComparison)) {
 
+    mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M01_SumYears] <- 0
+    mySlotData$Consumption_SumYears_M01 [i_Slot] <- 0
+    mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M02_SumYears] <- 0
+    mySlotData$Consumption_SumYears_M02 [i_Slot] <- 0
+    mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M03_SumYears] <- 0
+    mySlotData$Consumption_SumYears_M03 [i_Slot] <- 0
 
-    CurrentFilterList_M1_Year1 <-
-      (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M1")
+    i_MeterAmount <- 1
+    for (i_MeterAmount in (1 : (n_MeteringDevice * n_Sequence_MeterAmount))) {
 
-    CurrentFilterList_M2_Year1 <-
-      (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M2")
+      Filter_CurrentRow <-
+        as.numeric (
+          (mySlotData$Date_BalanceYears_Start [i_Slot] <=
+             myConsumption [i_MeterAmount, Indices_Col_CodeMonths]) * 1
+        )  * as.numeric (
+          (mySlotData$Date_BalanceYears_End [i_Slot] >=
+             myConsumption [i_MeterAmount, Indices_Col_CodeMonths]) * 1
+        )
 
-    CurrentFilterList_M3_Year1 <-
-      (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M3")
+      CurrentConsumption <-
+        as.numeric (
+          myConsumption [
+            i_MeterAmount,
+            Indices_Col_ConsumptionMonths
+          ] * Filter_CurrentRow
+        )
 
-    CurrentFilterList_M1_Year2 <-
-      (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M1")
+      CurrentConsumption <- Replace_NA (CurrentConsumption, 0)
 
-    CurrentFilterList_M2_Year2 <-
-      (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M2")
+      ## M01
+      if (myConsumption$ID_MeterDevice [i_MeterAmount] == "M1") {
 
-    CurrentFilterList_M3_Year2 <-
-      (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M3")
+        i_Year <- 1
+        for (i_Year in (1:n_Year_MonthlyConsumption)) {
 
+          mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M01_SumYears] <-
+            mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M01_SumYears] +
+            CurrentConsumption [(i_Year - 1) * 12 + (1:12) ]
 
-    CurrentFilterList_M1_Year3 <-
-      (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M1")
+        } # End Loop by i_Year
 
-    CurrentFilterList_M2_Year3 <-
-      (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M2")
+        mySlotData$Consumption_SumYears_M01 [i_Slot] <-
+          sum (mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M01_SumYears], na.rm = TRUE)
 
-    CurrentFilterList_M3_Year3 <-
-      (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M3")
+      } # End if M1
 
 
-    CurrentFilterList_M1_Year4 <-
-      (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M1")
+      ## M02
+      if (myConsumption$ID_MeterDevice [i_MeterAmount] == "M2") {
 
-    CurrentFilterList_M2_Year4 <-
-      (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M2")
+        i_Year <- 1
+        for (i_Year in (1:n_Year_MonthlyConsumption)) {
 
-    CurrentFilterList_M3_Year4 <-
-      (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
-      (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
-      (myConsumption$ID_MeterDevice == "M3")
+          mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M02_SumYears] <-
+            mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M02_SumYears] +
+            CurrentConsumption [(i_Year - 1) * 12 + (1:12) ]
+
+        } # End Loop by i_Year
+
+        mySlotData$Consumption_SumYears_M02 [i_Slot] <-
+          sum (mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M02_SumYears], na.rm = TRUE)
+
+      } # End if M2
+
+
+      ## M03
+      if (myConsumption$ID_MeterDevice  [i_MeterAmount] == "M3") {
+
+        i_Year <- 1
+        for (i_Year in (1:n_Year_MonthlyConsumption)) {
+
+          mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M03_SumYears] <-
+            mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M03_SumYears] +
+            CurrentConsumption [(i_Year - 1) * 12 + (1:12) ]
+
+        } # End Loop by i_Year
+
+        mySlotData$Consumption_SumYears_M03 [i_Slot] <-
+          sum (mySlotData [i_Slot, Indices_Col_ConsumptionMonths_M03_SumYears], na.rm = TRUE)
+
+      } # End if M3
+
+    } # End loop by i_MeterAmount
+
+  } # End loop by i_Slot
+
+
+
+
+
+
+
+
+
+
+## 2023-10-22 Loop by i_Slot old version
+
+  # i_Slot <- 1
+  # for (i_Slot in (1 : n_Slot_MeterCalcComparison)) {
+
+    ## 2023-10-21 - corrected (see above)
+    #
+    # CurrentFilterList_M1_Year1 <-
+    #   (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M1")
+    #
+    # CurrentFilterList_M1_Year2 <-
+    #   (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M1")
+    #
+    # CurrentFilterList_M1_Year3 <-
+    #   (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M1")
+    #
+    # CurrentFilterList_M1_Year4 <-
+    #   (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M1")
+    #
+    #
+    # CurrentFilterList_M2_Year1 <-
+    #   (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M2")
+    #
+    # CurrentFilterList_M2_Year2 <-
+    #   (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M2")
+    #
+    # CurrentFilterList_M2_Year3 <-
+    #   (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M2")
+    #
+    # CurrentFilterList_M2_Year4 <-
+    #   (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M2")
+    #
+    #
+    # CurrentFilterList_M3_Year1 <-
+    #   (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M3")
+    #
+    # CurrentFilterList_M3_Year2 <-
+    #   (myConsumption$Code_Year2_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year2_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M3")
+    #
+    # CurrentFilterList_M3_Year3 <-
+    #   (myConsumption$Code_Year3_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year3_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M3")
+    #
+    # CurrentFilterList_M3_Year4 <-
+    #   (myConsumption$Code_Year4_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
+    #   (myConsumption$Code_Year4_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
+    #   (myConsumption$ID_MeterDevice == "M3")
 
 
     # CurrentFilterList_M1 <-
@@ -1757,123 +1979,123 @@ PrepareMeterCalcSlots <- function (
     #   (myConsumption$Code_Year1_Month_01 >= mySlotData$Date_BalanceYears_Start [i_Slot]) &
     #   (myConsumption$Code_Year1_Month_01 <= mySlotData$Date_BalanceYears_End [i_Slot]) &
     #   (myConsumption$ID_MeterDevice == "M3")
-
-    mySlotData$Consumption_SumYears_M01 [i_Slot] <- 0
-    mySlotData$Consumption_SumYears_M02 [i_Slot] <- 0
-    mySlotData$Consumption_SumYears_M03 [i_Slot] <- 0
-
-
-    ID_Month <- "01" # for testing the loop
-
-    for (ID_Month in (AuxFunctions::Format_Integer_LeadingZeros(1:12,2))) {
-
-      # cat ("i_Slot = ", i_Slot, " ID_Month = ", ID_Month, " | " )
-
-      ### M1 -----
-
-      mySlotData [i_Slot, paste0 ("Consumption_SumYears_M01_Month", ID_Month)] <-
-        sum (
-          myConsumption [
-            CurrentFilterList_M1_Year1,
-            paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
-            ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M1_Year2,
-            paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M1_Year3,
-            paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M1_Year4,
-            paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
-          ]
-        )
-
-      mySlotData$Consumption_SumYears_M01 [i_Slot] <-
-        mySlotData$Consumption_SumYears_M01 [i_Slot] +
-        mySlotData [i_Slot, paste0 ("Consumption_SumYears_M01_Month", ID_Month)]
-
-
-      ### M2 -----
-
-      mySlotData [i_Slot, paste0 ("Consumption_SumYears_M02_Month", ID_Month)] <-
-        sum (
-          myConsumption [
-            CurrentFilterList_M2_Year1,
-            paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M2_Year2,
-            paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M2_Year3,
-            paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M2_Year4,
-            paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
-          ]
-        )
-
-      mySlotData$Consumption_SumYears_M02 [i_Slot] <-
-        mySlotData$Consumption_SumYears_M02 [i_Slot] +
-        mySlotData [i_Slot, paste0 ("Consumption_SumYears_M02_Month", ID_Month)]
-
-
-      ### M3 -----
-
-      mySlotData [i_Slot, paste0 ("Consumption_SumYears_M03_Month", ID_Month)] <-
-        sum (
-          myConsumption [
-            CurrentFilterList_M3_Year1,
-            paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M3_Year2,
-            paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M3_Year3,
-            paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
-          ]
-        ) +
-        sum (
-          myConsumption [
-            CurrentFilterList_M3_Year4,
-            paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
-          ]
-        )
-
-      mySlotData$Consumption_SumYears_M03 [i_Slot] <-
-        mySlotData$Consumption_SumYears_M03 [i_Slot] +
-        mySlotData [i_Slot, paste0 ("Consumption_SumYears_M03_Month", ID_Month)]
-
-
-
-    } # End of loop by month
-
-
-  } # End of loop by slot
-
+#
+#     mySlotData$Consumption_SumYears_M01 [i_Slot] <- 0
+#     mySlotData$Consumption_SumYears_M02 [i_Slot] <- 0
+#     mySlotData$Consumption_SumYears_M03 [i_Slot] <- 0
+#
+#
+#     ID_Month <- "01" # for testing the loop
+#
+#     for (ID_Month in (AuxFunctions::Format_Integer_LeadingZeros(1:12,2))) {
+#
+#       # cat ("i_Slot = ", i_Slot, " ID_Month = ", ID_Month, " | " )
+#
+#       ### M1 -----
+#
+#       mySlotData [i_Slot, paste0 ("Consumption_SumYears_M01_Month", ID_Month)] <-
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M1_Year1,
+#             paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
+#             ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M1_Year2,
+#             paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M1_Year3,
+#             paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M1_Year4,
+#             paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
+#           ]
+#         )
+#
+#       mySlotData$Consumption_SumYears_M01 [i_Slot] <-
+#         mySlotData$Consumption_SumYears_M01 [i_Slot] +
+#         mySlotData [i_Slot, paste0 ("Consumption_SumYears_M01_Month", ID_Month)]
+#
+#
+#       ### M2 -----
+#
+#       mySlotData [i_Slot, paste0 ("Consumption_SumYears_M02_Month", ID_Month)] <-
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M2_Year1,
+#             paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M2_Year2,
+#             paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M2_Year3,
+#             paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M2_Year4,
+#             paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
+#           ]
+#         )
+#
+#       mySlotData$Consumption_SumYears_M02 [i_Slot] <-
+#         mySlotData$Consumption_SumYears_M02 [i_Slot] +
+#         mySlotData [i_Slot, paste0 ("Consumption_SumYears_M02_Month", ID_Month)]
+#
+#
+#       ### M3 -----
+#
+#       mySlotData [i_Slot, paste0 ("Consumption_SumYears_M03_Month", ID_Month)] <-
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M3_Year1,
+#             paste0 ("Consumption_Assigned_Year1_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M3_Year2,
+#             paste0 ("Consumption_Assigned_Year2_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M3_Year3,
+#             paste0 ("Consumption_Assigned_Year3_Month_", ID_Month)
+#           ]
+#         ) +
+#         sum (
+#           myConsumption [
+#             CurrentFilterList_M3_Year4,
+#             paste0 ("Consumption_Assigned_Year4_Month_", ID_Month)
+#           ]
+#         )
+#
+#       mySlotData$Consumption_SumYears_M03 [i_Slot] <-
+#         mySlotData$Consumption_SumYears_M03 [i_Slot] +
+#         mySlotData [i_Slot, paste0 ("Consumption_SumYears_M03_Month", ID_Month)]
+#
+#
+#
+#     } # End of loop by month
+#
+#
+#   } # End of loop by slot
+#
 
   mySlotData$Consumption_Year_M01 <-
     AuxFunctions::Replace_NA (
@@ -1917,11 +2139,18 @@ PrepareMeterCalcSlots <- function (
   mySlotData$Consumption_Year <-
     mySlotData$Indicator_Completeness_Consumption * (
       mySlotData$Multiplier_Contribution_M01 * mySlotData$Consumption_Year_M01 +
-        mySlotData$Multiplier_Contribution_M02 * mySlotData$Consumption_Year_M02 +
-        mySlotData$Multiplier_Contribution_M03 * mySlotData$Consumption_Year_M03
+      mySlotData$Multiplier_Contribution_M02 * mySlotData$Consumption_Year_M02 +
+      mySlotData$Multiplier_Contribution_M03 * mySlotData$Consumption_Year_M03
     )
   # <CN24> | kWh/a | Real
 
+  # cat (mySlotData$Indicator_Completeness_Consumption, fill = TRUE)
+  # cat (mySlotData$Multiplier_Contribution_M01, fill = TRUE)
+  # cat (mySlotData$Consumption_Year_M01, fill = TRUE)
+  # cat (mySlotData$Multiplier_Contribution_M02, fill = TRUE)
+  # cat (mySlotData$Consumption_Year_M02, fill = TRUE)
+  # cat (mySlotData$Multiplier_Contribution_M03, fill = TRUE)
+  # cat (mySlotData$Consumption_Year_M03, fill = TRUE)
 
   mySlotData$Code_TypeCompareMeterCalc <-
     as.character (myGeneralData [1,
@@ -2805,7 +3034,8 @@ CalculateMeterCalcSlots <- function (
 
   mySlotCalcData$f_ClimateCorrection_HDD_Factor <-
     ifelse (
-      myGeneralData$Code_Type_ClimateCorrection == "Correction_Temperature",
+      myGeneralData$Code_Type_ClimateCorrection [i_DataSet_Building] ==
+        "Correction_Temperature",
       mySlotCalcData$f_Correction_HDD,
       1
     )
@@ -2819,11 +3049,11 @@ CalculateMeterCalcSlots <- function (
     ifelse (
       mySlotCalcData$Code_Level_MeterComparison_SysH == "HeatDemand",
       (
-        myGeneralData$q_h_nd_eff	*
+        myGeneralData$q_h_nd_eff [i_DataSet_Building]	*
           mySlotCalcData$Multiplier_MeterComparison_q_h_nd_eff +
-          myGeneralData$q_s_h	*
+          myGeneralData$q_s_h	[i_DataSet_Building] *
           mySlotCalcData$Multiplier_MeterComparison_q_s_h +
-          myGeneralData$q_d_h *
+          myGeneralData$q_d_h [i_DataSet_Building] *
           mySlotCalcData$Multiplier_MeterComparison_q_d_h
       ) *
         mySlotCalcData$f_ClimateCorrection_HDD_Factor +
@@ -2835,14 +3065,14 @@ CalculateMeterCalcSlots <- function (
   mySlotCalcData$q_compare_h_heat_generation <-
     ifelse (
       mySlotCalcData$Code_Level_MeterComparison_SysH == "HeatGeneration",
-      ( myGeneralData$q_g_h_out +
+      ( myGeneralData$q_g_h_out [i_DataSet_Building] +
           mySlotCalcData$Delta_q_ClimateCorrection_HDD_Sol ) *
         mySlotCalcData$f_ClimateCorrection_HDD_Factor *
-        (myGeneralData$Fraction_SysH_G_1 *
+        (myGeneralData$Fraction_SysH_G_1 [i_DataSet_Building]*
             mySlotCalcData$Multiplier_MeterComparison_q_del_h_1 +
-            myGeneralData$Fraction_SysH_G_2 *
+            myGeneralData$Fraction_SysH_G_2 [i_DataSet_Building] *
             mySlotCalcData$Multiplier_MeterComparison_q_del_h_2 +
-            myGeneralData$Fraction_SysH_G_3 *
+            myGeneralData$Fraction_SysH_G_3 [i_DataSet_Building] *
             mySlotCalcData$Multiplier_MeterComparison_q_del_h_3)
       ,
       0
@@ -2852,26 +3082,26 @@ CalculateMeterCalcSlots <- function (
   mySlotCalcData$q_compare_h_energy_carrier <-
     ifelse (
       mySlotCalcData$Code_Level_MeterComparison_SysH == "EnergyCarrier",
-      (  myGeneralData$q_del_h_1 *
+      (  myGeneralData$q_del_h_1 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_del_h_1 +
-           myGeneralData$q_del_h_2 *
+           myGeneralData$q_del_h_2 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_del_h_2 +
-           myGeneralData$q_del_h_3 *
+           myGeneralData$q_del_h_3 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_del_h_3 +
-           myGeneralData$q_del_h_aux	*
+           myGeneralData$q_del_h_aux	[i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_del_h_aux	+
-           myGeneralData$q_del_ve_aux *
+           myGeneralData$q_del_ve_aux [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_del_ve_aux +
-           myGeneralData$q_prod_el_h_1 *
+           myGeneralData$q_prod_el_h_1 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_prod_el_h_1 +
-           myGeneralData$q_prod_el_h_2 *
+           myGeneralData$q_prod_el_h_2 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_prod_el_h_2 +
-           myGeneralData$q_prod_el_h_3 *
+           myGeneralData$q_prod_el_h_3 [i_DataSet_Building] *
            mySlotCalcData$Multiplier_MeterComparison_q_prod_el_h_3
       ) * (
-        ( myGeneralData$q_g_h_out +
+        ( myGeneralData$q_g_h_out [i_DataSet_Building] +
           mySlotCalcData$Delta_q_ClimateCorrection_HDD_Sol) /
-          myGeneralData$q_g_h_out
+          myGeneralData$q_g_h_out [i_DataSet_Building]
       ) * mySlotCalcData$f_ClimateCorrection_HDD_Factor,
       0
     )
@@ -2886,7 +3116,7 @@ CalculateMeterCalcSlots <- function (
 
   mySlotCalcData$Q_compare_h <-
     mySlotCalcData$q_compare_h_per_sqm *
-    myGeneralData$A_C_Ref
+    myGeneralData$A_C_Ref [i_DataSet_Building]
   # <GD24> | Comparison value | kWh/a | Real
 
   mySlotCalcData$Indicator_PlausibilityComparison <-
@@ -2901,6 +3131,8 @@ CalculateMeterCalcSlots <- function (
         0
       ) == (mySlotCalcData$Code_Domain_MeterComparison_SysW != "-") * 1
     ) * 1 # <GH24>
+
+  # cat (mySlotCalcData$Indicator_PlausibilityComparison, fill = TRUE)
 
   mySlotCalcData$Q_calc <-
     ifelse (
@@ -2925,6 +3157,7 @@ CalculateMeterCalcSlots <- function (
     )
   # <GV24> | Metered energy demand, comparison value | kWh/a | Real
 
+  # cat (mySlotCalcData$Q_meter, fill = TRUE)
 
   ###################################################################################X
   ## 4  Determine the indicator pair for direct comparison  -----
@@ -2936,14 +3169,17 @@ CalculateMeterCalcSlots <- function (
   mySlotCalcData$ratio_q_meter_q_calc <- NA
 
   mySlotCalcData$q_calc_per_sqm <-
-    mySlotCalcData$Q_calc / myGeneralData$A_C_Ref
+    mySlotCalcData$Q_calc / myGeneralData$A_C_Ref [i_DataSet_Building]
   # <GW24> | Calculated energy demand, comparison value |
   # Value related to reference floor area | kWh/(m²a) | Real
 
   mySlotCalcData$q_meter_per_sqm <-
-    mySlotCalcData$Q_meter / myGeneralData$A_C_Ref
+    mySlotCalcData$Q_meter / myGeneralData$A_C_Ref [i_DataSet_Building]
   # <GX24> | Metered energy demand, comparison value |
   # Value related to reference floor area | kWh/(m²a) | Real
+
+  # cat (mySlotCalcData$q_meter_per_sqm, fill = TRUE)
+
 
   mySlotCalcData$ratio_q_meter_q_calc <-
     AuxFunctions::Replace_NA (mySlotCalcData$q_meter_per_sqm / mySlotCalcData$q_calc_per_sqm, 0)
@@ -3070,7 +3306,6 @@ CalculateMeterCalcSlots <- function (
 
 MeterCalcSingleBuilding <-  function (
 
-    # Tables from  data package: "clidamonger" "Climate Data Monthly Germany"
     myClimateData_PostCodes,
     myClimateData_StationTA,
     myClimateData_TA_HD,
@@ -3095,30 +3330,37 @@ MeterCalcSingleBuilding <-  function (
   ###################################################################################X
   # B  DEBUGGUNG - Assign input for debugging of function  -----
   ###################################################################################X
-
-
   ## After debugging: Comment this section
-  #
-  # myClimateData_PostCodes <-
-  #   as.data.frame (clidamonger::tab.stationmapping)
-  # # Name of the original table is misleading --> better to be changed
-  # # (also in the Excel workbook)
-  #
-  # myClimateData_StationTA <-
-  #   as.data.frame (clidamonger::list.station.ta)
-  #
-  # myClimateData_TA_HD <-
-  #   as.data.frame (clidamonger::data.ta.hd)
-  #
-  # myClimateData_Sol <-
-  #   as.data.frame (clidamonger::data.sol)
-  #
-  # myParTab_SolOrientEst <-
-  #   as.data.frame (clidamonger::tab.estim.sol.orient)
-  #
-  #
-  # myDataset  <- myDataCalc_CMC ["DE.MOBASY.WBG.0008.04", ]
-  # myDataset  <- myDataCalc_CMC [185, ]
+#
+#   myClimateData_PostCodes <-
+#     as.data.frame (StationClimateTables$ClimateData_PostCodes)
+#   #  as.data.frame (clidamonger::tab.stationmapping)
+#   # Name of the original table is misleading --> better to be changed
+#   # (also in the Excel workbook)
+#
+#   myClimateData_StationTA <-
+#     as.data.frame (StationClimateTables$ClimateData_StationTA)
+#   #as.data.frame (clidamonger::list.station.ta)
+#
+#   myClimateData_TA_HD <-
+#     as.data.frame (StationClimateTables$ClimateData_TA_HD)
+#   #as.data.frame (clidamonger::data.ta.hd)
+#
+#   myClimateData_Sol <-
+#     as.data.frame (StationClimateTables$ClimateData_Sol)
+#   #as.data.frame (clidamonger::data.sol)
+#
+#   myParTab_SolOrientEst <-
+#     as.data.frame (StationClimateTables$ParTab_SolOrientEst)
+#   #as.data.frame (clidamonger::tab.estim.sol.orient)
+#
+#   myParTab_Meter_EnergyDensity <-
+#     TabulaTables$ParTab_Meter_EnergyDensity
+#
+#   myDataset  <-
+#     myDataCalc_CMC [8, ]
+#   # myDataset  <- myDataCalc_CMC ["DE.MOBASY.WBG.0008.04", ]
+#   # myDataset  <- myDataCalc_CMC [185, ]
 
 
   ###################################################################################X
@@ -3154,7 +3396,6 @@ MeterCalcSingleBuilding <-  function (
   DF_MeterCalcSlots <-
     PrepareMeterCalcSlots (
 
-      # Tables from  data package: "clidamonger" "Climate Data Monthly Germany"
       myClimateData_PostCodes = myClimateData_PostCodes,
       myClimateData_StationTA = myClimateData_StationTA,
       myClimateData_TA_HD     = myClimateData_TA_HD,
@@ -3304,28 +3545,37 @@ CalcMeterComparison <- function (
   ###################################################################################X
   ## After debugging: Comment this section
 
-  ## After debugging: Comment this section
-  #
   # myClimateData_PostCodes <-
-  #   as.data.frame (clidamonger::tab.stationmapping)
+  #   as.data.frame (StationClimateTables$ClimateData_PostCodes)
+  # #  as.data.frame (clidamonger::tab.stationmapping)
   # # Name of the original table is misleading --> better to be changed
   # # (also in the Excel workbook)
   #
   # myClimateData_StationTA <-
-  #   as.data.frame (clidamonger::list.station.ta)
+  #   as.data.frame (StationClimateTables$ClimateData_StationTA)
+  #   #as.data.frame (clidamonger::list.station.ta)
   #
   # myClimateData_TA_HD <-
-  #   as.data.frame (clidamonger::data.ta.hd)
+  #   as.data.frame (StationClimateTables$ClimateData_TA_HD)
+  #   #as.data.frame (clidamonger::data.ta.hd)
   #
   # myClimateData_Sol <-
-  #   as.data.frame (clidamonger::data.sol)
+  #   as.data.frame (StationClimateTables$ClimateData_Sol)
+  #   #as.data.frame (clidamonger::data.sol)
   #
   # myParTab_SolOrientEst <-
-  #   as.data.frame (clidamonger::tab.estim.sol.orient)
+  #   as.data.frame (StationClimateTables$ParTab_SolOrientEst)
+  #   #as.data.frame (clidamonger::tab.estim.sol.orient)
   #
+  # myParTab_Meter_EnergyDensity <-
+  #   TabulaTables$ParTab_Meter_EnergyDensity
   #
-  # myDataInput     <- Data_Input
-  # myDataCalc_CMC  <- Data_Calc
+  # myDataInput     <-
+  #   myBuildingDataTables$Data_Input
+  #
+  # myDataCalc_CMC  <-
+  #   myOutputTables$Data_Calc
+  #
 
 
   ###################################################################################X
@@ -3347,56 +3597,6 @@ CalcMeterComparison <- function (
     nrow (myDataCalc_CMC)
 
 
-  ## Can be deleted
-  #
-  # ###################################################################################X
-  # ### 1.1  Preparation of result vectors
-  #
-  # # The creation of result vectors in Data_Calc helps running the whole script
-  # # even if there are errors in sections (sub functions)
-  #
-  # mySlotNameList <-
-  #   Format_Integer_LeadingZeros (
-  #     1:n_Slot_MeterCalcComparison, 2
-  #     )
-  #
-  #
-  # myOutputVariableNamesBySlot <-
-  #   c (
-  #     "Code_Model1_TypePeriod_MeterComparison"  ,
-  #     "Date_Model1_BalanceYears_Start"          ,
-  #     "Date_Model1_BalanceYears_End"            ,
-  #     "f_Model1_Correction_HDD"                 ,
-  #     "f_Model1_Correction_Sol_HD"              ,
-  #     "f_Model1_Correction_Int"                 ,
-  #     "q_Model1_compare_w_per_sqm"              ,
-  #     "q_Model1_compare_h_per_sqm"              ,
-  #     "Code_Model1_Domain_MeterComparison_SysH" ,
-  #     "Code_Model1_Domain_MeterComparison_SysW" ,
-  #     "F_Model1_CalcAdapt_M"                    ,
-  #     "Indicator_Model1_CalcAdapt_M"            ,
-  #     "q_Model1_calc_per_sqm"                   ,
-  #     "q_Model1_meter_per_sqm"                  ,
-  #     "ratio_Model1_q_meter_q_calc"
-  #   )
-  #
-  # myOutputVariableNames <- NA
-  #
-  # i_Slot <- 1
-  #
-  # for (i_Slot in (1:n_Slot_MeterCalcComparison)) {
-  #
-  #   myOutputVariableNames <-
-  #     c (
-  #       myOutputVariableNames,
-  #       paste0 (myOutputVariableNamesBySlot, "_", mySlotNameList [i_Slot] )
-  #   )
-  #
-  # } # End loop by slot
-  #
-  # myOutputVariableNames <-   myOutputVariableNames [-1]
-  #
-  # myDataCalc_CMC [ , myOutputVariableNames] <- NA
 
 
   ###################################################################################X
@@ -3461,7 +3661,8 @@ CalcMeterComparison <- function (
   myDataCalc_CMC$Indicator_Utilisation_Metering_Cooling_M2           <-
     AuxFunctions::Reformat_InputData_Boolean (myDataInput$Indicator_Utilisation_Metering_M2_Cooling)
   myDataCalc_CMC$Indicator_Utilisation_Metering_VentilationAux_M2    <-
-    AuxFunctions::Reformat_InputData_Boolean (myDataInput$Indicator_Utilisation_Metering_M2_VentilationAux)
+    AuxFunctions::Reformat_InputData_Boolean (
+      myDataInput$Indicator_Utilisation_Metering_M2_VentilationAux)
   myDataCalc_CMC$Indicator_Utilisation_Metering_HeatingPlantAux_M2   <-
     AuxFunctions::Reformat_InputData_Boolean (myDataInput$Indicator_Utilisation_Metering_M2_HeatingPlantAux)
   myDataCalc_CMC$Indicator_Utilisation_Metering_HouseholdEl_M2       <-

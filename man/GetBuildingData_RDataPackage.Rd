@@ -9,7 +9,7 @@ GetBuildingData_RDataPackage(myFilterName = "All")
 \arguments{
 \item{myFilterName}{a character string using predefined lists of datasets.
 The currently defined subsets are:
-"MOBASY_Sample":    Datasets of more than 100 multi-family houses used for target / actual
+"MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
                     comparison and benchmarking in the MOBASY project
                     (see https://www.iwu.de/forschung/energie/mobasy/)
 "WebTool":          One dataset used for the webtool
@@ -23,8 +23,8 @@ The currently defined subsets are:
                     Acta Polytechnica CTU Proceedings 38:470–477, 2022, published 2023
                     https://doi.org/10.14311/APP.2022.38.0470
 "ParameterStudy-PHSP-2023": 32 datasets of a parameter study on the
-                   "PassivHausSozialPlus" buildings, implemented in the MOBASY project
-"All" (default):       All datasets listed above}
+                    "PassivHausSozialPlus" buildings, implemented in the MOBASY project
+"All" (default):    All datasets listed above}
 }
 \value{
 BuildingDataTables a list of dataframes including the calculation input data
@@ -53,7 +53,7 @@ or
 myBuildingDataTables <- GetBuildingData_RDataPackage ("All")
 
 # (2) Load all datasets from the MOBASY sample
-myBuildingDataTables <- GetBuildingData_RDataPackage ("MOBASY_Sample")
+myBuildingDataTables <- GetBuildingData_RDataPackage ("MOBASY-Sample")
 
 # (3) Load dataset of 1 building (example for webtool)
 myBuildingDataTables <- GetBuildingData_RDataPackage ("WebTool")

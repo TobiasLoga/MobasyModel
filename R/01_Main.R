@@ -27,7 +27,7 @@
 #####################################################################################X
 ##  Function: EnergyProfileCalc ()   -----
 
-#'  Perform Energy Profile calculation  (MOBASY energy performance calculation without local climate, uncertainties and target/actual comparison)
+#'  Perform Energy Profile calculation - use state indicators to estimate the input data of a physical model and calculate the energy demand for heating and DHW
 #'
 #' EnergyProfileCalc consists of a physical model for calculating the energy demand for heating and domestic hot water.
 #' Energy Profile Indicators or detailed building data may be used as input data.
@@ -198,7 +198,7 @@ EnergyProfileCalc <- function (
 #' myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
 #'
 #'
-#' ## Calculate energy performance (Energy Profile procedure)
+#' ## Calculate energy performance (MOBASY calculation)
 #'
 #' myOutputTables <- MobasyCalc (
 #'    TabulaTables,
