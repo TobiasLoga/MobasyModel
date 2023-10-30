@@ -3,3 +3,5 @@
 /Output/Calc/*
 /Output/Result/*
 /internal-Test/
+! /Output/Calc/
+! /Output/Result/
