@@ -191,13 +191,15 @@ EnvArEst <- function (
 
   Data_Calc_EnvArEst$Code_ComplexRoof <-
     ifelse ((myInputData$Code_ComplexRoof == "_NA_") |
-              (myInputData$Code_ComplexRoof * 1 == 0),      # 2023-10-27 Added, compatibility with old version
+              (myInputData$Code_ComplexRoof == 0) |         # 2023-10-27 Added, compatibility with old version
+              (myInputData$Code_ComplexRoof == FALSE),      # 2023-10-27 Added, compatibility with old version
             "Standard",
             myInputData$Code_ComplexRoof)
   # Assumption in case of NA input: standard
 
   Data_Calc_EnvArEst$Code_ComplexRoof <-
-    ifelse (Data_Calc_EnvArEst$Code_ComplexRoof * 1 == 1,      # 2023-10-27 Added, compatibility with old version
+    ifelse ((Data_Calc_EnvArEst$Code_ComplexRoof == 1) |     # 2023-10-27 Added, compatibility with old version
+              (Data_Calc_EnvArEst$Code_ComplexRoof == TRUE), # 2023-10-27 Added, compatibility with old version
             "Complex",
             Data_Calc_EnvArEst$Code_ComplexRoof)
 

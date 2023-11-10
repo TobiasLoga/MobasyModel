@@ -216,13 +216,16 @@ Load_Lib_TABULA <- function (
     mySheetName_Lib_TABULA,
     myFileName_Lib_TABULA     = "tabula-values.xlsx",
     mySubDir_Lib_TABULA       = "Input/Lib_TABULA",
-    myAbsolutePath_Lib_TABULA = "") {
+    myAbsolutePath_Lib_TABULA = ""
+    ) {
 
   ## Internal test of the function
-  # mySheetName_Lib_TABULA    <- "Tab.ConstrYearClass"
+  # mySheetName_Lib_TABULA    <- "Tab.System.HG"
+  # # mySheetName_Lib_TABULA    <- "Tab.ConstrYearClass"
   # myFileName_Lib_TABULA     <- "tabula-values.xlsx"
   # mySubDir_Lib_TABULA       <- "Input/Lib_TABULA"
   # myAbsolutePath_Lib_TABULA <- ""
+
 
   # myDataFrameName <- "ParTab_EnvArEst" # Use for test of function
   # myDataFrameName <- "ParTab_SysHD" # Use for test of function
@@ -257,6 +260,7 @@ Load_Lib_TABULA <- function (
   #ncol(temp_header)
   #str(temp_header)
 
+
   ParTab <-
     openxlsx::read.xlsx (
       paste0 (myAbsolutePath_Lib_TABULA,
@@ -286,6 +290,14 @@ Load_Lib_TABULA <- function (
   # Rows with dataset name (first column) not available are removed
 
   rownames (ParTab) <- ParTab [,1]
+
+  ColsFormat <- temp_header [5, ]
+  i_Cols_DateFormat <- which (ColsFormat == "Date")
+
+  for (i_Col in i_Cols_DateFormat) {
+    ParTab [ ,i_Col] <-
+      AuxFunctions::xl_ConvertDate (ParTab [ ,i_Col])
+  }
 
   return (ParTab)
 
@@ -558,12 +570,12 @@ Load_ParameterTables <- function (
     ParTab_EnvArEst           <- tabuladata::par.envareaestim
     # TL: Name geändert Bezeichnung vorher: ParTab_EnvAreaEstim
     ParTab_ConstrYearClass    <- tabuladata::constryearclass
-    ParTab_Infiltration       <- tabuladata::infiltration
+    ParTab_Infiltration       <- tabuladata::const.infiltration
     ParTab_UClassConstr       <- tabuladata::u.class.constr
     ParTab_InsulationDefault  <- tabuladata::insulation.default
     ParTab_MeasurefDefault    <- tabuladata::measure.f.default
     ParTab_WindowTypePeriods  <- tabuladata::u.windowtype.periods
-    ParTab_ThermalBridging    <- tabuladata::thermalbridging
+    ParTab_ThermalBridging    <- tabuladata::const.thermalbridging
     ParTab_BoundaryCond       <- tabuladata::boundarycond
     ParTab_System_HG          <- tabuladata::system.hg
     ParTab_System_HS          <- tabuladata::system.hs
