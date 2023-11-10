@@ -87,16 +87,30 @@ SuSysConf <- function (
 
 
   ## After debugging: Comment this section
-#
-#   myInputData <- Data_Input
-#   myCalcData  <- Data_Calc
+  #
+  # myInputData <- myBuildingDataTables$Data_Input
+  # myCalcData  <- myBuildingDataTables$Data_Calc
+  #
+  # ParTab_BoundaryCond  <- TabulaTables$ParTab_BoundaryCond
+  # ParTab_System_HG<- TabulaTables$ParTab_System_HS
+  # ParTab_System_HS <- TabulaTables$ParTab_System_HS
+  # ParTab_System_HD <- TabulaTables$ParTab_System_HD
+  # ParTab_System_HA <- TabulaTables$ParTab_System_HA
+  # ParTab_System_WG <- TabulaTables$ParTab_System_WG
+  # ParTab_System_WS <- TabulaTables$ParTab_System_WS
+  # ParTab_System_WD <- TabulaTables$ParTab_System_WD
+  # ParTab_System_WA <- TabulaTables$ParTab_System_WA
+  # ParTab_System_H <- TabulaTables$ParTab_System_H
+  # ParTab_System_W <- TabulaTables$ParTab_System_W
+  # ParTab_System_Vent <- TabulaTables$ParTab_System_Vent
+  # ParTab_System_PVPanel <- TabulaTables$ParTab_System_PVPanel
+  # ParTab_System_PV <- TabulaTables$ParTab_System_PV
+  # # ParTab_System_Coverage <- TabulaTables$ParTab_System_Coverage # not used
+  # # ParTab_System_ElProd <- TabulaTables$ParTab_System_ElProd # not used
+  # ParTab_System_SetECAssess <- TabulaTables$ParTab_System_SetECAssess
+  # ParTab_System_EC <- TabulaTables$ParTab_System_EC
+  # ParTab_CalcAdapt <- TabulaTables$ParTab_CalcAdapt
 
-
-  ## Test specific datasets
-  # myInputData    <- Data_Input ["DE.MOBASY.NH.0020.05", ]
-  # myCalcData     <- Data_Calc  ["DE.MOBASY.NH.0020.05", ]
-  # myInputData    <- Data_Input ["DE.MOBASY.WBG.0007.05", ]
-  # myCalcData     <- Data_Calc  ["DE.MOBASY.WBG.0007.05", ]
 
 
   ###################################################################################X
@@ -308,8 +322,8 @@ SuSysConf <- function (
   myCalcData$Indicator_Boiler_OilGas_SysW <-
     AuxFunctions::Reformat_InputData_Boolean (myInputData$Indicator_Boiler_OilGas_SysW)
 
-  # The following input fractions (percentages of heat delivered by this heat generator) do not form part of the monitoring indicators.
-  # They are included to enable parameter studies.
+  # The following input fractions (percentages of heat delivered by this heat generator)
+  # do not form part of the monitoring indicators. They are included to enable parameter studies.
   myCalcData$Fraction_Input_Boiler_OilGas_SysH <-
     as.numeric (myInputData$Fraction_Input_Boiler_OilGas_SysH)
   myCalcData$Fraction_Input_Boiler_OilGas_SysW <-
@@ -1063,9 +1077,9 @@ SuSysConf <- function (
 
   myCalcData$Fraction_Standard_Stove_SysH <-
     0.3 # Default value used if several heat generators are selected
-  myCalcData$Fraction_Stove_SysH <-
+  myCalcData$Fraction_Stove_SysH <-      # 2023-11-10 corrected by supplementing Replace_NA ()
     ifelse (
-      myCalcData$Fraction_Input_SysH_G_Stove > 0,
+      AuxFunctions::Replace_NA (myCalcData$Fraction_Input_SysH_G_Stove, 0) > 0,
       myCalcData$Fraction_Input_SysH_G_Stove,
       myCalcData$Fraction_Standard_Stove_SysH
     )
@@ -1075,7 +1089,9 @@ SuSysConf <- function (
   ## . SysH_G_DirectElectric -----
 
   myCalcData$Indicator_SysH_G_Dec_DirectElectric <-
-    AuxFunctions::Reformat_InputData_Boolean (AuxFunctions::Replace_NA (myInputData$Indicator_SysH_G_Dec_DirectElectric, 0))
+    AuxFunctions::Reformat_InputData_Boolean (
+      AuxFunctions::Replace_NA (myInputData$Indicator_SysH_G_Dec_DirectElectric, 0)
+      )
 
   # The following input fraction (percentages of heat delivered by this heat generator) does not form part of the monitoring indicators.
   # It is included to enable parameter studies.
@@ -1100,9 +1116,9 @@ SuSysConf <- function (
 
   myCalcData$Fraction_Standard_Dec_DirectElectric_SysH <-
     0.2  # Default value used if several heat generators are selected
-  myCalcData$Fraction_Dec_DirectElectric_SysH <-
+  myCalcData$Fraction_Dec_DirectElectric_SysH <-    # 2023-11-10 corrected by supplementing Replace_NA ()
     ifelse (
-      myCalcData$Fraction_Input_SysH_G_Dec_DirectElectric > 0,
+      AuxFunctions::Replace_NA (myCalcData$Fraction_Input_SysH_G_Dec_DirectElectric, 0) > 0,
       myCalcData$Fraction_Input_SysH_G_Dec_DirectElectric,
       myCalcData$Fraction_Standard_Dec_DirectElectric_SysH
     )
