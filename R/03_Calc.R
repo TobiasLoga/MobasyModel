@@ -404,11 +404,11 @@ getData <- function() {
         ParTab_Uncertainty    = tabuladata::uncertainty.levels, # TL: hinzugefügt
 #        n_Dataset = 1 # entfernt, wird nicht mehr benötigt, da dies in den einzelnen
 #        Funktionen ermittelt wird
-        ClimateData_PostCodes = clidamonger::ClimateData_PostCodes,
-        ClimateData_StationTA = clidamonger::ClimateData_StationTA,
-        ClimateData_TA_HD     = clidamonger::ClimateData_TA_HD,
-        ClimateData_Sol       = clidamonger::ClimateData_Sol,
-        ParTab_SolOrientEst   = clidamonger::ParTab_SolOrientEst
+        ClimateData_PostCodes = clidamonger::tab.stationmapping,
+        ClimateData_StationTA = clidamonger::list.station.ta,
+        ClimateData_TA_HD     = clidamonger::data.ta.hd,
+        ClimateData_Sol       = clidamonger::data.sol,
+        ParTab_SolOrientEst   = clidamonger::tab.estim.sol.orient
 
     ))
 
