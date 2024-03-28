@@ -105,16 +105,16 @@ CalcBuilding <- function (
   ## . Calculate and check deviation between manually entered envelope area and estimation -----
 
 
-  myCalcData$A_Input_Roof_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Roof_01, 1)
-  myCalcData$A_Input_Roof_02    <- AuxFunctions::Replace_NA (myInputData$A_Input_Roof_02, 1)
-  myCalcData$A_Input_Wall_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_01, 1)
-  myCalcData$A_Input_Wall_02    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_02, 1)
-  myCalcData$A_Input_Wall_03    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_03, 1)
-  myCalcData$A_Input_Floor_01   <- AuxFunctions::Replace_NA (myInputData$A_Input_Floor_01, 1)
-  myCalcData$A_Input_Floor_02   <- AuxFunctions::Replace_NA (myInputData$A_Input_Floor_02, 1)
-  myCalcData$A_Input_Window_01  <- AuxFunctions::Replace_NA (myInputData$A_Input_Window_01, 1)
-  myCalcData$A_Input_Window_02  <- AuxFunctions::Replace_NA (myInputData$A_Input_Window_02, 1)
-  myCalcData$A_Input_Door_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Door_01, 1)
+  myCalcData$A_Input_Roof_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Roof_01, 0)
+  myCalcData$A_Input_Roof_02    <- AuxFunctions::Replace_NA (myInputData$A_Input_Roof_02, 0)
+  myCalcData$A_Input_Wall_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_01, 0)
+  myCalcData$A_Input_Wall_02    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_02, 0)
+  myCalcData$A_Input_Wall_03    <- AuxFunctions::Replace_NA (myInputData$A_Input_Wall_03, 0)
+  myCalcData$A_Input_Floor_01   <- AuxFunctions::Replace_NA (myInputData$A_Input_Floor_01, 0)
+  myCalcData$A_Input_Floor_02   <- AuxFunctions::Replace_NA (myInputData$A_Input_Floor_02, 0)
+  myCalcData$A_Input_Window_01  <- AuxFunctions::Replace_NA (myInputData$A_Input_Window_01, 0)
+  myCalcData$A_Input_Window_02  <- AuxFunctions::Replace_NA (myInputData$A_Input_Window_02, 0)
+  myCalcData$A_Input_Door_01    <- AuxFunctions::Replace_NA (myInputData$A_Input_Door_01, 0)
 
 
 
@@ -787,7 +787,7 @@ CalcBuilding <- function (
           myCalcData$q_ht - myCalcData$eta_h_gn * (myCalcData$q_sol + myCalcData$q_int)
       ) > 0,
       myCalcData$q_ht - myCalcData$eta_h_gn * (myCalcData$q_sol + myCalcData$q_int),
-
+      NA
       )
   # <LZ13> | energy need for heating | kWh/(m?a) | Real
 
