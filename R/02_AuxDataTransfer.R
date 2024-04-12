@@ -1008,6 +1008,7 @@ Load_BuildingData_Excel <- function (
   ## Constants
 
   n_Row_Header_DataBuilding <- 100
+  i_Row_ColumnFormat <- 98
 
   WorkingDir <- getwd ()
 
@@ -1118,6 +1119,31 @@ Load_BuildingData_Excel <- function (
   BuildingData <- BuildingData [, c(1, i_Col_Selected)]
   #BuildingData <- BuildingData [, c(1, 2, 3, 4, i_Col_Selected)]
   # colnames (BuildingData)
+
+
+
+  ## Convert boolean Excel input
+  #  2024-04-12 supplemented
+  #  Convert from {"1", "0", 1, 0, TRUE, FALSE, NA}
+  #  to {TRUE, FALSE, NA}
+
+  Colnames_Header_VarTypeBoolean <-
+    colnames (
+      Header_DataBuilding [ ,
+        as.integer (which (Header_DataBuilding [i_Row_ColumnFormat, ] == "Boolean"))
+      ]
+    )
+
+  if (sum (Colnames_Header_VarTypeBoolean %in% colnames (BuildingData)) > 0) {
+    BuildingData [ ,Colnames_Header_VarTypeBoolean] <-
+      as.logical (
+        Reformat_InputData_Boolean (
+          BuildingData [ , Colnames_Header_VarTypeBoolean]
+        )
+      )
+  }
+
+
 
   return (
     list (
