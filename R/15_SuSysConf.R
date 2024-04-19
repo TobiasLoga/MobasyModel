@@ -1820,23 +1820,26 @@ SuSysConf <- function (
 
   myCalcData$Index_SysH_G_Stove <-
       ifelse (
-          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) * AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Stove * 1, 0) == 1,
+         (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
+          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Stove * 1, 0)) == 1,
           apply (Index_SysH_G_Combined, 1, max) + 1,
           0
       ) # <AOV11>
   Index_SysH_G_Combined <-  cbind (Index_SysH_G_Combined, myCalcData$Index_SysH_G_Stove)
 
   myCalcData$Index_SysH_G_Dec_DirectElectric <-
-      ifelse (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
-                  AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_DirectElectric * 1, 0) == 1,
+      ifelse (
+         (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
+          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_DirectElectric * 1, 0)) == 1,
           apply (Index_SysH_G_Combined, 1, max) + 1,
           0
       ) # <AOW11>
   Index_SysH_G_Combined <-  cbind (Index_SysH_G_Combined, myCalcData$Index_SysH_G_Dec_DirectElectric)
 
   myCalcData$Index_SysH_G_Dec_ElectricNightStorage <-
-      ifelse (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
-                  AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_ElectricNightStorage * 1, 0) == 1,
+      ifelse (
+         (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
+          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_ElectricNightStorage * 1, 0)) == 1,
           apply (Index_SysH_G_Combined, 1, max) + 1,
           0
       ) # <AOX11>
@@ -1844,7 +1847,8 @@ SuSysConf <- function (
 
   myCalcData$Index_SysH_G_Dec_Heatpump <-
       ifelse (
-          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) * AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_Heatpump * 1, 0) == 1,
+         (AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Decentral * 1, 0) *
+          AuxFunctions::Replace_NA (myCalcData$Indicator_SysH_G_Dec_Heatpump * 1, 0)) == 1,
           apply (Index_SysH_G_Combined, 1, max) + 1,
           0
       ) # <AOY11>
@@ -2975,7 +2979,8 @@ SuSysConf <- function (
 
   myCalcData$Index_SysW_G_Dec_ElectricStorage <-
       ifelse (
-          AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_ElectricStorage * 1, 0) == 1,
+         (AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Decentral * 1, 0) *
+          AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_ElectricStorage * 1, 0)) == 1,
           apply (Index_SysW_G_Combined, 1, max) + 1,
           0
       ) # <AQQ11>
@@ -2983,7 +2988,8 @@ SuSysConf <- function (
 
   myCalcData$Index_SysW_G_Dec_ElectricTankless <-
       ifelse (
-          AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_ElectricTankless * 1, 0) == 1,
+          (AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Decentral * 1, 0) *
+           AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_ElectricTankless * 1, 0)) == 1,
           apply (Index_SysW_G_Combined, 1, max) + 1,
           0
       ) # <AQR11>
@@ -2991,7 +2997,8 @@ SuSysConf <- function (
 
   myCalcData$Index_SysW_G_Dec_GasTankless <-
       ifelse (
-          AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_GasTankless * 1, 0) == 1,
+          (AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Decentral * 1, 0) *
+           AuxFunctions::Replace_NA (myCalcData$Indicator_SysW_G_Dec_GasTankless * 1, 0)) == 1,
           apply (Index_SysW_G_Combined, 1, max) + 1,
           0
       ) # <AQS11>

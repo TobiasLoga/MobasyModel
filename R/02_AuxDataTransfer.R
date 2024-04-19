@@ -1039,8 +1039,12 @@ Load_BuildingData_Excel <- function (
                                       ]
 
   ## Identify input variables (monitoring variables, additional model-input variables, boundary conditions)
-  i_Row_Code_Type_DataFlow <- which (Header_DataBuilding [,1] == "Type_Datafield_WebTool")
-  i_Col_Selected <- which (Header_DataBuilding [i_Row_Code_Type_DataFlow,] == Code_Type_Datafield)
+
+  i_Row_Code_Type_DataFlow <-
+    which (Header_DataBuilding [,1] == "Type_Datafield_WebTool")
+
+  i_Col_Selected <-
+    which (Header_DataBuilding [i_Row_Code_Type_DataFlow,] == Code_Type_Datafield)
   #i_Col_Selected <- which (Header_DataBuilding [i_Row_Code_Type_DataFlow,] == "Input")
   #Header_DataBuilding
 
@@ -1126,6 +1130,8 @@ Load_BuildingData_Excel <- function (
   #  2024-04-12 supplemented
   #  Convert from {"1", "0", 1, 0, TRUE, FALSE, NA}
   #  to {TRUE, FALSE, NA}
+
+  Header_DataBuilding <- Header_DataBuilding [ , colnames (BuildingData)]
 
   Colnames_Header_VarTypeBoolean <-
     colnames (

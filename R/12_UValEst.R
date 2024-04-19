@@ -508,6 +508,9 @@ UValEst <- function (
             gsub ("_", NA,   AuxFunctions::xl_LEFT (Data_Calc_UValEst$Code_NumberPanes_WindowType2, 1))
           )), "-")
       ) # <ER11>
+
+
+
   Data_Calc_UValEst$Code_U_Class_WindowType1_LowE <-
       ifelse (
           AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType1, 0) * 1 == 1,
@@ -515,6 +518,7 @@ UValEst <- function (
           ifelse (
               AuxFunctions::xl_OR (
                   Data_Calc_UValEst$Code_NumberPanes_WindowType1 == "1p",
+                  Data_Calc_UValEst$Code_NumberPanes_WindowType1 == "_NA_",
                   is.na (Data_Calc_UValEst$Indicator_LowE_WindowType1)
               ),
               "-",
@@ -532,6 +536,7 @@ UValEst <- function (
           ifelse (
               AuxFunctions::xl_OR (
                   Data_Calc_UValEst$Code_NumberPanes_WindowType2 == "1p",
+                  Data_Calc_UValEst$Code_NumberPanes_WindowType2 == "_NA_",
                   is.na (Data_Calc_UValEst$Indicator_LowE_WindowType2)
               ),
               "-",
@@ -542,6 +547,45 @@ UValEst <- function (
               )
           )
       ) # <ET11>
+
+
+
+  ## 2024-04-19 query Code_NumberPanes_WindowTypeX == "_NA_" added at the beginning
+  #
+  # Data_Calc_UValEst$Code_U_Class_WindowType1_LowE <-
+  #     ifelse (
+  #         AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType1, 0) * 1 == 1,
+  #         "LowE",
+  #         ifelse (
+  #             AuxFunctions::xl_OR (
+  #                 Data_Calc_UValEst$Code_NumberPanes_WindowType1 == "1p",
+  #                 is.na (Data_Calc_UValEst$Indicator_LowE_WindowType1)
+  #             ),
+  #             "-",
+  #             ifelse (
+  #                 AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_LowE_WindowType1, 0) == 1,
+  #                 "LowE",
+  #                 "NoCoating"
+  #             )
+  #         )
+  #     ) # <ES11>
+  # Data_Calc_UValEst$Code_U_Class_WindowType2_LowE <-
+  #     ifelse (
+  #         AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType2, 0) * 1 == 1,
+  #         "LowE",
+  #         ifelse (
+  #             AuxFunctions::xl_OR (
+  #                 Data_Calc_UValEst$Code_NumberPanes_WindowType2 == "1p",
+  #                 is.na (Data_Calc_UValEst$Indicator_LowE_WindowType2)
+  #             ),
+  #             "-",
+  #             ifelse (
+  #                 AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_LowE_WindowType2, 0) == 1,
+  #                 "LowE",
+  #                 "NoCoating"
+  #             )
+  #         )
+  #     ) # <ET11>
 
   Data_Calc_UValEst$Code_U_Class_WindowType1_GasFilling <- "-" # <EU11>
   Data_Calc_UValEst$Code_U_Class_WindowType2_GasFilling <- "-" # <EV11>
@@ -1158,75 +1202,170 @@ UValEst <- function (
   ## . Insulation thickness of measures -----
 
   Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1 <-
-      ifelse (
-        AuxFunctions::Replace_NA (
-          Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input,
-          0
-        ) !=0,
-        Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input / 100,
-        ifelse (
-          AuxFunctions::xl_OR (
-            Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Refurbish",
-            Data_Calc_UValEst$Code_InsulationType_Roof_Input == "_NA_"
-          ),
-          Data_Calc_UValEst$d_Insulation_Roof_Default,
-          0
-        )
-    ) # <HQ11>
+    ifelse (Data_Calc_UValEst$Code_InsulationType_Roof_Input == "None",
+            0,
+            ifelse (
+              AuxFunctions::Replace_NA (
+                Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input,
+                0
+              ) !=0,
+              Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input / 100,
+              ifelse (
+                AuxFunctions::xl_OR (
+                  Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Refurbish",
+                  Data_Calc_UValEst$Code_InsulationType_Roof_Input == "_NA_"
+                ),
+                Data_Calc_UValEst$d_Insulation_Roof_Default,
+                0
+              )
+            )
+          ) # <HQ11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2 <-
-    ifelse (
-      AuxFunctions::Replace_NA (
-        Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input,
-        0
-      ) !=0,
-      Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input / 100,
-      ifelse (
-        AuxFunctions::xl_OR (
-          Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Refurbish",
-          Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "_NA_"
-        ),
-        Data_Calc_UValEst$d_Insulation_Ceiling_Default,
-        0
-      )
-    ) # <HR11>
+    ifelse (Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "None",
+            0,
+            ifelse (
+              AuxFunctions::Replace_NA (
+                Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input,
+                0
+              ) !=0,
+              Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input / 100,
+              ifelse (
+                AuxFunctions::xl_OR (
+                  Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Refurbish",
+                  Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "_NA_"
+                ),
+                Data_Calc_UValEst$d_Insulation_Ceiling_Default,
+                0
+              )
+            )
+          )# <HR11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1 <-
-    ifelse (
-      AuxFunctions::Replace_NA (
-        Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input,
-        0
-      ) != 0,
-      Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input / 100,
-      ifelse (
-        AuxFunctions::xl_OR (
-          Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Refurbish",
-          Data_Calc_UValEst$Code_InsulationType_Wall_Input == "_NA_"
-        ),
-        Data_Calc_UValEst$d_Insulation_Wall_Default,
-        0
-      )
-    ) # <HS11>
+    ifelse (Data_Calc_UValEst$Code_InsulationType_Wall_Input == "None",
+            0,
+            ifelse (
+              AuxFunctions::Replace_NA (
+                Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input,
+                0
+              ) != 0,
+              Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input / 100,
+              ifelse (
+                AuxFunctions::xl_OR (
+                  Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Refurbish",
+                  Data_Calc_UValEst$Code_InsulationType_Wall_Input == "_NA_"
+                ),
+                Data_Calc_UValEst$d_Insulation_Wall_Default,
+                0
+              )
+            )
+          ) # <HS11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_2 <-
     Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1 # <HT11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_3 <-
     Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_2 # <HU11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1 <-
-    ifelse (
-      AuxFunctions::Replace_NA (
-        Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input,
-        0
-      ) != 0,
-      Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input / 100,
-      ifelse (
-        AuxFunctions::xl_OR (
-          Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Refurbish",
-          Data_Calc_UValEst$Code_InsulationType_Floor_Input == "_NA_"
-        ),
-        Data_Calc_UValEst$d_Insulation_Floor_Default,
-        0
-      )
-    ) # <HV11>
+    ifelse (Data_Calc_UValEst$Code_InsulationType_Floor_Input == "None",
+            0,
+            ifelse (
+              AuxFunctions::Replace_NA (
+                Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input,
+                0
+              ) != 0,
+              Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input / 100,
+              ifelse (
+                AuxFunctions::xl_OR (
+                  Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Refurbish",
+                  Data_Calc_UValEst$Code_InsulationType_Floor_Input == "_NA_"
+                ),
+                Data_Calc_UValEst$d_Insulation_Floor_Default,
+                0
+              )
+            )
+          ) # <HV11>
+
   Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_2 <-
     Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1 # <HW11>
+
+
+
+  # 2024-04-19 Above script changed to set d_insulation always to 0 if insulation type == "None"
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input,
+  #       0
+  #     ) !=0,
+  #     Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input / 100,
+  #     ifelse (
+  #       AuxFunctions::xl_OR (
+  #         Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Refurbish",
+  #         Data_Calc_UValEst$Code_InsulationType_Roof_Input == "_NA_"
+  #       ),
+  #       Data_Calc_UValEst$d_Insulation_Roof_Default,
+  #       0
+  #     )
+  #   ) # <HQ11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input,
+  #       0
+  #     ) !=0,
+  #     Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input / 100,
+  #     ifelse (
+  #       AuxFunctions::xl_OR (
+  #         Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Refurbish",
+  #         Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "_NA_"
+  #       ),
+  #       Data_Calc_UValEst$d_Insulation_Ceiling_Default,
+  #       0
+  #     )
+  #   ) # <HR11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input,
+  #       0
+  #     ) != 0,
+  #     Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input / 100,
+  #     ifelse (
+  #       AuxFunctions::xl_OR (
+  #         Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Refurbish",
+  #         Data_Calc_UValEst$Code_InsulationType_Wall_Input == "_NA_"
+  #       ),
+  #       Data_Calc_UValEst$d_Insulation_Wall_Default,
+  #       0
+  #     )
+  #   ) # <HS11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_2 <-
+  #   Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1 # <HT11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_3 <-
+  #   Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_2 # <HU11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input,
+  #       0
+  #     ) != 0,
+  #     Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input / 100,
+  #     ifelse (
+  #       AuxFunctions::xl_OR (
+  #         Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Refurbish",
+  #         Data_Calc_UValEst$Code_InsulationType_Floor_Input == "_NA_"
+  #       ),
+  #       Data_Calc_UValEst$d_Insulation_Floor_Default,
+  #       0
+  #     )
+  #   ) # <HV11>
+  # Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_2 <-
+  #   Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1 # <HW11>
+  #
+
+
 
   # 2023-09-29 Above Script changed to interprete 0 as NA in specific cases
   # because NA input is not yet possible in the webtool.
@@ -1300,14 +1439,14 @@ UValEst <- function (
       ) == "Manual",
       0,
       ifelse (
+        Data_Calc_UValEst$Code_InsulationType_Roof_Input == "None",
+        0,
+        ifelse (
         AuxFunctions::Replace_NA (
           Data_Calc_UValEst$f_Measure_Roof_1_Input,
           0
         ) != 0,
         Data_Calc_UValEst$f_Measure_Roof_1_Input * 1,
-        ifelse (
-          Data_Calc_UValEst$Code_InsulationType_Roof_Input == "None",
-          0,
           ifelse (
             Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Refurbish",
             Data_Calc_UValEst$f_Insulation_Roof_Default_Refurbish,
@@ -1339,14 +1478,14 @@ UValEst <- function (
       ) == "Manual",
       0,
       ifelse (
+        Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "None",
+        0,
+        ifelse (
         AuxFunctions::Replace_NA (
           Data_Calc_UValEst$f_Measure_Roof_2_Input,
           0
         ) != 0,
         Data_Calc_UValEst$f_Measure_Roof_2_Input * 1,
-        ifelse (
-          Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "None",
-          0,
           ifelse (
             Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Refurbish",
             Data_Calc_UValEst$f_Insulation_Ceiling_Default_Refurbish,
@@ -1378,14 +1517,14 @@ UValEst <- function (
       ) == "Manual",
       0,
       ifelse (
+        Data_Calc_UValEst$Code_InsulationType_Wall_Input == "None",
+        0,
+        ifelse (
         AuxFunctions::Replace_NA (
           Data_Calc_UValEst$f_Measure_Wall_1_Input,
           0
         ) != 0,
         Data_Calc_UValEst$f_Measure_Wall_1_Input * 1,
-        ifelse (
-          Data_Calc_UValEst$Code_InsulationType_Wall_Input == "None",
-          0,
           ifelse (
             Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Refurbish",
             Data_Calc_UValEst$f_Insulation_Wall_Default_Refurbish,
@@ -1421,14 +1560,14 @@ UValEst <- function (
       ) == "Manual",
       0,
       ifelse (
+        Data_Calc_UValEst$Code_InsulationType_Floor_Input == "None",
+        0,
+        ifelse (
         AuxFunctions::Replace_NA (
           Data_Calc_UValEst$f_Measure_Floor_1_Input,
           0
         ) != 0,
         Data_Calc_UValEst$f_Measure_Floor_1_Input * 1,
-        ifelse (
-          Data_Calc_UValEst$Code_InsulationType_Floor_Input == "None",
-          0,
           ifelse (
             Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Refurbish",
             Data_Calc_UValEst$f_Insulation_Floor_Default_Refurbish,
@@ -1453,6 +1592,178 @@ UValEst <- function (
     ) # <IC13>
 
   Data_Calc_UValEst$f_Measure_Floor_2 <- Data_Calc_UValEst$f_Measure_Floor_1 # <ID13>
+
+
+  # 2024-04-19 Above script changed to set f_insulation always to 0 if insulation type == "None"
+  # Data_Calc_UValEst$f_Measure_Roof_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$Code_TypeInput_Envelope_ThermalTransmittance,
+  #       "_NA_"
+  #     ) == "Manual",
+  #     0,
+  #     ifelse (
+  #       AuxFunctions::Replace_NA (
+  #         Data_Calc_UValEst$f_Measure_Roof_1_Input,
+  #         0
+  #       ) != 0,
+  #       Data_Calc_UValEst$f_Measure_Roof_1_Input * 1,
+  #       ifelse (
+  #         Data_Calc_UValEst$Code_InsulationType_Roof_Input == "None",
+  #         0,
+  #         ifelse (
+  #           Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Refurbish",
+  #           Data_Calc_UValEst$f_Insulation_Roof_Default_Refurbish,
+  #           ifelse (
+  #             Data_Calc_UValEst$Code_InsulationType_Roof_Input == "Original",
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input, 0) / 100 >
+  #                 0.01,
+  #               1,
+  #               0
+  #             ),
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_1_Input, 0) / 100 >
+  #                 0.01,
+  #               Data_Calc_UValEst$f_Insulation_Roof_Default_Refurbish,
+  #               Data_Calc_UValEst$f_Insulation_Roof_Default_NA
+  #             )
+  #           )
+  #         )
+  #       )
+  #     )
+  #   ) # <HX13>
+  #
+  # Data_Calc_UValEst$f_Measure_Roof_2 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$Code_TypeInput_Envelope_ThermalTransmittance,
+  #       "_NA_"
+  #     ) == "Manual",
+  #     0,
+  #     ifelse (
+  #       AuxFunctions::Replace_NA (
+  #         Data_Calc_UValEst$f_Measure_Roof_2_Input,
+  #         0
+  #       ) != 0,
+  #       Data_Calc_UValEst$f_Measure_Roof_2_Input * 1,
+  #       ifelse (
+  #         Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "None",
+  #         0,
+  #         ifelse (
+  #           Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Refurbish",
+  #           Data_Calc_UValEst$f_Insulation_Ceiling_Default_Refurbish,
+  #           ifelse (
+  #             Data_Calc_UValEst$Code_InsulationType_Ceiling_Input == "Original",
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input, 0) / 100 >
+  #                 0.01,
+  #               1,
+  #               0
+  #             ),
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Roof_2_Input, 0) / 100 >
+  #                 0.01,
+  #               Data_Calc_UValEst$f_Insulation_Ceiling_Default_Refurbish,
+  #               Data_Calc_UValEst$f_Insulation_Ceiling_Default_NA
+  #             )
+  #           )
+  #         )
+  #       )
+  #     )
+  #   ) # <HY13>
+  #
+  # Data_Calc_UValEst$f_Measure_Wall_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$Code_TypeInput_Envelope_ThermalTransmittance,
+  #       "_NA_"
+  #     ) == "Manual",
+  #     0,
+  #     ifelse (
+  #       AuxFunctions::Replace_NA (
+  #         Data_Calc_UValEst$f_Measure_Wall_1_Input,
+  #         0
+  #       ) != 0,
+  #       Data_Calc_UValEst$f_Measure_Wall_1_Input * 1,
+  #       ifelse (
+  #         Data_Calc_UValEst$Code_InsulationType_Wall_Input == "None",
+  #         0,
+  #         ifelse (
+  #           Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Refurbish",
+  #           Data_Calc_UValEst$f_Insulation_Wall_Default_Refurbish,
+  #           ifelse (
+  #             Data_Calc_UValEst$Code_InsulationType_Wall_Input == "Original",
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input, 0) / 100 >
+  #                 0.01,
+  #               1,
+  #               0
+  #             ),
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Wall_1_Input, 0) / 100 >
+  #                 0.01,
+  #               Data_Calc_UValEst$f_Insulation_Wall_Default_Refurbish,
+  #               Data_Calc_UValEst$f_Insulation_Wall_Default_NA
+  #             )
+  #           )
+  #         )
+  #       )
+  #     )
+  #   ) # <HZ13>
+  #
+  # Data_Calc_UValEst$f_Measure_Wall_2 <- Data_Calc_UValEst$f_Measure_Wall_1 # <IA13>
+  #
+  # Data_Calc_UValEst$f_Measure_Wall_3 <- Data_Calc_UValEst$f_Measure_Wall_2 # <IB13>
+  #
+  # Data_Calc_UValEst$f_Measure_Floor_1 <-
+  #   ifelse (
+  #     AuxFunctions::Replace_NA (
+  #       Data_Calc_UValEst$Code_TypeInput_Envelope_ThermalTransmittance,
+  #       "_NA_"
+  #     ) == "Manual",
+  #     0,
+  #     ifelse (
+  #       AuxFunctions::Replace_NA (
+  #         Data_Calc_UValEst$f_Measure_Floor_1_Input,
+  #         0
+  #       ) != 0,
+  #       Data_Calc_UValEst$f_Measure_Floor_1_Input * 1,
+  #       ifelse (
+  #         Data_Calc_UValEst$Code_InsulationType_Floor_Input == "None",
+  #         0,
+  #         ifelse (
+  #           Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Refurbish",
+  #           Data_Calc_UValEst$f_Insulation_Floor_Default_Refurbish,
+  #           ifelse (
+  #             Data_Calc_UValEst$Code_InsulationType_Floor_Input == "Original",
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input, 0) / 100 >
+  #                 0.01,
+  #               1,
+  #               0
+  #             ),
+  #             ifelse (
+  #               AuxFunctions::Replace_NA (Data_Calc_UValEst$d_Insulation_Input_Measure_Floor_1_Input, 0) / 100 >
+  #                 0.01,
+  #               Data_Calc_UValEst$f_Insulation_Floor_Default_Refurbish,
+  #               Data_Calc_UValEst$f_Insulation_Floor_Default_NA
+  #             )
+  #           )
+  #         )
+  #       )
+  #     )
+  #   ) # <IC13>
+  #
+  # Data_Calc_UValEst$f_Measure_Floor_2 <- Data_Calc_UValEst$f_Measure_Floor_1 # <ID13>
+
+
+
+
+
+
+
+
 
   # 2023-09-29 Above Script changed to interprete 0 as NA in specific cases
   # because NA input is not yet possible in the webtool.
