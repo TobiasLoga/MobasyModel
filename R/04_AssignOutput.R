@@ -129,7 +129,10 @@ AssignOutput <- function (
   myDataOut$Date_Model1_Change                                                     <-
           AuxFunctions::Replace_NULL (myDataCalc$Date_Model1_Change, NA)
   myDataOut$A_Model1_C_Ref                                                         <-
-          round (AuxFunctions::Replace_NULL (myDataCalc$A_Calc_C_Ref, NA), digits = 1)
+    round (AuxFunctions::Replace_NULL (myDataCalc$A_C_Ref, NA), digits = 1)
+  ## 2024-04-26 - incorrect variable, corrected see above
+  # myDataOut$A_Model1_C_Ref                                                         <-
+  #         round (AuxFunctions::Replace_NULL (myDataCalc$A_Calc_C_Ref, NA), digits = 1)
   myDataOut$A_Model1_C_Living                                                      <-
           round (AuxFunctions::Replace_NULL (myDataCalc$A_Calc_C_Living, NA), digits = 1)
   myDataOut$A_Model1_C_National                                                    <-
@@ -820,6 +823,248 @@ AssignOutput <- function (
 
 
 # . ----------------------------------------------------------------------------------
+
+
+
+# . ----------------------------------------------------------------------------------
+
+
+#####################################################################################X
+## FUNCTION "ProvideChartData ()" -----
+#####################################################################################X
+
+
+ProvideChartData <- function (
+    myDataOut,
+    myDataCalc
+)
+
+{
+
+  cat ("ProvideChartData ()", fill = TRUE)
+
+  ###################################################################################X
+  # A  DESCRIPTIOM  -----
+  ###################################################################################X
+
+
+  ###################################################################################X
+  # B  DEBUGGUNG - Assign input for debugging of function  -----
+  ###################################################################################X
+  ## After debugging: Comment this section
+
+
+  # myDataOut   <- myOutputTables$Data_Output
+  # myDataCalc  <- myOutputTables$Data_Calc
+  #
+
+
+
+  ###################################################################################X
+  # C  FUNCTION SCRIPT   -----
+  ###################################################################################X
+
+
+  ###################################################################################X
+  ## 1  Initialisation   -----
+
+  DF_HeatNeed_Data        <- NA
+  DF_HeatNeed_Labels      <- NA
+  DF_HeatNeed_Settings    <- NA
+
+  DF_FinalEnergy_Data     <- NA
+  DF_FinalEnergy_Labels   <- NA
+  DF_FinalEnergy_Settings <- NA
+
+
+  ###################################################################################X
+  ## 2  Prepare data for heat need chart / energy balance of building envelope   -----
+
+  ## Transmission losses
+
+  # DF_A_Elements  <-
+  #   data.frame (
+  #     myDataOut [ ,
+  #       c(
+  #         "A_Model1_Roof_01",
+  #         "A_Model1_Roof_02",
+  #         "A_Model1_Wall_01",
+  #         "A_Model1_Wall_02",
+  #         "A_Model1_Wall_03",
+  #         "A_Model1_Floor_01",
+  #         "A_Model1_Floor_02",
+  #         "A_Model1_Window_01",
+  #         "A_Model1_Window_02",
+  #         "A_Model1_Door_01"
+  #       )
+  #     ]
+  # )
+  #
+  # DF_U_Elements <-
+  #   myDataOut [ ,
+  #       c(
+  #         "U_Model1_Roof_01",
+  #         "U_Model1_Roof_02",
+  #         "U_Model1_Wall_01",
+  #         "U_Model1_Wall_02",
+  #         "U_Model1_Wall_03",
+  #         "U_Model1_Floor_01",
+  #         "U_Model1_Floor_02",
+  #         "U_Model1_Window_01",
+  #         "U_Model1_Window_02",
+  #         "U_Model1_Door_01"
+  #       )
+  #     ]
+  #
+  # H_Transmission_Sum_Elements <-
+  #    apply (DF_A_Elements * DF_U_Elements * c(1,1,1,0.5,0.5,0.5,0.5,1,1,1), 1, sum)
+  #
+  # A_Envelope <-
+  #   apply (DF_A_Elements, 1, sum)
+  #
+  #
+  # h_tr <-
+  #   (H_Transmission_Sum_Elements +
+  #   A_Envelope * myDataOut$delta_U_Model1_ThermalBridging) /
+  #   myDataOut$A_Model1_C_Ref
+  #
+  # H_Transmission_Sum_Elements / myDataOut$A_Model1_C_Ref
+  #
+  # myDataOut$h_Model1_ht_tr
+
+
+
+
+
+
+
+  ## Multiplier
+
+  f_HeatNeed_Total <- 1.0
+
+
+  ## Energy balance
+
+  DF_HeatNeed_Data <- data.frame (rownames (myDataOut))
+  colnames (DF_HeatNeed_Data) <- "ID_Dataset"
+  rownames (DF_HeatNeed_Data) <- DF_HeatNeed_Data$ID_Dataset
+
+  DF_HeatNeed_Data$q_h_nd_net      <- f_HeatNeed_Total * myDataOut$q_Model1_h_nd_net
+
+  DF_HeatNeed_Data$q_ve_recovered  <-
+    f_HeatNeed_Total *
+    (myDataOut$q_Model1_h_nd - myDataOut$q_Model1_h_nd_net)
+
+  DF_HeatNeed_Data$q_sol           <- f_HeatNeed_Total * myDataOut$q_Model1_sol
+  DF_HeatNeed_Data$q_int           <- f_HeatNeed_Total * myDataOut$q_Model1_int
+
+  DF_HeatNeed_Data$q_tr_roof       <-
+    f_HeatNeed_Total *
+    myDataCalc$H_Transmission_Roof_01 /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+  DF_HeatNeed_Data$q_tr_ceiling    <-
+    f_HeatNeed_Total *
+    myDataCalc$H_Transmission_Roof_02 /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+  DF_HeatNeed_Data$q_tr_walls       <-
+    f_HeatNeed_Total * (
+      myDataCalc$H_Transmission_Wall_01 +
+      myDataCalc$H_Transmission_Wall_02 +
+      myDataCalc$H_Transmission_Wall_03
+    ) /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+
+  DF_HeatNeed_Data$q_tr_windows     <-
+    f_HeatNeed_Total * (
+      myDataCalc$H_Transmission_Window_01 +
+      myDataCalc$H_Transmission_Window_02 +
+      myDataCalc$H_Transmission_Door_01
+    ) /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+  DF_HeatNeed_Data$q_tr_floor       <-
+    f_HeatNeed_Total * (
+      myDataCalc$H_Transmission_Floor_01 +
+        myDataCalc$H_Transmission_Floor_02
+    ) /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+
+  DF_HeatNeed_Data$q_tr_thermalbridging <-
+    f_HeatNeed_Total *
+    myDataCalc$H_Transmission_ThermalBridging /
+    (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
+    myDataOut$q_Model1_ht_tr
+
+
+  DF_HeatNeed_Data$q_ve <-
+    f_HeatNeed_Total * myDataOut$q_Model1_ht_ve
+
+  # # Check gains and losses, should be equal
+  # apply (DF_HeatNeed_Data [ ,2:5], 1, sum)
+  # apply (DF_HeatNeed_Data [ ,6:12], 1, sum)
+
+
+  DF_HeatNeed_Labels   <- "Test"
+  DF_HeatNeed_Settings <- "Test"
+
+
+
+  List_Chart_HeatNeed <-
+    list (
+      DF_HeatNeed_Data     = DF_HeatNeed_Data,
+      DF_HeatNeed_Labels   = DF_HeatNeed_Labels,
+      DF_HeatNeed_Settings = DF_HeatNeed_Settings
+    )
+
+
+  DF_FinalEnergy_Data  <- "Test"
+  DF_HeatNeed_Labels   <- "Test"
+  DF_HeatNeed_Settings <- "Test"
+
+
+
+  List_Chart_FinalEnergy <-
+    list (
+      DF_FinalEnergy_Data     = DF_FinalEnergy_Data,
+      DF_FinalEnergy_Labels   = DF_FinalEnergy_Labels,
+      DF_FinalEnergy_Settings = DF_FinalEnergy_Settings
+    )
+
+
+
+  ###################################################################################X
+  ## 3  Output   -----
+
+
+  myChartData <-
+    list (
+      List_Chart_HeatNeed = List_Chart_HeatNeed,
+      List_Chart_FinalEnergy = List_Chart_FinalEnergy
+    )
+
+  return (myChartData)
+
+
+} # End of function ProvideChartData ()
+
+
+## End of the function ProvideChartData () -----
+#####################################################################################X
+
+
+# . ----------------------------------------------------------------------------------
+
+
+
 
 
 
