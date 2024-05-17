@@ -1,5 +1,5 @@
-library(data.table)
-library(dplyr)
+#library(data.table)
+#library(dplyr)
 
 #' @export
 calc <- function (
@@ -306,11 +306,22 @@ calc <- function (
         # output <- assignOutput(temp, data_calc)
         #
 
+
+        # 2024-04-26 Funktion for chart data output supplemented
+        List_ChartData <-
+          ProvideChartData (output, data_calc)
+        # List_ChartData$List_Chart_HeatNeed
+        # List_ChartData$List_Chart_FinalEnergy
+
+
         return (
           list (
             Data_Output = output,
-            Data_Calc   = data_calc)
-        )
+            Data_Calc   = data_calc,
+            List_Chart_HeatNeed    = List_ChartData$List_Chart_HeatNeed,
+            List_Chart_FinalEnergy = List_ChartData$List_Chart_FinalEnergy
+          )
+          )
         # TL: Musste ich ändern, um Zwischenergebnisse für die Überprüfung einsehen zu können
         # vorher:
         # return (output)
