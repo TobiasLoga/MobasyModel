@@ -1026,7 +1026,53 @@ ProvideChartData <- function (
     )
 
 
-  DF_FinalEnergy_Data  <- "Test"
+
+
+
+  ###################################################################################X
+  ## 3  Prepare data for final energy chart    -----
+
+
+
+  ## Multiplier
+
+  f_FinalEnergy_Total <- 1.0
+
+  myVariableNames_FinalEnergy <- c (
+    "q_Model1_del_h_sum_gas",
+    "q_Model1_del_h_sum_oil",
+    "q_Model1_del_h_sum_coal",
+    "q_Model1_del_h_sum_bio",
+    "q_Model1_del_h_sum_el",
+    "q_Model1_del_h_sum_dh",
+    "q_Model1_del_h_sum_other",
+    "q_Model1_prod_h_sum_el",
+    "q_Model1_del_w_sum_gas",
+    "q_Model1_del_w_sum_oil",
+    "q_Model1_del_w_sum_coal",
+    "q_Model1_del_w_sum_bio",
+    "q_Model1_del_w_sum_el",
+    "q_Model1_del_w_sum_dh",
+    "q_Model1_del_w_sum_other",
+    "q_Model1_prod_w_sum_el",
+    "q_Model1_del_sum_gas",
+    "q_Model1_del_sum_oil",
+    "q_Model1_del_sum_coal",
+    "q_Model1_del_sum_bio",
+    "q_Model1_del_sum_el",
+    "q_Model1_del_sum_dh",
+    "q_Model1_del_sum_other",
+    "q_Model1_prod_sum_el"
+  )
+
+  DF_FinalEnergy_Data <- data.frame (
+    myDataOut [ , c ("ID_Dataset", myVariableNames_FinalEnergy)]
+    )
+
+  DF_FinalEnergy_Data [ , myVariableNames_FinalEnergy] <-
+    f_FinalEnergy_Total *
+    DF_FinalEnergy_Data [ , myVariableNames_FinalEnergy]
+
   DF_HeatNeed_Labels   <- "Test"
   DF_HeatNeed_Settings <- "Test"
 
@@ -1042,12 +1088,12 @@ ProvideChartData <- function (
 
 
   ###################################################################################X
-  ## 3  Output   -----
+  ## 4  Output   -----
 
 
   myChartData <-
     list (
-      List_Chart_HeatNeed = List_Chart_HeatNeed,
+      List_Chart_HeatNeed    = List_Chart_HeatNeed,
       List_Chart_FinalEnergy = List_Chart_FinalEnergy
     )
 

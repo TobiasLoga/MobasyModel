@@ -20,6 +20,15 @@
 # library (AuxFunctions)
 # library (CliDaMon)
 
+# renv::init()
+# renv::status()
+# renv::snapshot()
+#
+# renv::install (packages = "IWUGERMANY/tabuladata")
+# renv::install (packages = "TobiasLoga/MobasyBuildingData")
+# renv::install (packages = "TobiasLoga/AuxFunctions")
+# devtools::install_github ("TobiasLoga/CliDaMon")
+# renv::snapshot()
 
 
 
