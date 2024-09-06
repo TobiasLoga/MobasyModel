@@ -308,7 +308,7 @@ calc <- function (
 
 
         # 2024-04-26 Funktion for chart data output supplemented
-        List_ChartData <-
+        DF_Display_Energy <-
           ProvideChartData (output, data_calc)
         # List_ChartData$List_Chart_HeatNeed
         # List_ChartData$List_Chart_FinalEnergy
@@ -318,7 +318,7 @@ calc <- function (
           list (
             Data_Output    = output,
             Data_Calc      = data_calc,
-            List_ChartData = List_ChartData
+            DF_Display_Energy = DF_Display_Energy
           )
           )
         # TL: Musste ich ändern, um Zwischenergebnisse für die Überprüfung einsehen zu können
