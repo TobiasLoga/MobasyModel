@@ -316,10 +316,9 @@ calc <- function (
 
         return (
           list (
-            Data_Output = output,
-            Data_Calc   = data_calc,
-            List_Chart_HeatNeed    = List_ChartData$List_Chart_HeatNeed,
-            List_Chart_FinalEnergy = List_ChartData$List_Chart_FinalEnergy
+            Data_Output    = output,
+            Data_Calc      = data_calc,
+            List_ChartData = List_ChartData
           )
           )
         # TL: Musste ich ändern, um Zwischenergebnisse für die Überprüfung einsehen zu können

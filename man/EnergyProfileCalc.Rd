@@ -4,7 +4,11 @@
 \alias{EnergyProfileCalc}
 \title{Perform Energy Profile calculation - use state indicators to estimate the input data of a physical model and calculate the energy demand for heating and DHW}
 \usage{
-EnergyProfileCalc(TabulaTables, myBuildingDataTables)
+EnergyProfileCalc(
+  TabulaTables,
+  myBuildingDataTables,
+  Indicator_Include_UncertaintyAssessment = 0
+)
 }
 \arguments{
 \item{TabulaTables}{a list of dataframes with parameters used for the calculation}

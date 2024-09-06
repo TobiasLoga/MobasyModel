@@ -92,7 +92,8 @@
 #' @export
 EnergyProfileCalc <- function (
     TabulaTables,
-    myBuildingDataTables
+    myBuildingDataTables,
+    Indicator_Include_UncertaintyAssessment = 0
     ) {
 
   myOutputTables <-
@@ -135,7 +136,7 @@ EnergyProfileCalc <- function (
       ClimateData_Sol           = NA,
       ParTab_SolOrientEst       = NA,
       Indicator_Include_ClimateStationValues  = 0,
-      Indicator_Include_UncertaintyAssessment = 0,
+      Indicator_Include_UncertaintyAssessment = Indicator_Include_UncertaintyAssessment,
       Indicator_Include_CalcMeterComparison   = 0
     )
 

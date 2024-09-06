@@ -853,6 +853,7 @@ ProvideChartData <- function (
   ###################################################################################X
   ## After debugging: Comment this section
 
+  # myDataOut   <- Data_Output
 
   # myDataOut   <- myOutputTables$Data_Output
   # myDataCalc  <- myOutputTables$Data_Calc
@@ -868,13 +869,7 @@ ProvideChartData <- function (
   ###################################################################################X
   ## 1  Initialisation   -----
 
-  DF_HeatNeed_Data        <- NA
-  DF_HeatNeed_Labels      <- NA
-  DF_HeatNeed_Settings    <- NA
-
-  DF_FinalEnergy_Data     <- NA
-  DF_FinalEnergy_Labels   <- NA
-  DF_FinalEnergy_Settings <- NA
+  DF_Display_Energy        <- NA
 
 
   ###################################################################################X
@@ -940,38 +935,40 @@ ProvideChartData <- function (
 
   ## Multiplier
 
-  f_HeatNeed_Total <- 1.0
+  f_Energy_Display <- 1.0
 
 
   ## Energy balance
 
-  DF_HeatNeed_Data <- data.frame (rownames (myDataOut))
-  colnames (DF_HeatNeed_Data) <- "ID_Dataset"
-  rownames (DF_HeatNeed_Data) <- DF_HeatNeed_Data$ID_Dataset
+  DF_Display_Energy <- data.frame (rownames (myDataOut))
+  colnames (DF_Display_Energy) <- "ID_Dataset"
+  rownames (DF_Display_Energy) <- DF_Display_Energy$ID_Dataset
 
-  DF_HeatNeed_Data$q_h_nd_net      <- f_HeatNeed_Total * myDataOut$q_Model1_h_nd_net
+  DF_Display_Energy$q_h_nd_net  <- f_Energy_Display * myDataOut$q_Model1_h_nd_net
 
-  DF_HeatNeed_Data$q_ve_recovered  <-
-    f_HeatNeed_Total *
+  DF_Display_Energy$q_h_nd      <- f_Energy_Display * myDataOut$q_Model1_h_nd
+
+  DF_Display_Energy$q_ve_recovered  <-
+    f_Energy_Display *
     (myDataOut$q_Model1_h_nd - myDataOut$q_Model1_h_nd_net)
 
-  DF_HeatNeed_Data$q_sol           <- f_HeatNeed_Total * myDataOut$q_Model1_sol
-  DF_HeatNeed_Data$q_int           <- f_HeatNeed_Total * myDataOut$q_Model1_int
+  DF_Display_Energy$q_sol           <- f_Energy_Display * myDataOut$q_Model1_sol
+  DF_Display_Energy$q_int           <- f_Energy_Display * myDataOut$q_Model1_int
 
-  DF_HeatNeed_Data$q_tr_roof       <-
-    f_HeatNeed_Total *
+  DF_Display_Energy$q_tr_roof       <-
+    f_Energy_Display *
     myDataCalc$H_Transmission_Roof_01 /
     (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
     myDataOut$q_Model1_ht_tr
 
-  DF_HeatNeed_Data$q_tr_ceiling    <-
-    f_HeatNeed_Total *
+  DF_Display_Energy$q_tr_ceiling    <-
+    f_Energy_Display *
     myDataCalc$H_Transmission_Roof_02 /
     (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
     myDataOut$q_Model1_ht_tr
 
-  DF_HeatNeed_Data$q_tr_walls       <-
-    f_HeatNeed_Total * (
+  DF_Display_Energy$q_tr_walls       <-
+    f_Energy_Display * (
       myDataCalc$H_Transmission_Wall_01 +
       myDataCalc$H_Transmission_Wall_02 +
       myDataCalc$H_Transmission_Wall_03
@@ -980,8 +977,8 @@ ProvideChartData <- function (
     myDataOut$q_Model1_ht_tr
 
 
-  DF_HeatNeed_Data$q_tr_windows     <-
-    f_HeatNeed_Total * (
+  DF_Display_Energy$q_tr_windows     <-
+    f_Energy_Display * (
       myDataCalc$H_Transmission_Window_01 +
       myDataCalc$H_Transmission_Window_02 +
       myDataCalc$H_Transmission_Door_01
@@ -989,8 +986,8 @@ ProvideChartData <- function (
     (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
     myDataOut$q_Model1_ht_tr
 
-  DF_HeatNeed_Data$q_tr_floor       <-
-    f_HeatNeed_Total * (
+  DF_Display_Energy$q_tr_floor       <-
+    f_Energy_Display * (
       myDataCalc$H_Transmission_Floor_01 +
         myDataCalc$H_Transmission_Floor_02
     ) /
@@ -998,33 +995,76 @@ ProvideChartData <- function (
     myDataOut$q_Model1_ht_tr
 
 
-  DF_HeatNeed_Data$q_tr_thermalbridging <-
-    f_HeatNeed_Total *
+  DF_Display_Energy$q_tr_thermalbridging <-
+    f_Energy_Display *
     myDataCalc$H_Transmission_ThermalBridging /
     (myDataCalc$h_Transmission * myDataOut$A_Model1_C_Ref) *
     myDataOut$q_Model1_ht_tr
 
 
-  DF_HeatNeed_Data$q_ve <-
-    f_HeatNeed_Total * myDataOut$q_Model1_ht_ve
+  DF_Display_Energy$q_ve <-
+    f_Energy_Display * myDataOut$q_Model1_ht_ve
+
 
   # # Check gains and losses, should be equal
-  # apply (DF_HeatNeed_Data [ ,2:5], 1, sum)
-  # apply (DF_HeatNeed_Data [ ,6:12], 1, sum)
+  # apply (DF_Display_Energy [ ,2:5], 1, sum)
+  # apply (DF_Display_Energy [ ,6:12], 1, sum)
 
 
-  DF_HeatNeed_Labels   <- "Test"
-  DF_HeatNeed_Settings <- "Test"
+  # DF_HeatNeed_Labels   <- "Test"
+  # DF_HeatNeed_Settings <- "Test"
+  #
+  #
+  #
+  # List_Chart_HeatNeed <-
+  #   list (
+  #     DF_Display_Energy     = DF_Display_Energy,
+  #     DF_HeatNeed_Labels   = DF_HeatNeed_Labels,
+  #     DF_HeatNeed_Settings = DF_HeatNeed_Settings
+  #   )
+  #
 
 
 
-  List_Chart_HeatNeed <-
-    list (
-      DF_HeatNeed_Data     = DF_HeatNeed_Data,
-      DF_HeatNeed_Labels   = DF_HeatNeed_Labels,
-      DF_HeatNeed_Settings = DF_HeatNeed_Settings
+  DF_Display_Energy [ , c (
+    "q_w_nd"
+  )] <-
+    f_Energy_Display *
+    myDataOut [ , c (
+      "q_Model1_w_nd"
+    )]
+
+
+
+  DF_Display_Energy$q_g_out_h_sum <-
+    f_Energy_Display *
+    apply (
+      myDataOut [ , c (
+        "q_Model1_g_out_h_1",
+        "q_Model1_g_out_h_2",
+        "q_Model1_g_out_h_3"
+      )],
+      1,
+      sum,
+      na.rm = TRUE
     )
 
+  DF_Display_Energy$q_g_out_w_sum <-
+    f_Energy_Display *
+    apply (
+      myDataOut [ , c (
+        "q_Model1_g_out_w_1",
+        "q_Model1_g_out_w_2",
+        "q_Model1_g_out_w_3"
+      )],
+      1,
+      sum,
+      na.rm = TRUE
+    )
+
+  DF_Display_Energy$q_g_out_sum <-
+    DF_Display_Energy$q_g_out_h_sum +
+    DF_Display_Energy$q_g_out_w_sum
 
 
 
@@ -1032,11 +1072,6 @@ ProvideChartData <- function (
   ###################################################################################X
   ## 3  Prepare data for final energy chart    -----
 
-
-
-  ## Multiplier
-
-  f_FinalEnergy_Total <- 1.0
 
   myVariableNames_FinalEnergy <- c (
     "q_Model1_del_h_sum_gas",
@@ -1063,27 +1098,128 @@ ProvideChartData <- function (
     "q_Model1_del_sum_dh",
     "q_Model1_del_sum_other",
     "q_Model1_prod_sum_el"
+
   )
 
-  DF_FinalEnergy_Data <- data.frame (
-    myDataOut [ , c ("ID_Dataset", myVariableNames_FinalEnergy)]
+  # DF_Display_Energy <- data.frame (
+  #   myDataOut [ , c ("ID_Dataset", myVariableNames_FinalEnergy)]
+  #   )
+
+  DF_Display_Energy [ , myVariableNames_FinalEnergy] <-
+    f_Energy_Display *
+    myDataOut [ , myVariableNames_FinalEnergy]
+
+
+
+  DF_Display_Energy$q_del_h_total <-
+    apply (
+      DF_Display_Energy [ , c (
+        "q_Model1_del_h_sum_gas",
+        "q_Model1_del_h_sum_oil",
+        "q_Model1_del_h_sum_coal",
+        "q_Model1_del_h_sum_bio",
+        "q_Model1_del_h_sum_el",
+        "q_Model1_del_h_sum_dh",
+        "q_Model1_del_h_sum_other"
+      )],
+      1,
+      sum,
+      na.rm = TRUE
     )
 
-  DF_FinalEnergy_Data [ , myVariableNames_FinalEnergy] <-
-    f_FinalEnergy_Total *
-    DF_FinalEnergy_Data [ , myVariableNames_FinalEnergy]
-
-  DF_HeatNeed_Labels   <- "Test"
-  DF_HeatNeed_Settings <- "Test"
-
-
-
-  List_Chart_FinalEnergy <-
-    list (
-      DF_FinalEnergy_Data     = DF_FinalEnergy_Data,
-      DF_FinalEnergy_Labels   = DF_FinalEnergy_Labels,
-      DF_FinalEnergy_Settings = DF_FinalEnergy_Settings
+  DF_Display_Energy$q_del_w_total <-
+    apply (
+      DF_Display_Energy [ , c (
+        "q_Model1_del_w_sum_gas",
+        "q_Model1_del_w_sum_oil",
+        "q_Model1_del_w_sum_coal",
+        "q_Model1_del_w_sum_bio",
+        "q_Model1_del_w_sum_el",
+        "q_Model1_del_w_sum_dh",
+        "q_Model1_del_w_sum_other"
+      )],
+      1,
+      sum,
+      na.rm = TRUE
     )
+
+  DF_Display_Energy$q_del_total <-
+    apply (
+      DF_Display_Energy [ , c (
+        "q_Model1_del_sum_gas",
+        "q_Model1_del_sum_oil",
+        "q_Model1_del_sum_coal",
+        "q_Model1_del_sum_bio",
+        "q_Model1_del_sum_el",
+        "q_Model1_del_sum_dh",
+        "q_Model1_del_sum_other"
+      )],
+      1,
+      sum,
+      na.rm = TRUE
+    )
+
+
+  colnames (DF_Display_Energy) <-
+    gsub (
+      pattern = "_Model1",
+      replacement = "",
+      x = colnames (DF_Display_Energy)
+      )
+
+  DF_Display_Energy [ , c (
+    "Uncertainty_q_h_nd",
+    "Uncertainty_q_w_nd"
+  )] <-
+    f_Energy_Display *
+    myDataOut [ , c (
+      "Uncertainty_q_h_nd",
+      "Uncertainty_q_w_nd"
+    )]
+
+  DF_Display_Energy$Uncertainty_q_g_out_h <-
+    f_Energy_Display *
+    myDataOut$Uncertainty_q_del_h /
+    myDataOut$e_g_h
+
+  DF_Display_Energy$Uncertainty_q_g_out_w <-
+    f_Energy_Display *
+    myDataOut$Uncertainty_q_del_w /
+    myDataOut$e_g_w
+
+  DF_Display_Energy$Uncertainty_q_g_out <-
+    sqrt (DF_Display_Energy$Uncertainty_q_g_out_h^2 +
+    DF_Display_Energy$Uncertainty_q_g_out_w^2)
+
+  DF_Display_Energy [ , c (
+    "Uncertainty_q_del_h",
+    "Uncertainty_q_del_w",
+    "Uncertainty_q_del"
+  )] <-
+    f_Energy_Display *
+    myDataOut [ , c (
+      "Uncertainty_q_del_h",
+      "Uncertainty_q_del_w",
+      "Uncertainty_q_del"
+    )]
+
+
+
+
+
+
+
+
+  # DF_FinalEnergy_Labels   <- "Test"
+  # DF_FinalEnergy_Settings <- "Test"
+  #
+  #
+  # List_Chart_FinalEnergy <-
+  #   list (
+  #     DF_Display_Energy     = DF_Display_Energy,
+  #     DF_FinalEnergy_Labels   = DF_FinalEnergy_Labels,
+  #     DF_FinalEnergy_Settings = DF_FinalEnergy_Settings
+  #   )
 
 
 
@@ -1091,13 +1227,13 @@ ProvideChartData <- function (
   ## 4  Output   -----
 
 
-  myChartData <-
-    list (
-      List_Chart_HeatNeed    = List_Chart_HeatNeed,
-      List_Chart_FinalEnergy = List_Chart_FinalEnergy
-    )
+  # List_ChartData <-
+  #   list (
+  #     DF_Display_Energy    = DF_Display_Energy,
+  #     DF_Display_Energy = DF_Display_Energy
+  #   )
 
-  return (myChartData)
+  return (DF_Display_Energy)
 
 
 } # End of function ProvideChartData ()

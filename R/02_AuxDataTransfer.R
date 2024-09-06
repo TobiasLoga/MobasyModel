@@ -1226,7 +1226,8 @@ GetDataMobasy <- function (
     Indicator_Load_BuildingData_Excel                 = 1,
     Indicator_Load_BuildingData_RDataPackage          = 0,
     FilterVariableName_1                    = "Status_DataBase_Admin",
-    FilterValueList_1                       = c ("Public", "Project", "Test_Calc"),
+    FilterValueList_1                       = c ("Public", "Project",
+                                                 "Test_Calc", "Analysis"),
     FilterVariableName_2                    = NA,
     FilterValueList_2                       = NA
 ) {
@@ -2146,7 +2147,8 @@ Save_BuildingData_rda <- function (
     Data_Output,
     Header_BuildingData,
     DF_FilterBuildingData,
-    myFilterName
+    myFilterName,
+    SubFolderName = "Output/RDA"
 ) {
 
 
@@ -2157,7 +2159,7 @@ Save_BuildingData_rda <- function (
 
   save (
     Data_Input,
-    file = "Output/RDA/Data_Input.rda"
+    file = paste0 (SubFolderName, "/Data_Input.rda")
   )
 
 
@@ -2168,7 +2170,7 @@ Save_BuildingData_rda <- function (
 
   save (
     Data_Output,
-    file = "Output/RDA/Data_Output.rda"
+    file = paste0 (SubFolderName, "/Data_Output.rda")
   )
 
 
@@ -2178,7 +2180,7 @@ Save_BuildingData_rda <- function (
 
   save (
     Data_Output_PreCalculated,
-    file = "Output/RDA/Data_Output_PreCalculated.rda"
+    file = paste0 (SubFolderName, "/Data_Output_PreCalculated.rda")
   )
 
   InfoVariables <- Header_BuildingData
@@ -2194,7 +2196,7 @@ Save_BuildingData_rda <- function (
 
   save (
     InfoVariables,
-    file = "Output/RDA/InfoVariables.rda"
+    file = paste0 (SubFolderName, "/InfoVariables.rda")
   )
 
 
@@ -2203,7 +2205,7 @@ Save_BuildingData_rda <- function (
   )
   save (
     DF_FilterBuildingData,
-    file = "Output/RDA/DF_FilterBuildingData.rda"
+    file = paste0 (SubFolderName, "/DF_FilterBuildingData.rda")
   )
 
 
@@ -2212,7 +2214,7 @@ Save_BuildingData_rda <- function (
   )
   save (
     myFilterName,
-    file = "Output/RDA/myFilterName.rda"
+    file = paste0 (SubFolderName, "/myFilterName.rda")
   )
 
 }

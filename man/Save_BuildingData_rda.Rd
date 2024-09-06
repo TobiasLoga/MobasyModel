@@ -10,7 +10,8 @@ Save_BuildingData_rda(
   Data_Output,
   Header_BuildingData,
   DF_FilterBuildingData,
-  myFilterName
+  myFilterName,
+  SubFolderName = "Output/RDA"
 )
 }
 \arguments{

@@ -12,7 +12,7 @@ GetDataMobasy(
   Indicator_Load_BuildingData_Excel = 1,
   Indicator_Load_BuildingData_RDataPackage = 0,
   FilterVariableName_1 = "Status_DataBase_Admin",
-  FilterValueList_1 = c("Public", "Project", "Test_Calc"),
+  FilterValueList_1 = c("Public", "Project", "Test_Calc", "Analysis"),
   FilterVariableName_2 = NA,
   FilterValueList_2 = NA
 )
