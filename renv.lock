@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.4.0",
+    "Version": "4.4.2",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -23,7 +23,7 @@
     },
     "CliDaMon": {
       "Package": "CliDaMon",
-      "Version": "1.0.0",
+      "Version": "1.1.1",
       "Source": "GitHub",
       "Remotes": "TobiasLoga/AuxFunctions",
       "RemoteType": "github",
@@ -31,11 +31,11 @@
       "RemoteRepo": "CliDaMon",
       "RemoteUsername": "TobiasLoga",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ba32c33bf036f6a7631817aa3c1145580c6f6ffc",
+      "RemoteSha": "5d7cf38bf918b8687b6b4a4b6ad1dca686a129b8",
       "Requirements": [
         "AuxFunctions"
       ],
-      "Hash": "875cdfaf2201884b79d523b8f007806b"
+      "Hash": "d1424a51b6ec4f4c0ee087aa8f434fa6"
     },
     "MobasyBuildingData": {
       "Package": "MobasyBuildingData",
@@ -62,19 +62,19 @@
     },
     "clidamonger": {
       "Package": "clidamonger",
-      "Version": "1.1.0",
+      "Version": "1.3.0",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "R"
       ],
-      "Hash": "913cca06caa2795d3c3591aa6d8219de"
+      "Hash": "36984d9e660e583e19cd51c18e4742fd"
     },
     "openxlsx": {
       "Package": "openxlsx",
-      "Version": "4.2.5.2",
+      "Version": "4.2.8",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "Rcpp",
@@ -85,7 +85,7 @@
         "utils",
         "zip"
       ],
-      "Hash": "c03b4c18d42da881fb8e15a085c2b9d6"
+      "Hash": "0dae94b258dc5abc4713eacdbbebcb51"
     },
     "renv": {
       "Package": "renv",
@@ -124,10 +124,10 @@
     },
     "zip": {
       "Package": "zip",
-      "Version": "2.3.1",
+      "Version": "2.3.2",
       "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "fcc4bd8e6da2d2011eb64a5e5cc685ab"
+      "Repository": "RSPM",
+      "Hash": "2f2ac1424654714391fe94dd69e196a9"
     }
   }
 }

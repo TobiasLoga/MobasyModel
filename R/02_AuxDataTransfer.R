@@ -611,23 +611,29 @@ Load_ParameterTables <- function (
       ParTab_EnvArEst$Code_Par_EnvAreaEstim == Code_ParTab_EnvAreaEst_ParameterSet,
       ]
 
-  Code_ParTab_U_Class_Constr_National <- "MOBASY"
-  ParTab_UClassConstr <-
-    ParTab_UClassConstr [
-      ParTab_UClassConstr$Code_U_Class_Constr_National == Code_ParTab_U_Class_Constr_National,
-      ]
-
-  Code_ParTab_InsulationDefault <- "MOBASY"
-  ParTab_InsulationDefault <-
-    ParTab_InsulationDefault [
-      ParTab_InsulationDefault$Code_d_Insulation_Default_National == Code_ParTab_InsulationDefault,
-      ]
-
-  Code_ParTab_MeasurefDefault <- "MOBASY"
-  ParTab_MeasurefDefault <-
-    ParTab_MeasurefDefault [
-      ParTab_MeasurefDefault$Code_f_Measure_National_Basic == Code_ParTab_MeasurefDefault,
-      ]
+  ## 2025-03-28 removed
+  #
+  # The filter is not needed, since the script in UValEst() uses the building data input
+  # in "Code_U_Class_National" as a filter.
+  # Now, more flexibility is needed using other parameters than the MOBASY ones.
+  #
+  # Code_ParTab_U_Class_Constr_National <- "MOBASY"
+  # ParTab_UClassConstr <-
+  #   ParTab_UClassConstr [
+  #     ParTab_UClassConstr$Code_U_Class_Constr_National == Code_ParTab_U_Class_Constr_National,
+  #     ]
+  #
+  # Code_ParTab_InsulationDefault <- "MOBASY"
+  # ParTab_InsulationDefault <-
+  #   ParTab_InsulationDefault [
+  #     ParTab_InsulationDefault$Code_d_Insulation_Default_National == Code_ParTab_InsulationDefault,
+  #     ]
+  #
+  # Code_ParTab_MeasurefDefault <- "MOBASY"
+  # ParTab_MeasurefDefault <-
+  #   ParTab_MeasurefDefault [
+  #     ParTab_MeasurefDefault$Code_f_Measure_National_Basic == Code_ParTab_MeasurefDefault,
+  #     ]
 
   Code_ParTab_ConstrYearClass_StatusDataset    <- "Typology"
   Code_ParTab_ConstrYearClass_Country          <- "DE"
