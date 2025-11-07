@@ -39,15 +39,18 @@
     },
     "MobasyBuildingData": {
       "Package": "MobasyBuildingData",
-      "Version": "0.1.0",
+      "Version": "0.1.4",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "TobiasLoga",
       "RemoteRepo": "MobasyBuildingData",
-      "RemoteRef": "main",
-      "RemoteSha": "39a11d439c1718b918987c149dd81ab45c1feaf2",
-      "Hash": "5cd97a0073cdebfd1ad966b4e09a10d8"
+      "RemoteUsername": "TobiasLoga",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "54da61a39d3167624302b987499afe83423b8cea",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "5bac447b8394d9dd4a80957da7033c37"
     },
     "Rcpp": {
       "Package": "Rcpp",

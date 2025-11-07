@@ -9,11 +9,12 @@ GetBuildingData_LocalExcel(myFilterName = "All")
 \arguments{
 \item{myFilterName}{a character string using predefined lists of datasets.
 The currently defined subsets are:
+"Examples":         Several example datasets
 "MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
                     comparison and benchmarking in the MOBASY project
                     (see https://www.iwu.de/forschung/energie/mobasy/)
-"WebTool":          One dataset used for the webtool
-"Examples":         Several example datasets
+"MOBASY-Sample_Checked-OnSite":    Datasets of 12 buildings from the MOBASY sample which were checked onsite
+                    Can be used to test the function MobasyCalc () including target actual comparison
 "ParameterStudy-CESB-2022":  10 datasets of the parameter study, published in
                     Loga, Tobias; Stein, Britta; Behem, Guillaume (2023):
                     Use of Energy Profile Indicators to Determine the Expected Range
@@ -22,8 +23,13 @@ The currently defined subsets are:
                     2022 (CESB22), 4 to 6 July 2022;
                     Acta Polytechnica CTU Proceedings 38:470–477, 2022, published 2023
                     https://doi.org/10.14311/APP.2022.38.0470
+                    (also implemented in the MOBASY project)
 "ParameterStudy-PHSP-2023": 32 datasets of a parameter study on the
                    "PassivHausSozialPlus" buildings, implemented in the MOBASY project
+"MOBASY-All"        All datasets mentioned above
+"WebTool":          One dataset used for the webtool
+"Typology-DE_Example-Buildings"  Datasets of the example buildings from the German residential building typology
+"EnergyProfileShinyApp"  includes the datasets from the following filters: "Typology-DE_Example-Buildings", "MOBASY-All"
 "All" (default):       All datasets listed above}
 }
 \value{
@@ -56,20 +62,30 @@ StationClimateTables <- GetStationClimate_LocalExcel ()
 
 # (1) Load all available datasets from the MOBASY building data table
 myBuildingDataTables <- GetBuildingData_LocalExcel ()
+or
+myBuildingDataTables <- GetBuildingData_LocalExcel ("All")
 
-# (2) Load all datasets from the MOBASY sample
+# (2) Load some example datasets
+myBuildingDataTables <- GetBuildingData_LocalExcel ("Examples")
+
+# (3) Load all datasets from the MOBASY sample
 myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample")
 
-# (3) Load dataset of 1 building (example for webtool)
-myBuildingDataTables <- GetBuildingData_LocalExcel ("WebTool")
-
-# (4) Load dataset of the target/actual comparison study performed
-#     for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
-myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
+# (4) Load a selection of datasets from the MOBASY sample (12 buildings)
+myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample_Checked-OnSite")
 
 # (5) Load datasets of 6 buildings from a parameter study on uncertainties
 myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
 
+# (6) Load dataset of the target/actual comparison study performed
+#     for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
+myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
+
+# (7) Load dataset of 1 building (example for webtool)
+myBuildingDataTables <- GetBuildingData_LocalExcel ("WebTool")
+
+# (8) Load datasets of the example buildings from the German residential building typology
+myBuildingDataTables <- GetBuildingData_LocalExcel ("Typology-DE_Example-Buildings")
 
 ## Show structure and content of the main dataframes
 str (myBuildingDataTables$Data_Input)

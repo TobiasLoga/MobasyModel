@@ -608,9 +608,11 @@ ClimateStationValues <- function (
       ## The function "CliDaMon::ClimateByMonth" returns a list of dataframes
       # myResultList_ClimateByMonth [[5]] # Show the list of dataframes
 
-
+      # 2025-11-07 Change due to error caused by new structure in the package CliDaMon
       myDF_ClimMon <-
-        myResultList_ClimateByMonth [[1]]
+        myResultList_ClimateByMonth$DF_ClimCalc
+      # myDF_ClimMon <-
+      #   myResultList_ClimateByMonth [[1]]
       #   ResultDataframe_ClimateByMonth (myResultList_ClimateByMonth, myIndex_DF = 1)
       # clipr::write_clip(myDF_ClimMon)
 
@@ -619,8 +621,11 @@ ClimateStationValues <- function (
       # myResultList_ClimateByMonth [[2]]
       # # ResultDataframe_ClimateByMonth (myResultList_ClimateByMonth, myIndex_DF = 2)
 
+      # 2025-11-07 Change due to error caused by new structure in the package CliDaMon
       myDF_StationInfo_TA <-
-        myResultList_ClimateByMonth [[3]]
+        myResultList_ClimateByMonth$DF_StationInfo
+      # myDF_StationInfo_TA <-
+      #   myResultList_ClimateByMonth [[3]]
         # ResultDataframe_ClimateByMonth (myResultList_ClimateByMonth, myIndex_DF = 3)
       #
       # myDF_FunctionParameters <-
