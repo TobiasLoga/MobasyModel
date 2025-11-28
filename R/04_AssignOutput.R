@@ -836,7 +836,8 @@ AssignOutput <- function (
 
 ProvideChartData <- function (
     myDataOut,
-    myDataCalc
+    myDataCalc,
+    Digits_EnergyIndicators = 1   # number of digits to be displayed for energy indicators
 )
 
 {
@@ -859,6 +860,9 @@ ProvideChartData <- function (
   # myDataCalc  <- myOutputTables$Data_Calc
   #
 
+  # myDataOut   <-  List_DataFrames_Output$Data_Output
+  # myDataCalc  <-  List_DataFrames_Output$Data_Calc
+  # Digits_EnergyIndicators <- 2
 
 
   ###################################################################################X
@@ -1206,8 +1210,13 @@ ProvideChartData <- function (
 
 
 
+  ## Round the energy indicators
 
+  i_Column_NameEnergyIndicator_Start <- which (colnames (DF_Display_Energy) == "q_h_nd_net")
+  n_Column <- length (colnames (DF_Display_Energy) )
 
+  DF_Display_Energy [ , i_Column_NameEnergyIndicator_Start : n_Column] <-
+    round (DF_Display_Energy [ , i_Column_NameEnergyIndicator_Start : n_Column], Digits_EnergyIndicators)
 
 
   # DF_FinalEnergy_Labels   <- "Test"
