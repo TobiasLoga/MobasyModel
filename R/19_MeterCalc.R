@@ -428,7 +428,7 @@ PrepareDFMeterValues <- function (
 
 
   DF_MeterDevice$EnergyDensity_EC_Lib <-
-    Value_ParTab_Vector (
+    AuxFunctions::Value_ParTab_Vector (
       myParTab_Meter_EnergyDensity,
       DF_MeterDevice$Code_EC,
       paste0 ("kWh_Hs_per_", DF_MeterDevice$Unit_EC)
@@ -3739,7 +3739,7 @@ CalcMeterComparison <- function (
   ###################################################################################X
 
 
-  myDataCalc_CMC$Date_Change <- TimeStampForDataset ()
+  myDataCalc_CMC$Date_Change <-  AuxFunctions::TimeStampForDataset ()
 
 
 

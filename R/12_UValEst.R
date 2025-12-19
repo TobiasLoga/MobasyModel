@@ -673,7 +673,7 @@ UValEst <- function (
       ) # <FK11>
 
   Data_Calc_UValEst$n_air_infiltration_Class <-
-      Value_ParTab (ParTab_Infiltration, Data_Calc_UValEst$Code_Infiltration_Actual, "n_air_infiltration", 3, "Manual input", NA, Value_Numeric_Error)
+      AuxFunctions::Value_ParTab (ParTab_Infiltration, Data_Calc_UValEst$Code_Infiltration_Actual, "n_air_infiltration", 3, "Manual input", NA, Value_Numeric_Error)
 
 
   ###################################################################################X
@@ -810,7 +810,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Roof_Default <-
              ifelse (
                  Data_Calc_UValEst$Code_InstallationType_Insulation_Roof_Default == "AppliedBetweenRafters",
-                 Value_ParTab (
+                 AuxFunctions::Value_ParTab (
                      ParTab_InsulationDefault,
                      Data_Calc_UValEst$ID_Class_Year_Insulation_Roof,
                      "Lambda_Insulation_Default_AppliedBetweenRafters",
@@ -825,7 +825,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Roof_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Roof_Default == "FlatRoofMassive",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Roof,
               "Lambda_Insulation_Default_FlatRoofMassive",
@@ -843,7 +843,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Ceiling_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Ceiling_Default == "TopCeiling",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Ceiling,
               "Lambda_Insulation_Default_TopCeiling",
@@ -861,7 +861,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Wall_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Wall_Default == "Wall_External",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Wall,
               "Lambda_Insulation_Default_Wall_External",
@@ -876,7 +876,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Wall_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Wall_Default == "Wall_Internal",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Wall,
               "Lambda_Insulation_Default_Wall_Internal",
@@ -894,7 +894,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Floor_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Floor_Default == "BorderingCellar",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Floor,
               "Lambda_Insulation_Default_BorderingCellar",
@@ -909,7 +909,7 @@ UValEst <- function (
   Data_Calc_UValEst$Lambda_Insulation_Floor_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Floor_Default == "BorderingSoil",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Floor,
               "Lambda_Insulation_Default_BorderingSoil",
@@ -930,7 +930,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Roof_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Roof_Default == "AppliedBetweenRafters",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Roof,
               "d_Insulation_Default_AppliedBetweenRafters",
@@ -945,7 +945,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Roof_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Roof_Default == "FlatRoofMassive",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Roof,
               "d_Insulation_Default_FlatRoofMassive",
@@ -965,7 +965,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Ceiling_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Ceiling_Default == "TopCeiling",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Ceiling,
               "d_Insulation_Default_TopCeiling",
@@ -985,7 +985,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Wall_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Wall_Default == "Wall_External",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Wall,
               "d_Insulation_Default_Wall_External",
@@ -1000,7 +1000,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Wall_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Wall_Default == "Wall_Internal",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Wall,
               "d_Insulation_Default_Wall_Internal",
@@ -1020,7 +1020,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Floor_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Floor_Default == "BorderingCellar",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Floor,
               "d_Insulation_Default_BorderingCellar",
@@ -1035,7 +1035,7 @@ UValEst <- function (
   Data_Calc_UValEst$d_Insulation_Floor_Default <-
       ifelse (
           Data_Calc_UValEst$Code_InstallationType_Insulation_Floor_Default == "BorderingSoil",
-          Value_ParTab (
+          AuxFunctions::Value_ParTab (
               ParTab_InsulationDefault,
               Data_Calc_UValEst$ID_Class_Year_Insulation_Floor,
               "d_Insulation_Default_BorderingSoil",
@@ -1054,7 +1054,7 @@ UValEst <- function (
   ## . Area fractions of measures when no input is available / case: refurbishment was carried out -----
 
   Data_Calc_UValEst$f_Insulation_Roof_Default_Refurbish <-
-      Value_ParTab(
+      AuxFunctions::Value_ParTab(
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1068,7 +1068,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Ceiling_Default_Refurbish <-
-      Value_ParTab(
+      AuxFunctions::Value_ParTab(
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1082,7 +1082,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Wall_Default_Refurbish <-
-      Value_ParTab(
+      AuxFunctions::Value_ParTab(
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1096,7 +1096,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Floor_Default_Refurbish <-
-      Value_ParTab(
+      AuxFunctions::Value_ParTab(
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1116,7 +1116,7 @@ UValEst <- function (
   # An average state of the building stock is considered
 
   Data_Calc_UValEst$f_Insulation_Roof_Default_NA <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1130,7 +1130,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Ceiling_Default_NA <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1144,7 +1144,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Wall_Default_NA <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -1158,7 +1158,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$f_Insulation_Floor_Default_NA <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_MeasurefDefault,
           paste0 (
               Data_Calc_UValEst$Code_Insulation_Default,
@@ -2081,7 +2081,7 @@ UValEst <- function (
   #Data_Calc_UValEst$Index_Col_Tab_U_WindowType2_Period
 
   Data_Calc_UValEst$U_Class_Window_Type_1 <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_WindowTypePeriods,
           Data_Calc_UValEst$Code_U_Class_Window_Type_1,
           paste0 (
@@ -2091,7 +2091,7 @@ UValEst <- function (
       )
 
   Data_Calc_UValEst$U_Class_Window_Type_2 <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_WindowTypePeriods,
           Data_Calc_UValEst$Code_U_Class_Window_Type_2,
           paste0 (
@@ -2102,7 +2102,7 @@ UValEst <- function (
 
 
   Data_Calc_UValEst$g_gl_n_Window_Type_1 <-
-  Value_ParTab_Vector (
+  AuxFunctions::Value_ParTab_Vector (
       ParTab_WindowTypePeriods,
       Data_Calc_UValEst$Code_U_Class_Window_Type_1,
       paste0 (
@@ -2112,7 +2112,7 @@ UValEst <- function (
   )
 
   Data_Calc_UValEst$g_gl_n_Window_Type_2 <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_WindowTypePeriods,
           Data_Calc_UValEst$Code_U_Class_Window_Type_2,
           paste0 (
@@ -2612,7 +2612,7 @@ UValEst <- function (
 
 
   Data_Calc_UValEst$delta_U_Class_ThermalBridging_Refurbished <-
-    Value_ParTab (
+    AuxFunctions::Value_ParTab (
       ParTab_ThermalBridging,
       Data_Calc_UValEst$Code_ThermalBridging_Refurbished,
       "delta_U_ThermalBridging",
@@ -3255,7 +3255,7 @@ UValEst <- function (
   # Data_Output            <- as.data.frame (myCalcData [, "ID_Dataset"])
   # colnames (Data_Output) <- "ID_Dataset"
 
-  myCalcData$Date_Change                              <- TimeStampForDataset ()
+  myCalcData$Date_Change                              <- AuxFunctions::TimeStampForDataset ()
 
   # myCalcData$Code_Country                             <- Data_Calc_UValEst$Code_Country
   # myCalcData$Code_Building                            <- Data_Calc_UValEst$Code_Building

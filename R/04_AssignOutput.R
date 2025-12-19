@@ -119,7 +119,6 @@ AssignOutput <- function (
   # Any changes of the script should be prepared in that table.
 
   myDataOut$ID_Dataset                                                             <-
-          AuxFunctions::Replace_NULL (myDataCalc$ID_Dataset, NA)
   myDataOut$Code_Model1_Type_Procedure                                             <-
           AuxFunctions::Replace_NULL (myDataCalc$Code_Model1_Type_Procedure, NA)
   myDataOut$Remark_Model1_01                                                       <-

@@ -2891,11 +2891,11 @@ SuSysConf <- function (
       0.25 * AuxFunctions::xl_NOT (is.na (myCalcData$Indicator_Storage_SysH_Immersion)) +
       0.25 * AuxFunctions::xl_NOT (is.na (myCalcData$Indicator_Storage_SysH_InsideEnvelope)) # <AQC11>
 
-  myCalcData$q_s_h_Database <- Value_ParTab (ParTab_System_HS, myCalcData$Code_SysH_S, "q_s_h", 3, "-", 0, Value_Numeric_Error)
+  myCalcData$q_s_h_Database <- AuxFunctions::Value_ParTab (ParTab_System_HS, myCalcData$Code_SysH_S, "q_s_h", 3, "-", 0, Value_Numeric_Error)
 
-  myCalcData$q_d_h_Database <- Value_ParTab (ParTab_System_HD, myCalcData$Code_SysH_D, "q_d_h", 3, "-", 0, Value_Numeric_Error)
+  myCalcData$q_d_h_Database <- AuxFunctions::Value_ParTab (ParTab_System_HD, myCalcData$Code_SysH_D, "q_d_h", 3, "-", 0, Value_Numeric_Error)
 
-  myCalcData$q_del_h_aux_Database <- Value_ParTab (ParTab_System_HA, myCalcData$Code_SysH_Aux, "q_del_h_aux", 3, "-", 0, Value_Numeric_Error)
+  myCalcData$q_del_h_aux_Database <- AuxFunctions::Value_ParTab (ParTab_System_HA, myCalcData$Code_SysH_Aux, "q_del_h_aux", 3, "-", 0, Value_Numeric_Error)
 
   myCalcData$q_s_h <-
       AuxFunctions::Replace_NA (ifelse (
@@ -4034,7 +4034,7 @@ SuSysConf <- function (
 
   #View (ParTab_System_WS)
   myCalcData$q_s_w_Database <-
-      Value_ParTab (ParTab_System_WS,
+      AuxFunctions::Value_ParTab (ParTab_System_WS,
                     myCalcData$Code_SysW_S,
                     "q_s_w",
                     3,
@@ -4043,7 +4043,7 @@ SuSysConf <- function (
                     Value_Numeric_Error)
 
   myCalcData$q_s_w_h_Database <-
-      Value_ParTab (ParTab_System_WS,
+      AuxFunctions::Value_ParTab (ParTab_System_WS,
                     myCalcData$Code_SysW_S,
                     "q_s_w_h",
                     3,
@@ -4052,7 +4052,7 @@ SuSysConf <- function (
                     Value_Numeric_Error)
 
   myCalcData$q_d_w_Database <-
-      Value_ParTab (ParTab_System_WD,
+      AuxFunctions::Value_ParTab (ParTab_System_WD,
                     myCalcData$Code_SysW_D,
                     "q_d_w",
                     3,
@@ -4061,7 +4061,7 @@ SuSysConf <- function (
                     Value_Numeric_Error)
 
   myCalcData$q_d_w_h_Database <-
-      Value_ParTab (ParTab_System_WD,
+      AuxFunctions::Value_ParTab (ParTab_System_WD,
                     myCalcData$Code_SysW_D,
                     "q_d_w_h",
                     3,
@@ -4070,7 +4070,7 @@ SuSysConf <- function (
                     Value_Numeric_Error)
 
   myCalcData$q_del_w_aux_Database <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_WA,
           myCalcData$Code_SysW_Aux,
           "q_del_w_aux",
@@ -4165,7 +4165,7 @@ SuSysConf <- function (
       ) # <ASN11>
 
   myCalcData$Name_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Name_CalcAdapt",
@@ -4175,7 +4175,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Name_National_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Name_National_CalcAdapt",
@@ -4185,7 +4185,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Description_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Description_CalcAdapt",
@@ -4195,7 +4195,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Description_National_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Description_National_CalcAdapt",
@@ -4205,7 +4205,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Remark_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Remark_CalcAdapt",
@@ -4215,7 +4215,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Name_National_CalcAdapt_M <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Name_National_CalcAdapt",
@@ -4225,7 +4225,7 @@ SuSysConf <- function (
       )
 
   myCalcData$Indicator_CalcAdapt_M_Accuracy <-
-      String_ParTab (
+      AuxFunctions::String_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "Indicator_CalcAdapt_Accuracy",
@@ -4236,7 +4236,7 @@ SuSysConf <- function (
 
 
   myCalcData$F_CalcAdapt_M_000 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_000",
@@ -4247,7 +4247,7 @@ SuSysConf <- function (
       )
 
   myCalcData$F_CalcAdapt_M_100 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_100",
@@ -4258,7 +4258,7 @@ SuSysConf <- function (
       )
 
   myCalcData$F_CalcAdapt_M_200 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_200",
@@ -4269,7 +4269,7 @@ SuSysConf <- function (
       )
 
   myCalcData$F_CalcAdapt_M_300 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_300",
@@ -4280,7 +4280,7 @@ SuSysConf <- function (
       )
 
   myCalcData$F_CalcAdapt_M_400 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_400",
@@ -4291,7 +4291,7 @@ SuSysConf <- function (
       )
 
   myCalcData$F_CalcAdapt_M_500 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_CalcAdapt,
           myCalcData$Code_CalcAdapt_M,
           "F_CalcAdapt_500",
@@ -4347,7 +4347,7 @@ SuSysConf <- function (
       AuxFunctions::xl_CONCATENATE(myCalcData$Code_EC_Specification_Version, ".El") # <ATD11>
 
   myCalcData$f_p_Total_SysH_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_1,
           "EC_f_p_Total",
@@ -4358,7 +4358,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysH_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_2,
           "EC_f_p_Total",
@@ -4369,7 +4369,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysH_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_3,
           "EC_f_p_Total",
@@ -4380,7 +4380,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysH_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_ElAux,
           "EC_f_p_Total",
@@ -4392,7 +4392,7 @@ SuSysConf <- function (
 
 
   myCalcData$f_p_NonRen_SysH_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_1,
           "EC_f_p_NonRen",
@@ -4403,7 +4403,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysH_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_2,
           "EC_f_p_NonRen",
@@ -4414,7 +4414,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysH_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_3,
           "EC_f_p_NonRen",
@@ -4425,7 +4425,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysH_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_ElAux,
           "EC_f_p_NonRen",
@@ -4436,7 +4436,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysH_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_1,
           "EC_f_CO2",
@@ -4447,7 +4447,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysH_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_2,
           "EC_f_CO2",
@@ -4458,7 +4458,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysH_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_3,
           "EC_f_CO2",
@@ -4469,7 +4469,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysH_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_ElAux,
           "EC_f_CO2",
@@ -4481,7 +4481,7 @@ SuSysConf <- function (
 
 
   myCalcData$price_SysH_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_1,
           "EC_price",
@@ -4492,7 +4492,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysH_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_2,
           "EC_price",
@@ -4503,7 +4503,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysH_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_3,
           "EC_price",
@@ -4514,7 +4514,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysH_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysH_EC_ElAux,
           "EC_price",
@@ -4564,7 +4564,7 @@ SuSysConf <- function (
       AuxFunctions::xl_CONCATENATE(myCalcData$Code_EC_Specification_Version, ".El") # <ATD11>
 
   myCalcData$f_p_Total_SysW_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_1,
           "EC_f_p_Total",
@@ -4575,7 +4575,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysW_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_2,
           "EC_f_p_Total",
@@ -4586,7 +4586,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysW_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_3,
           "EC_f_p_Total",
@@ -4597,7 +4597,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_Total_SysW_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_ElAux,
           "EC_f_p_Total",
@@ -4609,7 +4609,7 @@ SuSysConf <- function (
 
 
   myCalcData$f_p_NonRen_SysW_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_1,
           "EC_f_p_NonRen",
@@ -4620,7 +4620,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysW_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_2,
           "EC_f_p_NonRen",
@@ -4631,7 +4631,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysW_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_3,
           "EC_f_p_NonRen",
@@ -4642,7 +4642,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_p_NonRen_SysW_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_ElAux,
           "EC_f_p_NonRen",
@@ -4653,7 +4653,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysW_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_1,
           "EC_f_CO2",
@@ -4664,7 +4664,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysW_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_2,
           "EC_f_CO2",
@@ -4675,7 +4675,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysW_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_3,
           "EC_f_CO2",
@@ -4686,7 +4686,7 @@ SuSysConf <- function (
       )
 
   myCalcData$f_CO2_SysW_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_ElAux,
           "EC_f_CO2",
@@ -4698,7 +4698,7 @@ SuSysConf <- function (
 
 
   myCalcData$price_SysW_EC_1 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_1,
           "EC_price",
@@ -4709,7 +4709,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysW_EC_2 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_2,
           "EC_price",
@@ -4720,7 +4720,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysW_EC_3 <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_3,
           "EC_price",
@@ -4731,7 +4731,7 @@ SuSysConf <- function (
       )
 
   myCalcData$price_SysW_ElAux <-
-      Value_ParTab (
+      AuxFunctions::Value_ParTab (
           ParTab_System_EC,
           myCalcData$Code_Specification_SysW_EC_ElAux,
           "EC_price",

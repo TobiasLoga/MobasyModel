@@ -52,17 +52,6 @@
       ],
       "Hash": "5bac447b8394d9dd4a80957da7033c37"
     },
-    "Rcpp": {
-      "Package": "Rcpp",
-      "Version": "1.0.12",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "methods",
-        "utils"
-      ],
-      "Hash": "5ea2700d21e038ace58269ecdbeb9ec0"
-    },
     "clidamonger": {
       "Package": "clidamonger",
       "Version": "1.3.0",
@@ -73,23 +62,6 @@
       ],
       "Hash": "36984d9e660e583e19cd51c18e4742fd"
     },
-    "openxlsx": {
-      "Package": "openxlsx",
-      "Version": "4.2.8",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "Rcpp",
-        "grDevices",
-        "methods",
-        "stats",
-        "stringi",
-        "utils",
-        "zip"
-      ],
-      "Hash": "0dae94b258dc5abc4713eacdbbebcb51"
-    },
     "renv": {
       "Package": "renv",
       "Version": "1.0.7",
@@ -99,19 +71,6 @@
         "utils"
       ],
       "Hash": "397b7b2a265bc5a7a06852524dabae20"
-    },
-    "stringi": {
-      "Package": "stringi",
-      "Version": "1.8.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "stats",
-        "tools",
-        "utils"
-      ],
-      "Hash": "058aebddea264f4c99401515182e656a"
     },
     "tabuladata": {
       "Package": "tabuladata",
@@ -124,13 +83,6 @@
       "RemoteRef": "main",
       "RemoteSha": "1af63fc09311afc13fc255380a6c5e9271a9c43b",
       "Hash": "9e03050252f052d013c23157dee9843d"
-    },
-    "zip": {
-      "Package": "zip",
-      "Version": "2.3.2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "2f2ac1424654714391fe94dd69e196a9"
     }
   }
 }

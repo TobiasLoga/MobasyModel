@@ -223,67 +223,67 @@ ClimateLibValues <- function (
   myDataCalc_ClimLib$Code_Climate_Lib <- "DE.N"
 
   myDataCalc_ClimLib$theta_e_Base_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "Theta_e_Base")
 
   myDataCalc_ClimLib$HeatingDays_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "HeatingDays")
 
   myDataCalc_ClimLib$theta_e_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "Theta_e")
 
   myDataCalc_ClimLib$I_Sol_HD_Hor_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Hor")
 
   myDataCalc_ClimLib$I_Sol_HD_East_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_East")
 
   myDataCalc_ClimLib$I_Sol_HD_South_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_South")
 
   myDataCalc_ClimLib$I_Sol_HD_West_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_West")
 
   myDataCalc_ClimLib$I_Sol_HD_North_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_North")
 
   myDataCalc_ClimLib$I_Sol_Year_Hor_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Year_Hor")
 
   myDataCalc_ClimLib$I_Sol_Year_East_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Year_East")
 
   myDataCalc_ClimLib$I_Sol_Year_South_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Year_South")
 
   myDataCalc_ClimLib$I_Sol_Year_West_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Year_West")
 
   myDataCalc_ClimLib$I_Sol_Year_North_Lib <-
-    Value_ParTab_Vector (myParTab_Climate,
+    AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
                          myDataCalc_ClimLib$Code_Climate_Lib,
                          "I_Sol_Year_North")
 

@@ -1,7 +1,7 @@
 Package: MobasyModel
 Type: Package
 Title: MOBASY model - realistic calculation of the energy demand for heating and its uncertainty   
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: person (given = "Tobias", family = "Loga", email = "t.loga@iwu.de", role = "aut", comment = c(ORCID = "0000-0001-5097-5613"))
     person (given = "Jens", family = "Calisti", email = "jens@tangled.de", role = "cre", comment = c(ORCID = "0000-0003-2211-0553"))
 Maintainer: <t.loga@iwu.de>
@@ -29,6 +29,5 @@ RoxygenNote: 7.3.2
 Imports: 
     tabuladata,
     clidamonger,
-    openxlsx,
     AuxFunctions,
     CliDaMon

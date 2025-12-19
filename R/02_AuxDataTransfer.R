@@ -20,6 +20,9 @@
 #####################################################################################################X
 
 
+
+
+
 #####################################################################################################X
 ## Useful information for running the script in RStudio ---------------------------------------------
 #####################################################################################################X
@@ -29,6 +32,53 @@
 #  <Ctrl>-<Alt>-<E>       Run script from current line to end
 #  <Ctrl>-<Alt>-<R>       Run complete script
 #  <Ctrl>-<Enter>         Run current line or selected script range
+
+
+
+
+
+#. ---------------------------------------------------------------------------------
+
+
+###################################################################################X
+## %xl_JoinStrings% ------------------------------------
+
+# 2025-12-19 pasted here from package AuxFunctions
+# Syntax is different when referencing to the package: AuxFunctions::`%xl_JoinStrings%`("A", "B")
+# --> not useful because paste0 () could be used as well. So this function works similar to Excel only without package reference.
+
+
+## %xl_JoinStrings%
+#' Concatenate vectors of character strings by row (Excel equivalent operator &)
+#'
+#' %xl_JoinStrings% concatenates vectors of character strings by row.
+#' The function is used to simplify parsing Excel formulas and to apply them to vector variables.
+#' Definition of infix operators: https://www.datamentor.io/r-programming/infix-operator/
+#'
+#' @param myStr1 first vector of character strings.
+#' @param myStr2 second vector of character strings.
+#'
+#' @return A character vector of the concatenated values.
+#'
+#' @examples
+#' temp1 <- c ("cow ", "pig ", "elephant ", "tiger ")
+#' temp2 <- c ("eats ", "loves ", "grows ", "has ")
+#' temp3 <- c ("grass", "mud", "big", "stripes")
+#' temp1 %xl_JoinStrings% temp2 %xl_JoinStrings% temp3
+#' # Result: "cow eats grass"     "pig loves mud"      "elephant grows big" "tiger has has "
+#'
+`%xl_JoinStrings%` <- function (
+    myStr1,
+    myStr2
+) {
+  return (
+    paste0 (myStr1, myStr2)
+  )
+}
+
+
+
+
 
 
 
@@ -44,92 +94,27 @@
 
 
 ###################################################################################X
-## . Function: Load Excel table
+## . TabulaDataSourceXLSX::Load_ExcelTable () -----
+
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Load_ExcelTable ()
+
+
+
+
+
+#. ---------------------------------------------------------------------------------
+
+
+###################################################################################X
+## . TabulaDataSourceXLSX::ConvertQueryToEnergyProfileInput () -----
 ###################################################################################X
 
-#' @export
-Load_ExcelTable <- function (myFileName,
-                             mySubfolderName,
-                             mySheetName,
-                             myHeaderRowCount) {
-
-  cat ("Load_ExcelTable: [", myFileName, "]", mySheetName, fill = TRUE, sep ="")
-
-  # Input for test of function
-  # myFileName <- "Gradtagzahlen-Deutschland.xlsx"
-  # mySubfolderName <- "Input/Climate"
-  # mySheetName <- "Data.TA.HD"
-  # myHeaderRowCount <- 1
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::ConvertQueryToEnergyProfileInput ()
 
 
-  # Test of function:
-  # Code_Type_Datafield <- "Input"
 
-
-  ## Read header of the table
-
-  Header_myDataFrame	<- NA
-  Header_myDataFrame <-
-      openxlsx::read.xlsx (
-        paste (mySubfolderName, myFileName, sep = "/"),
-        sheet = mySheetName,
-        colNames = TRUE) [(1 : max(1, myHeaderRowCount-1)),]
-
-
-  n_Col_Header <- ncol (Header_myDataFrame)
-  if (is.null (n_Col_Header)) {
-    n_Col_Header <- 1
-  }
-  #cat (n_Col_Header)
-
-  # if (n_Col_Header == 1) {
-  #
-  # }
-
-
-  ## Read values of the table
-
-  myDataFrame <- NA
-  myDataFrame <-
-      openxlsx::read.xlsx (
-        paste (mySubfolderName, myFileName, sep = "/"),
-        sheet = mySheetName,
-        rowNames = FALSE,
-        colNames = FALSE,
-        startRow = (myHeaderRowCount+1),
-        cols = (1:n_Col_Header),
-        skipEmptyCols = FALSE,
-        na.strings = c('NA',""))
-
-  n_Col_Data <- ncol (myDataFrame)
-  if (is.null (n_Col_Data)) {
-    n_Col_Data <- 1
-  }
-  #cat (n_Col_Data)
-
-  myDataFrame <-
-    if (n_Col_Data < n_Col_Header) {
-      cbind (
-        myDataFrame,
-        matrix (
-          data = NA,
-          nrow = nrow (myDataFrame),
-          ncol = (n_Col_Header - n_Col_Data))
-      )
-    } else {
-      myDataFrame
-    }
-
-  #ncol (myDataFrame)
-
-  colnames(myDataFrame) <- colnames(Header_myDataFrame)
-  #myDataFrame[1:10,]
-
-  rownames (myDataFrame) <- myDataFrame [ ,1]
-
-  return (myDataFrame)
-
-}
 
 
 
@@ -139,60 +124,12 @@ Load_ExcelTable <- function (myFileName,
 
 
 ###################################################################################X
-## . Function: Load script settings
-###################################################################################X
+## . TabulaDataSourceXLSX::Load_Settings () -----
 
+# Function: Load script settings
 
-Load_Settings <- function (
-    mySettingsID            = "Example.01",
-    myFileName_Settings     = "R-Settings_EnergyProfile.xlsx",
-    mySubDir_Settings       = "Input/Settings",
-    myAbsolutePath_Settings = ""
-) {
-
-  DF_AllGlobalSettings <-
-    Load_ExcelTable (
-      myFileName       = myFileName_Settings,
-      mySubfolderName  = mySubDir_Settings,
-      mySheetName      = "Global",
-      myHeaderRowCount = 1)
-
-  myFilterName <-
-    DF_AllGlobalSettings$Filter_BuildingDataset [
-      DF_AllGlobalSettings$ID_Settings == mySettingsID
-    ]
-
-  if (is.na (myFilterName)) {
-    DF_DatasetFilter <- NA
-  } else {
-    DF_DatasetFilter <-
-      openxlsx::read.xlsx (
-        paste (mySubDir_Settings, myFileName_Settings, sep = "/"),
-        sheet = myFilterName,
-        colNames = TRUE
-      )
-  }
-
-
-  # old version, did not work with Filter consisting of only 1 column
-  # DF_DatasetFilter <-
-  #   Load_ExcelTable (
-  #     myFileName = myFileName_Settings,
-  #     mySubfolderName = mySubDir_Settings,
-  #     mySheetName =
-  #       DF_AllGlobalSettings$Filter_BuildingDataset [
-  #         DF_AllGlobalSettings$ID_Settings == mySettingsID
-  #         ],
-  #     myHeaderRowCount = 1)
-
-  return (
-    list (
-      DF_Global = DF_AllGlobalSettings [DF_AllGlobalSettings$ID_Settings == mySettingsID, ],
-      DF_DatasetFilter = DF_DatasetFilter
-    )
-  )
-
-}
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Load_Settings ()
 
 
 
@@ -208,101 +145,15 @@ Load_Settings <- function (
 
 
 ###################################################################################X
-## . Function load TABULA library values from specified table
-###################################################################################X
+## . TabulaDataSourceXLSX::Load_Lib_TABULA () ----
 
-#' @export
-Load_Lib_TABULA <- function (
-    mySheetName_Lib_TABULA,
-    myFileName_Lib_TABULA     = "tabula-values.xlsx",
-    mySubDir_Lib_TABULA       = "Input/Lib_TABULA",
-    myAbsolutePath_Lib_TABULA = ""
-    ) {
-
-  ## Internal test of the function
-  # mySheetName_Lib_TABULA    <- "Tab.System.HG"
-  # # mySheetName_Lib_TABULA    <- "Tab.ConstrYearClass"
-  # myFileName_Lib_TABULA     <- "tabula-values.xlsx"
-  # mySubDir_Lib_TABULA       <- "Input/Lib_TABULA"
-  # myAbsolutePath_Lib_TABULA <- ""
+# Function load TABULA library values from specified Excel table
 
 
-  # myDataFrameName <- "ParTab_EnvArEst" # Use for test of function
-  # myDataFrameName <- "ParTab_SysHD" # Use for test of function
-
-  # mySheetName_Lib_TABULA <-
-  #   NamesByCodes_Sheet_Lib_TABULA [NamesByCodes_Sheet_Lib_TABULA$Codes_Lib == myDataFrameName ,"Names_Table_Lib"]
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Load_Lib_TABULA ()
 
 
-  cat ("Load_Lib_TABULA: [", myFileName_Lib_TABULA, "]", mySheetName_Lib_TABULA, fill = TRUE, sep ="")
-
-
-  myAbsolutePath_Lib_TABULA <-
-    if (myAbsolutePath_Lib_TABULA == "") {
-      ""
-    } else {
-      paste0 (myAbsolutePath_Lib_TABULA, "/")
-    }
-
-  temp_header <- NA
-  temp_header <-
-    openxlsx::read.xlsx (
-      paste0 (myAbsolutePath_Lib_TABULA,
-             mySubDir_Lib_TABULA, "/",
-             myFileName_Lib_TABULA),
-      sheet = mySheetName_Lib_TABULA,
-      startRow = 1,
-      colNames = TRUE #,
-      #detectDates = TRUE # not used, causes errors if different
-      # date formats are used in one column
-    )
-  # Data frame used as a header (datafield names)
-  #ncol(temp_header)
-  #str(temp_header)
-
-
-  ParTab <-
-    openxlsx::read.xlsx (
-      paste0 (myAbsolutePath_Lib_TABULA,
-              mySubDir_Lib_TABULA, "/",
-              myFileName_Lib_TABULA),
-      sheet = mySheetName_Lib_TABULA,
-      startRow = 11,
-      colNames = FALSE,
-      skipEmptyCols = FALSE #,
-      #detectDates = TRUE # not used, causes errors if different
-      # date formats are used in one column
-      # for example values '11.09.2015' and '14.09.2016  14:07:09'
-      # as input values (even if Excel cell format is the same;
-      # If detectDates = FALSE both versions are read as integer
-      # in the same Excel systematics)
-    )
-  #ncol(ParTab)
-  #
-
-  n_Col_Min_Temp <- min (ncol(ParTab), ncol(temp_header))
-  # Due to notes and auxiliary cells the number of columns can be different.
-  temp_header <- temp_header [,1:n_Col_Min_Temp]
-  ParTab <- ParTab [,1:n_Col_Min_Temp]
-  colnames (ParTab) <-  colnames(temp_header)
-
-  ParTab <- ParTab [! is.na (ParTab [,1]), ]
-  # Rows with dataset name (first column) not available are removed
-
-  rownames (ParTab) <- ParTab [,1]
-
-  ColsFormat <- temp_header [5, ]
-  i_Cols_DateFormat <- which (ColsFormat == "Date")
-
-  for (i_Col in i_Cols_DateFormat) {
-    ParTab [ ,i_Col] <-
-      AuxFunctions::xl_ConvertDate (ParTab [ ,i_Col])
-  }
-
-  return (ParTab)
-
-
-} # End function
 
 
 
@@ -313,12 +164,21 @@ Load_Lib_TABULA <- function (
 ## . Function: Load all TABULA tables with calculation parameters (Excel or R data package)
 ###################################################################################X
 
+# 2025-12-19 Note: The original function including option to import from Excel has been moved
+# to the new package TabulaDataSourceXLSX.
+# Call: TabulaDataSourceXLSX::Load_ParameterTables_XLSX_RDA ()
+
+# The following version of the function only loads parameters from RDA files
+
+
 #' @export
-Load_ParameterTables <- function (
-    mySwitch_LoadLibFromRDataPackage = 0,
-    myFileName_Lib_TABULA            = "tabula-values.xlsx",
-    mySubDir_Lib_TABULA              = "Input/Lib_TABULA",
-    myAbsolutePath_Lib_TABULA        = "") {
+Load_ParameterTables <- function () {
+
+# Load_ParameterTables <- function (
+#     mySwitch_LoadLibFromRDataPackage = 1,  # 2025-12-19 changed from
+#     myFileName_Lib_TABULA            = "tabula-values.xlsx",
+#     mySubDir_Lib_TABULA              = "Input/Lib_TABULA",
+#     myAbsolutePath_Lib_TABULA        = "") {
 
   ## Internal test of the function
   # mySheetName_Lib_TABULA    <- "Tab.ConstrYearClass"
@@ -327,241 +187,246 @@ Load_ParameterTables <- function (
   # myAbsolutePath_Lib_TABULA <- ""
 
 
+  mySwitch_LoadLibFromRDataPackage <- 1
+
   if (mySwitch_LoadLibFromRDataPackage == 0) {
 
     ## Option 1: Load tables from local Excel file
 
-    ParTab_EnvArEst             <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Par.EnvAreaEstim",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
+    # 2025-12-19 this option is now only included in the package TabulaDataSourceXLSX as function Load_ParameterTables_XLSX_RDA ()
+    # Now: Do nothing.
 
-    ParTab_ConstrYearClass      <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.ConstrYearClass",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_UClassConstr         <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.U.Class.Constr",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_InsulationDefault    <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Insulation.Default",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_MeasurefDefault      <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Measure.f.Default",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_ThermalBridging      <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Const.ThermalBridging",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-
-    ParTab_Infiltration         <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Const.Infiltration",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_WindowTypePeriods    <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.U.WindowType.Periods",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_BoundaryCond         <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.BoundaryCond",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_Climate              <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Climate",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_Uncertainty          <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Uncertainty.Levels",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_HG            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.HG",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_HS            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.HS",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_HD            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.HD",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_HA            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.HA",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_WG            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.WG",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_WS            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.WS",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_WD            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.WD",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_WA            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.WA",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_H             <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.H",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_W             <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.W",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_Vent          <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.Vent",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_PVPanel       <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.PVPanel",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_PV            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.PV",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    #ParTab_System_Coverage      <-
-    #  Load_Lib_TABULA (
-    #   mySheetName_Lib_TABULA    = "Tab.System.Coverage") # Currently not used
-    #ParTab_System_ElProd        <-
-    #  Load_Lib_TABULA (
-    #   mySheetName_Lib_TABULA    = "Tab.System.ElProd") # Currently not used
-
-    ParTab_System_SetECAssess   <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.SetECAssess",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_System_EC            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.System.EC",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_Meter_EnergyDensity            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.Meter.EnergyDensity",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
-
-    ParTab_CalcAdapt            <-
-      Load_Lib_TABULA (
-        mySheetName_Lib_TABULA    = "Tab.CalcAdapt",
-        myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
-        mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
-        myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
-      )
+    # ParTab_EnvArEst             <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Par.EnvAreaEstim",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_ConstrYearClass      <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.ConstrYearClass",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_UClassConstr         <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.U.Class.Constr",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_InsulationDefault    <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Insulation.Default",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_MeasurefDefault      <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Measure.f.Default",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_ThermalBridging      <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Const.ThermalBridging",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    #
+    # ParTab_Infiltration         <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Const.Infiltration",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_WindowTypePeriods    <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.U.WindowType.Periods",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_BoundaryCond         <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.BoundaryCond",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_Climate              <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Climate",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_Uncertainty          <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Uncertainty.Levels",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_HG            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.HG",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_HS            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.HS",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_HD            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.HD",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_HA            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.HA",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_WG            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.WG",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_WS            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.WS",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_WD            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.WD",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_WA            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.WA",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_H             <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.H",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_W             <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.W",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_Vent          <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.Vent",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_PVPanel       <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.PVPanel",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_PV            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.PV",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # #ParTab_System_Coverage      <-
+    # #  Load_Lib_TABULA (
+    # #   mySheetName_Lib_TABULA    = "Tab.System.Coverage") # Currently not used
+    # #ParTab_System_ElProd        <-
+    # #  Load_Lib_TABULA (
+    # #   mySheetName_Lib_TABULA    = "Tab.System.ElProd") # Currently not used
+    #
+    # ParTab_System_SetECAssess   <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.SetECAssess",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_System_EC            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.System.EC",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_Meter_EnergyDensity            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.Meter.EnergyDensity",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
+    #
+    # ParTab_CalcAdapt            <-
+    #   Load_Lib_TABULA (
+    #     mySheetName_Lib_TABULA    = "Tab.CalcAdapt",
+    #     myFileName_Lib_TABULA     = myFileName_Lib_TABULA,
+    #     mySubDir_Lib_TABULA       = mySubDir_Lib_TABULA,
+    #     myAbsolutePath_Lib_TABULA = myAbsolutePath_Lib_TABULA
+    #   )
 
   } else {
 
@@ -689,59 +554,13 @@ Load_ParameterTables <- function (
 
 
 
-
-
-
 ###################################################################################X
-## . Function: GetParameterTables_LocalExcel
-
-#' Get TABULA tables with calculation parameters from local Excel workbook
-#'
-#' GetParameterTables_LocalExcel () loads a data library with parameters
-#' for the energy performance calculation from the Excel workbook "tabula-values.xlsx".
-#' The data tables of the package are basically identical to the tables of the workbook
-#' "tabula-values.xlsx" from the European projects TABULA and EPISCOPE
-#' (Download at: https://episcope.eu/communication/download/)
-#' However some tables have been added used by the MOBASY algorithms for
-#' target/actual comparison and for uncertainty assessment.
-#' In some of the existing tables additional parameter sets (rows) have been added.
-#'
-#' The file name and subfolder are fixed to:
-#' Subfolder: "Input/Lib"
-#' File name: "tabula-values.xlsx"
-#' GetParameterTables_LocalExcel () is a wrapper for the function Load_ParameterTables ()
-#' in which arguments are used specifying the data source (local Excel or R data package
-#' and the location of the local file).
-#'
-#' @param None
-#'
-#' @return A List of 28 dataframes
-#'
-#' @examples
-#'
-#' ## Load data
-#'
-#' TabulaTables <-
-#'   GetParameterTables_LocalExcel ()
-#'
-#' ## Show structure and content of some of the dataframes
-#' str (TabulaTables$ParTab_InsulationDefault)
-#' str (TabulaTables$ParTab_System_HG)
-#' str (TabulaTables$ParTab_Meter_EnergyDensity)
-#' str (TabulaTables$ParTab_Uncertainty)
-#'
-#' @export
-GetParameterTables_LocalExcel <- function () {
-
-  TabulaTables <-
-    Load_ParameterTables (mySwitch_LoadLibFromRDataPackage = 0)
-
-  return (
-    TabulaTables
-  )
+## . TabulaDataSourceXLSX::GetParameterTables_LocalExcel -----
 
 
-}
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::GetParameterTables_LocalExcel ()
+
 
 
 
@@ -787,7 +606,8 @@ GetParameterTables_LocalExcel <- function () {
 GetParameterTables_RDataPackage <- function () {
 
   TabulaTables <-
-    Load_ParameterTables (mySwitch_LoadLibFromRDataPackage = 1)
+    Load_ParameterTables ()
+  # Load_ParameterTables (mySwitch_LoadLibFromRDataPackage = 1)
 
   return (
     TabulaTables
@@ -803,72 +623,14 @@ GetParameterTables_RDataPackage <- function () {
 
 
 ###################################################################################X
-## . Function: Load tables with station climate data from local workbook
-###################################################################################X
+## . TabulaDataSourceXLSX::Load_StationClimateTables_Excel () -----
+## Function: Load tables with station climate data from local workbook
 
 
-#' @export
-Load_StationClimateTables_Excel <- function (
-    myFileName_StationClimate         = "Gradtagzahlen-Deutschland.xlsx",
-    mySubDir_StationClimate           = "Input/Climate",
-    myAbsolutePath_StationClimate     = ""
-) {
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Load_StationClimateTables_Excel ()
 
-  ClimateData_StationTA <-
-    #Data_ClimateMonth_StationTA <-
-    Load_ExcelTable (
-      myFileName       = myFileName_StationClimate,
-      mySubfolderName  = mySubDir_StationClimate,
-      mySheetName      = "List.Station.TA",
-      myHeaderRowCount = 1
-    )
 
-  ClimateData_PostCodes <-
-    #Data_ClimateMonth_StationMapping <-
-    Load_ExcelTable (
-      myFileName       = myFileName_StationClimate,
-      mySubfolderName  = mySubDir_StationClimate,
-      mySheetName      = "Tab.StationMapping",
-      myHeaderRowCount = 1
-    )
-
-  ClimateData_TA_HD <-
-    #Data_ClimateMonth_TA_HD <-
-    Load_ExcelTable (
-      myFileName       = myFileName_StationClimate,
-      mySubfolderName  = mySubDir_StationClimate,
-      mySheetName      = "Data.TA.HD",
-      myHeaderRowCount = 1
-    )
-
-  ClimateData_Sol <-
-    #Data_ClimateMonth_Sol <-
-    Load_ExcelTable (
-      myFileName       = myFileName_StationClimate,
-      mySubfolderName  = mySubDir_StationClimate,
-      mySheetName      = "Data.Sol",
-      myHeaderRowCount = 1
-    )
-
-  ParTab_SolOrientEst <-
-    Load_ExcelTable (
-      myFileName       = myFileName_StationClimate,
-      mySubfolderName  = mySubDir_StationClimate,
-      mySheetName      = "Tab.Estim.Sol.Orient",
-      myHeaderRowCount = 1
-    )
-
-  return (
-    list (
-      ClimateData_StationTA = ClimateData_StationTA,
-      ClimateData_PostCodes = ClimateData_PostCodes,
-      ClimateData_TA_HD     = ClimateData_TA_HD,
-      ClimateData_Sol       = ClimateData_Sol,
-      ParTab_SolOrientEst   = ParTab_SolOrientEst
-      )
-    )
-
-} # End of function
 
 
 #. ---------------------------------------------------------------------------------
@@ -878,46 +640,12 @@ Load_StationClimateTables_Excel <- function (
 
 
 ###################################################################################X
-## . Function: GetStationClimate_LocalExcel
+## . TabulaDataSourceXLSX::GetStationClimate_LocalExcel () -----
 
-#' Get station climate data from local Excel file
-#'
-#' GetStationClimate_LocalExcel () loads all station climate data from a local Excel file.
-#' The source is fixed to:
-#' Subfolder:    "Input/Climate"
-#' File name:    "Gradtagzahlen-Deutschland.xlsx"
-#' It is a wrapper for the function Load_StationClimateTables_Excel () in which
-#' arguments are used specifying the type of data source (local Excel or R data package)
-#' and the localisation of the local file.
-#'
-#' @param None
-#'
-#' @return StationClimateTables a list of dataframes
-#' @examples
-#'
-#' StationClimateTables <- GetStationClimate_LocalExcel ()
-#'
-#' ## Show structure and content of exemplary dataframes included in the list
-#'
-#' str (StationClimateTables$ClimateData_PostCodes)
-#' str (StationClimateTables$ClimateData_TA_HD)
-#'
-#'
-#' @export
-GetStationClimate_LocalExcel <- function (
-) {
 
-  ClimateStationTables <- Load_StationClimateTables_Excel (
-    myFileName_StationClimate         = "Gradtagzahlen-Deutschland.xlsx",
-    mySubDir_StationClimate           = "Input/Climate",
-    myAbsolutePath_StationClimate     = ""
-  )
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::GetStationClimate_LocalExcel ()
 
-  return (
-    ClimateStationTables
-  )
-
-}
 
 
 
@@ -990,180 +718,12 @@ GetStationClimate_RDataPackage <- function (
 
 
 ###################################################################################X
-## . Function: Load building data from Excel workbook
-###################################################################################X
+## . TabulaDataSourceXLSX::Load_BuildingData_Excel -----
 
-#' @export
-Load_BuildingData_Excel <- function (
-    Code_Type_Datafield,
-    myFilterVariableName_01 = NA,
-    myFilter_01 = NA,
-    myFilterVariableName_02 = NA,
-    myFilter_02 = NA
-    ) {
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Load_BuildingData_Excel ()
 
 
-  ## Test of function:
-  # Code_Type_Datafield <- "Input"
-  # myFilterVariableName_01 <- "Status_DataBase_Admin"
-  # myFilter_01             <- "Project"
-  # myFilterVariableName_02 <- NA # "Status_DataBase_Admin"
-  # myFilter_02             <- NA # "Test_Calc"
-
-
-  ## Constants
-
-  n_Row_Header_DataBuilding <- 100
-  i_Row_ColumnFormat <- 98
-
-  WorkingDir <- getwd ()
-
-  Name_File_BuildingData   <- "Building-Data"
-  Name_Sheet_BuildingData  <- "Data.Building"
-  Subfolder_BuildingData   <- "Input/BuildingData"
-  Path_File_BuildingData   <-
-    paste (
-      WorkingDir, "/",
-      Subfolder_BuildingData, "/",
-      Name_File_BuildingData, ".xlsx",
-      sep = ""
-    )
-
-
-  ## Print information about current step
-
-  cat ("Load_ExcelTable: [", Name_File_BuildingData, "]",
-       Name_Sheet_BuildingData,
-       fill = TRUE, sep ="")
-
-  ## Read header of BuildingData table (building data)
-  Header_DataBuilding	<- NA
-  Header_DataBuilding <- openxlsx::read.xlsx (Path_File_BuildingData,
-                                    sheet=Name_Sheet_BuildingData,
-                                    colNames = TRUE)[
-                                      (1 : n_Row_Header_DataBuilding),
-                                      ]
-
-  ## Identify input variables (monitoring variables, additional model-input variables, boundary conditions)
-
-  i_Row_Code_Type_DataFlow <-
-    which (Header_DataBuilding [,1] == "Type_Datafield_WebTool")
-
-  i_Col_Selected <-
-    which (Header_DataBuilding [i_Row_Code_Type_DataFlow,] == Code_Type_Datafield)
-  #i_Col_Selected <- which (Header_DataBuilding [i_Row_Code_Type_DataFlow,] == "Input")
-  #Header_DataBuilding
-
-  n_Col_Header <- length (colnames (Header_DataBuilding))
-  #n_Col_Header
-
-  # Note: The following row in the header should be used to identify the monitoring indicators and the input indicators of the calculation model.
-  # Only these should be retained.
-  #
-  # Possible codes:
-  # Info | Monitoring | Metering | Input_Building_Detailed | Input_Model_Parameters | Output_Model
-  #
-  #Header_DataBuilding [Header_DataBuilding$ID_Dataset == "Index_Level_DataAcquisition", 1:50]
-
-  ## Read BuildingData table (building data)
-  BuildingData <- NA
-  BuildingData <- openxlsx::read.xlsx (Path_File_BuildingData,
-                             sheet=Name_Sheet_BuildingData,
-                             rowNames = FALSE,
-                             colNames = FALSE,
-                             startRow = (n_Row_Header_DataBuilding+1),
-                             cols = (1:n_Col_Header),
-                             skipEmptyCols = FALSE,
-                             na.strings = c('NA','#',""))
-  #BuildingData <- read.xlsx (Path_File_BuildingData, sheet=Name_Sheet_BuildingData, colNames = FALSE, startRow = (n_Row_Header_DataBuilding+1), cols = (1:n_Col_Header),  skipEmptyCols = FALSE, na.strings = c('NA','#',""), detectDates = TRUE)
-  #BuildingData <- read.xlsx (Path_File_BuildingData, sheet=Name_Sheet_BuildingData, colNames = FALSE, startRow = (n_Row_Header_DataBuilding+1), skipEmptyCols = FALSE, na.strings = c('NA','#',""))
-  #BuildingData <- read.xlsx (Path_File_BuildingData, sheet=Name_Sheet_BuildingData, colNames = FALSE, startRow = (n_Row_Header_DataBuilding+1), skipEmptyCols = FALSE)
-
-  #BuildingData[(1:10),]
-
-  #colnames (BuildingData)
-  #length (colnames (BuildingData))
-
-  n_Col_Data <- ncol (BuildingData)
-
-  BuildingData <-
-    if (n_Col_Data < n_Col_Header) {
-      cbind (
-        BuildingData,
-        matrix (data = NA, nrow = nrow (BuildingData), ncol = (n_Col_Header - n_Col_Data))
-      )
-    } else {
-      BuildingData
-    }
-  length (colnames (BuildingData))
-
-
-
-
-  colnames (BuildingData) <- colnames (Header_DataBuilding)
-  #BuildingData[1:10,]
-
-
-  if (! is.na (myFilterVariableName_01) & is.na (myFilterVariableName_02)) {
-    BuildingData <- BuildingData [BuildingData [ ,myFilterVariableName_01] %in%
-                                  myFilter_01, ]
-
-  }
-
-
-  if (! is.na (myFilterVariableName_01) & ! is.na (myFilterVariableName_02)) {
-    BuildingData <- BuildingData [BuildingData [ ,myFilterVariableName_01] %in%
-                                  myFilter_01  &
-                                  BuildingData [ ,myFilterVariableName_02] %in%
-                                  myFilter_02,]
-  } # 2022-11-25: Changed from OR (|) to AND (&)
-
-  # BuildingData <- BuildingData [BuildingData$Status_DataBase_Admin == "Project" |
-  #                                             BuildingData$Status_DataBase_Admin == "Test_Calc",]
-
-  #BuildingData [1:10, ]
-  #View (BuildingData)
-
-  rownames (BuildingData) <- BuildingData$ID_Dataset # not yet necessary
-
-  BuildingData <- BuildingData [, c(1, i_Col_Selected)]
-  #BuildingData <- BuildingData [, c(1, 2, 3, 4, i_Col_Selected)]
-  # colnames (BuildingData)
-
-
-
-  ## Convert boolean Excel input
-  #  2024-04-12 supplemented
-  #  Convert from {"1", "0", 1, 0, TRUE, FALSE, NA}
-  #  to {TRUE, FALSE, NA}
-
-  Header_DataBuilding <- Header_DataBuilding [ , colnames (BuildingData)]
-
-  Colnames_Header_VarTypeBoolean <-
-    colnames (
-      Header_DataBuilding [ ,
-        as.integer (which (Header_DataBuilding [i_Row_ColumnFormat, ] == "Boolean"))
-      ]
-    )
-
-  if (sum (Colnames_Header_VarTypeBoolean %in% colnames (BuildingData)) > 0) {
-    BuildingData [ ,Colnames_Header_VarTypeBoolean] <-
-      as.logical (
-        Reformat_InputData_Boolean (
-          BuildingData [ , Colnames_Header_VarTypeBoolean]
-        )
-      )
-  }
-
-
-
-  return (
-    list (
-      BuildingData        = BuildingData,
-      Header_BuildingData = Header_DataBuilding
-      )
-  )
-}
 
 
 #. ---------------------------------------------------------------------------------
@@ -1172,18 +732,18 @@ Load_BuildingData_Excel <- function (
 ###################################################################################X
 ## . Function: GetDataMobasy ()
 
+# 2025-12-19 Note: The original function including option to import from Excel has been moved
+# to the new package TabulaDataSourceXLSX.
+# Call: TabulaDataSourceXLSX::GetDataMobasy_XLSX_RDA ()
+
+# The following version of the function only loads parameters from RDA files
+
+
 #' Get MOBASY data from specific sources
 #'
 #' GetDataMobasy () loads the data used for the functions EnergyProfileCalc ()
-#' and MobasyCalc () from sources that are specified by the parameters
-#' (local Excel workbooks or R data packages).
+#' and MobasyCalc () from R data packages.
 #'
-#' @param Indicator_Load_ParameterTables_Excel             an integer (possible values: 0, 1)
-#' @param Indicator_Load_ParameterTables_RDataPackage      an integer (possible values: 0, 1)
-#' @param Indicator_Load_StationClimateTables_Excel        an integer (possible values: 0, 1)
-#' @param Indicator_Load_StationClimateTables_RDataPackage an integer (possible values: 0, 1)
-#' @param Indicator_Load_BuildingData_Excel                an integer (possible values: 0, 1)
-#' @param Indicator_Load_BuildingData_RDataPackage         an integer (possible values: 0, 1)
 #' @param FilterVariableName_1                   a character string
 #' @param FilterValueList_1                      a character string or a list of character strings
 #' @param FilterVariableName_2                   a character string
@@ -1195,12 +755,6 @@ Load_BuildingData_Excel <- function (
 #' @examples
 #'
 #' mydata <- GetDataMobasy (
-#'  Indicator_Load_ParameterTables_Excel              = 1,
-#'  Indicator_Load_ParameterTables_RDataPackage       = 0,
-#'  Indicator_Load_StationClimateTables_Excel         = 1,
-#'  Indicator_Load_StationClimateTables_RDataPackage  = 0,
-#'  Indicator_Load_BuildingData_Excel                 = 1,
-#'  Indicator_Load_BuildingData_RDataPackage          = 0,
 #'  myFilterVariableName_1  = "ID_Dataset",
 #'  myFilterValueList_1     = c (
 #'    "DE.MOBASY.WBG.0008.61",
@@ -1225,12 +779,6 @@ Load_BuildingData_Excel <- function (
 #'
 #' @export
 GetDataMobasy <- function (
-    Indicator_Load_ParameterTables_Excel              = 1,
-    Indicator_Load_ParameterTables_RDataPackage       = 0,
-    Indicator_Load_StationClimateTables_Excel         = 1,
-    Indicator_Load_StationClimateTables_RDataPackage  = 0,
-    Indicator_Load_BuildingData_Excel                 = 1,
-    Indicator_Load_BuildingData_RDataPackage          = 0,
     FilterVariableName_1                    = "Status_DataBase_Admin",
     FilterValueList_1                       = c ("Public", "Project",
                                                  "Test_Calc", "Analysis"),
@@ -1250,123 +798,33 @@ GetDataMobasy <- function (
   DF_FilterBuildingData     <- NA
 
 
+
+
+
   #####################################################################################X
   ## Load tabula values from library
 
 
-  ## Option 1: Load tabula values from Excel file
-
-  if (Indicator_Load_ParameterTables_Excel * 1 == 1) {
-
     Lib_TABULA <-
-      Load_ParameterTables (
-        mySwitch_LoadLibFromRDataPackage = 0,
-        myFileName_Lib_TABULA     = "tabula-values.xlsx",
-        mySubDir_Lib_TABULA       = "Input/Lib_TABULA",
-      )
+      Load_ParameterTables ()
 
-  }
-
-
-  ## Option 2: Load tabula values from R data package
-
-  if (Indicator_Load_ParameterTables_RDataPackage * 1 == 1) {
-
-    Lib_TABULA <-
-      Load_ParameterTables (
-        mySwitch_LoadLibFromRDataPackage = 1,
-        myFileName_Lib_TABULA     = NA,
-        mySubDir_Lib_TABULA       = NA,
-      )
-
-  }
 
 
   #####################################################################################X
   ## Load climate station values
 
-
-  ## Option 1: Load climate station values from Excel file
-
-  if (Indicator_Load_StationClimateTables_Excel * 1 == 1) {
-
     Lib_ClimateStation <-
-      Load_StationClimateTables_Excel  (
-        myFileName_StationClimate         = "Gradtagzahlen-Deutschland.xlsx",
-        mySubDir_StationClimate           = "Input/Climate",
-        myAbsolutePath_StationClimate     = ""
-      )
+      GetStationClimate_RDataPackage ()
 
-  }
+    # Lib_ClimateStation <-
+    #   Load_StationClimateTables_RDataPackage  (
+    #   )
 
-
-  ## Option 2: Load climate station values from R data packaage
-
-  if (Indicator_Load_StationClimateTables_RDataPackage * 1 == 1) {
-
-    Lib_ClimateStation <-
-      Load_StationClimateTables_RDataPackage  (
-      )
-
-  }
 
 
   #####################################################################################X
   ## Load building data
 
-
-  ## Option 1: Load building data from Excel file
-
-  if (Indicator_Load_BuildingData_Excel * 1 == 1) {
-
-    List_Temp <-
-      Load_BuildingData_Excel (
-        Code_Type_Datafield = "Input",
-        myFilterVariableName_01 = FilterVariableName_1,
-        myFilter_01             = FilterValueList_1,
-        myFilterVariableName_02 = FilterVariableName_2,
-        myFilter_02             = FilterValueList_2
-      ) # Function defined in AuxDataTransfer
-    Data_Input          <- List_Temp$BuildingData
-    Header_BuildingData <- List_Temp$Header_BuildingData
-
-    List_Temp <-
-      Load_BuildingData_Excel (
-        Code_Type_Datafield = "Output",
-        myFilterVariableName_01 = FilterVariableName_1,
-        myFilter_01             = FilterValueList_1,
-        myFilterVariableName_02 = FilterVariableName_2,
-        myFilter_02             = FilterValueList_2
-      ) # Function defined in AuxDataTransfer
-    Data_Output_PreCalculated <- List_Temp$BuildingData
-    #colnames (Data_Output_PreCalculated)
-
-    # Data_Output_PreCalculated <-
-    #   Data_Output_PreCalculated [rownames (Data_Input), ]
-
-    Data_Output <- Data_Output_PreCalculated
-    Data_Output [ , 2:ncol(Data_Output)] <- NA
-
-    Data_Calc <-
-      Data_Input
-
-    DF_FilterBuildingData <-
-      Load_ExcelTable (myFileName = "Building-Data.xlsx",
-                       mySubfolderName = "Input/BuildingData",
-                       mySheetName = "Filter.Dataset",
-                       myHeaderRowCount = 1)
-
-    myFilterName = "All"
-
-    # n_Dataset <-
-    #   nrow (Data_Calc)
-
-  } # End if (load building data from Excel file )
-
-
-  ## Option 2: Load building data from R data packaage
-
-  if (Indicator_Load_BuildingData_RDataPackage * 1 == 1) {
 
     Data_Input                <- MobasyBuildingData::Data_Input
     Data_Output_PreCalculated <- MobasyBuildingData::Data_Output_PreCalculated
@@ -1392,7 +850,6 @@ GetDataMobasy <- function (
     }
 
 
-  } # End if (load building data from *.rda files)
 
   MobasyData <-
     list (
@@ -1539,141 +996,12 @@ ApplyFilterBuildingDatasets <- function (
 
 
 ###################################################################################X
-## . Function: GetBuildingData_LocalExcel
+## . TabulaDataSourceXLSX::GetBuildingData_LocalExcel () -----
 
-#' Get MOBASY building data from local Excel file
-#'
-#' GetBuildingData_LocalExcel () loads the MOBASY building data table from a local Excel file
-#' and returns a dataframe with datasets specified by the function argument.
-#' Subfolder:    "Input/BuildingData"
-#' File name:    "Building-Data.xlsx"
-#' Sheet name:   "Data.Building"
-#' GetDataMobasy_Local () is a wrapper for the function GetDataMobasy () in which
-#' arguments are used specifying the data source (local Excel or R data package)
-#' and the building datasets to be loaded.
-#'
-#' @param myFilterName a character string using predefined lists of datasets.
-#' The currently defined subsets are:
-#' "Examples":         Several example datasets
-#' "MOBASY-Sample":    Datasets of more than 100 multi-family houses used for target / actual
-#'                     comparison and benchmarking in the MOBASY project
-#'                     (see https://www.iwu.de/forschung/energie/mobasy/)
-#' "MOBASY-Sample_Checked-OnSite":    Datasets of 12 buildings from the MOBASY sample which were checked onsite
-#'                     Can be used to test the function MobasyCalc () including target actual comparison
-#' "ParameterStudy-CESB-2022":  10 datasets of the parameter study, published in
-#'                     Loga, Tobias; Stein, Britta; Behem, Guillaume (2023):
-#'                     Use of Energy Profile Indicators to Determine the Expected Range
-#'                     of Heating Energy Consumption;
-#'                     Proceedings of the Conference "Central Europe towards Sustainable Building"
-#'                     2022 (CESB22), 4 to 6 July 2022;
-#'                     Acta Polytechnica CTU Proceedings 38:470–477, 2022, published 2023
-#'                     https://doi.org/10.14311/APP.2022.38.0470
-#'                     (also implemented in the MOBASY project)
-#' "ParameterStudy-PHSP-2023": 32 datasets of a parameter study on the
-#'                    "PassivHausSozialPlus" buildings, implemented in the MOBASY project
-#' "MOBASY-All"        All datasets mentioned above
-#' "WebTool":          One dataset used for the webtool
-#' "Typology-DE_Example-Buildings"  Datasets of the example buildings from the German residential building typology
-#' "EnergyProfileShinyApp"  includes the datasets from the following filters: "Typology-DE_Example-Buildings", "MOBASY-All"
-#' "All" (default):       All datasets listed above
-#'
-#' @return BuildingDataTables a list of dataframes including the calculation input data
-#' "Data_Input", an empty dataframe "Data_Output" providing the structure for the output,
-#' the dataframe "Data_Output_PreCalculated" providing data calculated by the Excel tool
-#' (useful for comparison by developers) and the dataframe "Data_Calc" which is used to
-#' collect all variables and their values used in the different calculation functions.
-#' Furthermore the dataframe with all available filter lists DF_FilterBuildingData and the
-#' actually applied filter myFilterName are returned
-#'
-#' @examples
-#'
-#' ## Get data from weather stations
-#' StationClimateTables <- GetStationClimate_LocalExcel ()
-#'
-#'
-#' ## Get local building data
-#' # Different options of dataset selection:
-#'
-#' # (1) Load all available datasets from the MOBASY building data table
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ()
-#' or
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("All")
-#'
-#' # (2) Load some example datasets
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("Examples")
-#'
-#' # (3) Load all datasets from the MOBASY sample
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample")
-#'
-#' # (4) Load a selection of datasets from the MOBASY sample (12 buildings)
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("MOBASY-Sample_Checked-OnSite")
-#'
-#' # (5) Load datasets of 6 buildings from a parameter study on uncertainties
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-CESB-2022")
-#'
-#' # (6) Load dataset of the target/actual comparison study performed
-#' #     for the two "PassivHausSozialPlus" (PHSP) buildings (2 x 16 variants)
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("ParameterStudy-PHSP-2023")
-#'
-#' # (7) Load dataset of 1 building (example for webtool)
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("WebTool")
-#'
-#' # (8) Load datasets of the example buildings from the German residential building typology
-#' myBuildingDataTables <- GetBuildingData_LocalExcel ("Typology-DE_Example-Buildings")
-#'
-#' ## Show structure and content of the main dataframes
-#' str (myBuildingDataTables$Data_Input)
-#' str (myBuildingDataTables$Data_Output)
-#'
-#' ## Show the names of the predefined filter lists
-#' colnames (myBuildingDataTables$DF_FilterBuildingData)
-#'
-#' @export
-GetBuildingData_LocalExcel <- function (
-    myFilterName = "All"
-) {
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::GetBuildingData_LocalExcel ()
 
 
-  myDataTables <-
-    GetDataMobasy (
-      Indicator_Load_ParameterTables_Excel              = 0,
-      Indicator_Load_ParameterTables_RDataPackage       = 0,
-      Indicator_Load_StationClimateTables_Excel         = 0,
-      Indicator_Load_StationClimateTables_RDataPackage  = 0,
-      Indicator_Load_BuildingData_Excel                 = 1,
-      Indicator_Load_BuildingData_RDataPackage          = 0,
-    )
-
-  myDataTables <-
-    ApplyFilterBuildingDatasets (
-    Data_Input                = myDataTables$Data_Input,
-    Data_Output_PreCalculated = myDataTables$Data_Output_PreCalculated,
-    Data_Output               = myDataTables$Data_Output,
-    Data_Calc                 = myDataTables$Data_Calc,
-    Header_BuildingData       = myDataTables$Header_BuildingData,
-    DF_FilterBuildingData     = myDataTables$DF_FilterBuildingData,
-    myFilterName              = myFilterName
-  )
-
-
-  # Only a selection of the list returned by GetDataMobasy ()
-  # will be returned by GetBuildingData_LocalExcel ()
-  myBuildingDataTables <-
-    list (
-      Data_Input	              =	myDataTables$Data_Input,
-      Data_Output_PreCalculated =	myDataTables$Data_Output_PreCalculated,
-      Data_Output 	            =	myDataTables$Data_Output,
-      Data_Calc	                =	myDataTables$Data_Calc,
-      Header_BuildingData       = myDataTables$Header_BuildingData,
-      DF_FilterBuildingData     = myDataTables$DF_FilterBuildingData,
-      myFilterName              = myFilterName
-    )
-
-  return (
-    myBuildingDataTables
-  )
-
-}
 
 
 
@@ -1776,12 +1104,6 @@ GetBuildingData_RDataPackage <- function (
 
   myDataTables <-
     GetDataMobasy (
-      Indicator_Load_ParameterTables_Excel              = 0,
-      Indicator_Load_ParameterTables_RDataPackage       = 0,
-      Indicator_Load_StationClimateTables_Excel         = 0,
-      Indicator_Load_StationClimateTables_RDataPackage  = 0,
-      Indicator_Load_BuildingData_Excel                 = 0,
-      Indicator_Load_BuildingData_RDataPackage          = 1,
     )
 
   myDataTables <-
@@ -1825,95 +1147,25 @@ GetBuildingData_RDataPackage <- function (
 
 
 ###################################################################################X
-## . Function: Store calculation and result data in Excel workbook
-###################################################################################X
+## . TabulaDataSourceXLSX::Save_Data_Calc () -----
 
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Save_Data_Calc ()
 
-#' @export
-Save_Data_Calc <- function (Data_Calc)  {
-  #str (Data_Calc)
-
-  ## Constants
-
-  Subfolder_Output_Calc     <- "Output/Calc"
-  Name_File_Output_Calc     <- "Calc"
-  Name_Sheet_Output_Calc    <- "Data"
-
-
-  ## Function script
-
-  WorkingDir <- getwd ()
-
-  WB_Data_Calc <- openxlsx::createWorkbook()
-  openxlsx::addWorksheet (WB_Data_Calc, Name_Sheet_Output_Calc)
-  openxlsx::writeData (WB_Data_Calc, Name_Sheet_Output_Calc, Data_Calc)
-  openxlsx::saveWorkbook (WB_Data_Calc,
-                paste (WorkingDir, "/",
-                       Subfolder_Output_Calc, "/",
-                       Name_File_Output_Calc, "_",
-                       TimeStampForFileName () ,
-                       ".xlsx",
-                       sep="")
-                )
-}
 
 
 #. ---------------------------------------------------------------------------------
 
 
+
 ###################################################################################X
-## . Function: Store specific output as result for "Model1" in Excel workbook
-###################################################################################X
-
-#' @export
-Save_Result_MonitoringTable <- function (DF_Result, myName_Result)  {
-  #str (DF_Result)
-
-  ## Constants
-
-  Subfolder_Result          <- "Output/Result"
-  Name_Sheet_Result         <- "Data"
+## . TabulaDataSourceXLSX::Save_Result_MonitoringTable () -----
 
 
-  ## Function script
-
-  WorkingDir <- getwd ()
-
-  WB_Result <- openxlsx::createWorkbook()
-  openxlsx::addWorksheet (WB_Result, Name_Sheet_Result)
-  openxlsx::writeData (WB_Result, Name_Sheet_Result, DF_Result)
-
-  openxlsx::saveWorkbook (WB_Result,
-                paste (WorkingDir, "/",
-                       Subfolder_Result, "/",
-                       myName_Result, "_",
-                       TimeStampForFileName () ,
-                       ".xlsx",
-                       sep="")
-                )
-}
-
-#
-# Save_DataFrame_XLSX <- function (MyDataFrame, MyOutPutPath, MyFileNameWithoutSuffix, MySheetName)  {
-#
-#   #str (MyDataFrame)
-#   WB_Data_Out <- createWorkbook()
-#   addWorksheet (WB_Data_Out, "Data")
-#   writeData (WB_Data_Out, MySheetName, MyDataFrame)
-#   saveWorkbook (WB_Data_Out, paste (MyOutPutPath, "/", MyFileNameWithoutSuffix, ".xlsx", sep=""))
-#
-# }
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Save_Result_MonitoringTable ()
 
 
-
-#
-# #str (Data_Calc)
-# WB_Data_Calc <- createWorkbook()
-# addWorksheet (WB_Data_Calc, "Data")
-# writeData (WB_Data_Calc, "Data", Data_Calc)
-# saveWorkbook (WB_Data_Calc, paste (WorkingDir, "/",  Subfolder_Calc, "/", Name_File_Calc, "_", TimeStampForFileName () , ".xlsx", sep=""))
-#
-#
 
 #. ---------------------------------------------------------------------------------
 
@@ -2015,88 +1267,11 @@ DetectDifferencesToPrecalculatedResult <- function (
 
 
 ###################################################################################X
-## . Save_BuildingData_LocalExcel
+## . TabulaDataSourceXLSX::Save_BuildingData_LocalExcel () -----
 
-#' Save the building data tables to an Excel workbook
-#'
-#' Save all current building data including calculation results to an Excel workbook
-#'
-#' The following tables are exported to the respective subfolders:
-#'
-#' Subfolder "Output/Calc/":
-#'
-#' > "Data_Calc_{YYYY-MM-DD_hh-mm-ss}.xlsx"
-#'
-#'
-#'Subfolder "Output/Result/":
-#'
-#' > "Data_Input_{YYYY-MM-DD_hh-mm-ss}.xlsx"
-#'
-#' > "Data_Output_{YYYY-MM-DD_hh-mm-ss}.xlsx"
-#'
-#' > "Data_Output_PreCalculated_{YYYY-MM-DD_hh-mm-ss}.xlsx"
-#'
-#'
-#' @param myBuildingDataTables a list of data frames. THese are:
-#' Data_Input, Data_Output_PreCalculated, Data_Output, Data_Calc
-#'
-#' @examples
-#'
-#' ## Load building data tables and calculation parameters
-#'
-#' ## Get parameter tables
-#' TabulaTables <-
-#'    GetParameterTables_RDataPackage ()
-#'
-#' myBuildingDataTables <-
-#'    GetBuildingData_RDataPackage ("Examples")
-#'
-#' myOutputTables <- EnergyProfileCalc (
-#'    TabulaTables,
-#'    myBuildingDataTables
-#'    )
-#'
-#' Save_BuildingData_LocalExcel (
-#'    myOutputTables$Data_Output,
-#'    myOutputTables$Data_Calc,
-#'    myBuildingDataTables$Data_Output_PreCalculated
-#' )
-#'
-#' @export
-Save_BuildingData_LocalExcel <- function (
-    Data_Output,
-    Data_Calc,
-    Data_Output_PreCalculated
-) {
+# 2025-12-19 Note: The original function has been moved to the new package TabulaDataSourceXLSX
+# Call: TabulaDataSourceXLSX::Save_BuildingData_LocalExcel ()
 
-
-Save_Result_MonitoringTable (
-  Data_Output,
-  "Data_Output"
-)
-
-Save_Data_Calc (
-  Data_Calc
-)
-
-Save_Result_MonitoringTable (
-  Data_Output_PreCalculated,
-  "Result_PreCalculated"
-)
-
-DF_OutputDifferencesToPrecalc <-
-  DetectDifferencesToPrecalculatedResult (
-    Data_Output,
-    Data_Output_PreCalculated
-  )
-
-Save_Result_MonitoringTable (
-  DF_OutputDifferencesToPrecalc,
-  "DifferencesToPrecalc")
-
-
-
-}
 
 
 

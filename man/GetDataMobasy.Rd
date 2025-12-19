@@ -5,12 +5,6 @@
 \title{Get MOBASY data from specific sources}
 \usage{
 GetDataMobasy(
-  Indicator_Load_ParameterTables_Excel = 1,
-  Indicator_Load_ParameterTables_RDataPackage = 0,
-  Indicator_Load_StationClimateTables_Excel = 1,
-  Indicator_Load_StationClimateTables_RDataPackage = 0,
-  Indicator_Load_BuildingData_Excel = 1,
-  Indicator_Load_BuildingData_RDataPackage = 0,
   FilterVariableName_1 = "Status_DataBase_Admin",
   FilterValueList_1 = c("Public", "Project", "Test_Calc", "Analysis"),
   FilterVariableName_2 = NA,
@@ -18,18 +12,6 @@ GetDataMobasy(
 )
 }
 \arguments{
-\item{Indicator_Load_ParameterTables_Excel}{an integer (possible values: 0, 1)}
-
-\item{Indicator_Load_ParameterTables_RDataPackage}{an integer (possible values: 0, 1)}
-
-\item{Indicator_Load_StationClimateTables_Excel}{an integer (possible values: 0, 1)}
-
-\item{Indicator_Load_StationClimateTables_RDataPackage}{an integer (possible values: 0, 1)}
-
-\item{Indicator_Load_BuildingData_Excel}{an integer (possible values: 0, 1)}
-
-\item{Indicator_Load_BuildingData_RDataPackage}{an integer (possible values: 0, 1)}
-
 \item{FilterVariableName_1}{a character string}
 
 \item{FilterValueList_1}{a character string or a list of character strings}
@@ -45,18 +27,11 @@ Lib_TABULA, Lib_ClimateStation, Data_Input, Data_Output_PreCalculated, Data_Outp
 }
 \description{
 GetDataMobasy () loads the data used for the functions EnergyProfileCalc ()
-and MobasyCalc () from sources that are specified by the parameters
-(local Excel workbooks or R data packages).
+and MobasyCalc () from R data packages.
 }
 \examples{
 
 mydata <- GetDataMobasy (
- Indicator_Load_ParameterTables_Excel              = 1,
- Indicator_Load_ParameterTables_RDataPackage       = 0,
- Indicator_Load_StationClimateTables_Excel         = 1,
- Indicator_Load_StationClimateTables_RDataPackage  = 0,
- Indicator_Load_BuildingData_Excel                 = 1,
- Indicator_Load_BuildingData_RDataPackage          = 0,
  myFilterVariableName_1  = "ID_Dataset",
  myFilterValueList_1     = c (
    "DE.MOBASY.WBG.0008.61",

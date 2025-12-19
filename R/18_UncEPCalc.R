@@ -308,7 +308,7 @@ UncEPCalc <- function (
 
 
   Data_Calc_Unc$RelativeUncertainty_A_Envelope <-
-      Value_ParTab_Vector(
+      AuxFunctions::Value_ParTab_Vector(
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.A_Envelope.01"),
           paste0(
@@ -477,7 +477,7 @@ UncEPCalc <- function (
 
 
   Data_Calc_Unc$RelativeUncertainty_U_Input_Top <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_PreCalc.01"),
           paste0(
@@ -490,7 +490,7 @@ UncEPCalc <- function (
 
 
   Data_Calc_Unc$RelativeUncertainty_U_Input_Wall <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_PreCalc.01"),
           paste0(
@@ -502,7 +502,7 @@ UncEPCalc <- function (
   # <BGZ13> | U_Input | Tab.Uncertainty.Levels | RelativeUncertainty | U_Precalc | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_U_Input_Window <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_PreCalc.01"),
           paste0(
@@ -515,7 +515,7 @@ UncEPCalc <- function (
 
 
   Data_Calc_Unc$RelativeUncertainty_U_Input_Bottom <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_PreCalc.01"),
           paste0(
@@ -1072,7 +1072,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainty of original U-values  -----
 
   Data_Calc_Unc$RelativeUncertainty_U_Original <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_Original.01"),
           paste0(
@@ -1087,7 +1087,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainties of insulated area fraction, insulation thickness, thermal conductivity  -----
 
   Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Roof <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.f_Insulation.01"),
           paste0(
@@ -1099,7 +1099,7 @@ UncEPCalc <- function (
   # <BHS13> | f_Insulation_Roof | Tab.Uncertainty.Levels | AbsoluteUncertainty | f_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Ceiling <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.f_Insulation.01"),
           paste0(
@@ -1111,7 +1111,7 @@ UncEPCalc <- function (
   # <BHT13> | f_Insulation_Ceiling | Tab.Uncertainty.Levels | AbsoluteUncertainty | f_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Wall <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.f_Insulation.01"),
           paste0(
@@ -1124,7 +1124,7 @@ UncEPCalc <- function (
 
 
   Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Floor <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.f_Insulation.01"),
           paste0(
@@ -1136,7 +1136,7 @@ UncEPCalc <- function (
   # <BHV13> | f_Insulation_Floor | Tab.Uncertainty.Levels | AbsoluteUncertainty | f_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_d_Insulation_Roof <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1148,7 +1148,7 @@ UncEPCalc <- function (
   # <BHW13> | d_Insulation_Roof | Tab.Uncertainty.Levels | RelativeUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_d_Insulation_Ceiling <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1160,7 +1160,7 @@ UncEPCalc <- function (
   # <BHX13> | d_Insulation_Ceiling | Tab.Uncertainty.Levels | RelativeUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_d_Insulation_Wall <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1172,7 +1172,7 @@ UncEPCalc <- function (
   # <BHY13> | d_Insulation_Wall | Tab.Uncertainty.Levels | RelativeUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_d_Insulation_Floor <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1184,7 +1184,7 @@ UncEPCalc <- function (
   # <BHZ13> | d_Insulation_Floor | Tab.Uncertainty.Levels | RelativeUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Roof <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1196,7 +1196,7 @@ UncEPCalc <- function (
   # <BIA13> | d_Insulation_Roof | Tab.Uncertainty.Levels | AbsoluteUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Ceiling <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1208,7 +1208,7 @@ UncEPCalc <- function (
   # <BIB13> | d_Insulation_Ceiling | Tab.Uncertainty.Levels | AbsoluteUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Wall <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1220,7 +1220,7 @@ UncEPCalc <- function (
   # <BIC13> | d_Insulation_Wall | Tab.Uncertainty.Levels | AbsoluteUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Floor <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.d_Insulation.01"),
           paste0(
@@ -1232,7 +1232,7 @@ UncEPCalc <- function (
   # <BID13> | d_Insulation_Floor | Tab.Uncertainty.Levels | AbsoluteUncertainty | d_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Roof <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.Lambda_Insulation.01"),
           paste0(
@@ -1244,7 +1244,7 @@ UncEPCalc <- function (
   # <BIE13> | Lambda_Insulation_Roof | Tab.Uncertainty.Levels | RelativeUncertainty | Lambda_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Ceiling <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.Lambda_Insulation.01"),
           paste0(
@@ -1256,7 +1256,7 @@ UncEPCalc <- function (
   # <BIF13> | Lambda_Insulation_Ceiling | Tab.Uncertainty.Levels | RelativeUncertainty | Lambda_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Wall <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.Lambda_Insulation.01"),
           paste0(
@@ -1268,7 +1268,7 @@ UncEPCalc <- function (
   # <BIG13> | Lambda_Insulation_Wall | Tab.Uncertainty.Levels | RelativeUncertainty | Lambda_Insulation | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Floor <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.Lambda_Insulation.01"),
           paste0(
@@ -1284,7 +1284,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainties of U-values of windows  -----
 
   Data_Calc_Unc$RelativeUncertainty_U_WindowType1 <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_Window.01"),
           paste0 (
@@ -1296,7 +1296,7 @@ UncEPCalc <- function (
   # <BII13> | U_WindowType1 | Tab.Uncertainty.Levels | RelativeUncertainty | U_Window | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_U_WindowType2 <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.U_Window.01"),
           paste0 (
@@ -1352,7 +1352,7 @@ UncEPCalc <- function (
       ) # <BIK13>
 
   Data_Calc_Unc$AbsoluteUncertainty_DeltaU_ThermalBridging <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.DeltaU_ThermalBridging.01"),
           paste0 (
@@ -1389,7 +1389,7 @@ UncEPCalc <- function (
       ) # <BIM13>
 
   Data_Calc_Unc$AbsoluteUncertainty_n_Air_HeatLosses <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.n_Air_HeatLosses.01"),
           paste0 (
@@ -1422,7 +1422,7 @@ UncEPCalc <- function (
       ) # <BIO13> | Note: A Precondition for uncertainty class "E" is that the energy quality of the envelope is unclear. However, this cannot bei determined in this workbook but only in tabula-calculator.xlsx. Therefore "E" is not used here (can only be used in manual assessments). | Case "E" to be implemented (defined by energy quality of envelope, calculated later in tabula-calculator.xlsx)
 
   Data_Calc_Unc$AbsoluteUncertainty_theta_i <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.theta_i.01"),
           paste0 (
@@ -1755,7 +1755,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainties of climate data and passive solar aperture  -----
 
   Data_Calc_Unc$RelativeUncertainty_HDD_Climate <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.HDD_Climate.01"),
           paste0 (
@@ -1767,7 +1767,7 @@ UncEPCalc <- function (
   # <BJA13> | HDD_Climate | Tab.Uncertainty.Levels | RelativeUncertainty | HDD_Climate | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_Aperture_PassiveSolar <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.A_Aperture_PassiveSolar_EquivalentSouth.01"),
           paste0 (
@@ -1779,7 +1779,7 @@ UncEPCalc <- function (
   # <BJB13> | A_Aperture_PassiveSolar_EquivalentSouth | Tab.Uncertainty.Levels | RelativeUncertainty | A_Aperture_PassiveSolar_EquivalentSouth | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_SolarRadiation <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.I_Sol.01"),
           paste0 (
@@ -1795,7 +1795,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainties of internal heat sources  -----
 
   Data_Calc_Unc$RelativeUncertainty_phi_int <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.phi_int.01"),
           paste0 (
@@ -1811,7 +1811,7 @@ UncEPCalc <- function (
   ## . Quantify uncertainties of system efficiencies and DHW heat need  -----
 
   Data_Calc_Unc$RelativeUncertainty_eta_ve_rec <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.eta_ve_rec.01"),
           paste0 (
@@ -1823,7 +1823,7 @@ UncEPCalc <- function (
   # <BJE13> | eta_ve_rec | Tab.Uncertainty.Levels | RelativeUncertainty | eta_ve_rec | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_q_w_nd <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.q_w_nd.01"),
           paste0 (
@@ -1835,7 +1835,7 @@ UncEPCalc <- function (
   # <BJF13> | q_w_nd | Tab.Uncertainty.Levels | RelativeUncertainty | q_w_nd | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_e_SysH <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.e_SysH.01"),
           paste0 (
@@ -1847,7 +1847,7 @@ UncEPCalc <- function (
   # <BJG13> | e_SysH | Tab.Uncertainty.Levels | RelativeUncertainty | e_SysH | Gen | 1
 
   Data_Calc_Unc$RelativeUncertainty_e_SysW <-
-      Value_ParTab_Vector (
+      AuxFunctions::Value_ParTab_Vector (
           ParTab_Uncertainty,
           paste0 (Data_Calc_Unc$Code_Country, ".Gen.e_SysW.01"),
           paste0 (
@@ -2067,83 +2067,83 @@ UncEPCalc <- function (
 
       ) # <AF13> | W/(m²K) | Real
   # Data_Calc_Unc$f_Measure_Roof_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Roof_01') # <AG13> | Roof_01 | Calc.Set.Building | Real | f_Measure_Roof_01 | 236
   # Data_Calc_Unc$f_Measure_Roof_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Roof_02') # <AH13> | Roof_02 | Calc.Set.Building | Real | f_Measure_Roof_02 | 237
   # Data_Calc_Unc$f_Measure_Wall_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Wall_01') # <AI13> | Wall_01 | Calc.Set.Building | Real | f_Measure_Wall_01 | 238
   # Data_Calc_Unc$f_Measure_Wall_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Wall_02') # <AJ13> | Wall_02 | Calc.Set.Building | Real | f_Measure_Wall_02 | 239
   # Data_Calc_Unc$f_Measure_Wall_03 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Wall_03') # <AK13> | Wall_03 | Calc.Set.Building | Real | f_Measure_Wall_03 | 240
   # Data_Calc_Unc$f_Measure_Floor_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Floor_01') # <AL13> | Floor_01 | Calc.Set.Building | Real | f_Measure_Floor_01 | 241
   # Data_Calc_Unc$f_Measure_Floor_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Floor_02') # <AM13> | Floor_02 | Calc.Set.Building | Real | f_Measure_Floor_02 | 242
   # Data_Calc_Unc$f_Measure_Window_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Window_01') # <AN13> | Window_01 | Calc.Set.Building | Real | f_Measure_Window_01 | 243
   # Data_Calc_Unc$f_Measure_Window_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Window_02') # <AO13> | Window_02 | Calc.Set.Building | Real | f_Measure_Window_02 | 244
   # Data_Calc_Unc$f_Measure_Door_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'f_Measure_Door_01') # <AP13> | Door_01 | Calc.Set.Building | Real | f_Measure_Door_01 | 245
   # Data_Calc_Unc$d_Insulation_Measure_Roof_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Roof_01'
   #     ) # <AQ13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Roof_01 | 207
   # Data_Calc_Unc$d_Insulation_Measure_Roof_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Roof_02'
   #     ) # <AR13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Roof_02 | 208
   # Data_Calc_Unc$d_Insulation_Measure_Wall_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Wall_01'
   #     ) # <AS13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Wall_01 | 209
   # Data_Calc_Unc$d_Insulation_Measure_Wall_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Wall_02'
   #     ) # <AT13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Wall_02 | 210
   # Data_Calc_Unc$d_Insulation_Measure_Wall_03 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Wall_03'
   #     ) # <AU13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Wall_03 | 211
   # Data_Calc_Unc$d_Insulation_Measure_Floor_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Floor_01'
   #     ) # <AV13> | m | Calc.Set.Building | Real | d_Insulation_Measure_Floor_01 | 212
   # Data_Calc_Unc$d_Insulation_Measure_Floor_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'd_Insulation_Measure_Floor_02'
@@ -2192,15 +2192,15 @@ UncEPCalc <- function (
       ) # <BD13> | W/(m·K) | Calc.Set.Building | Real | R_Measure_Floor_02 | 220
 
   # Data_Calc_Unc$R_Measure_Window_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'R_Measure_Window_01') # <BE13> | m²K/W | Calc.Set.Building | Real | R_Measure_Window_01 | 221
   # Data_Calc_Unc$R_Measure_Window_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'R_Measure_Window_02') # <BF13> | m²K/W | Calc.Set.Building | Real | R_Measure_Window_02 | 222
   # Data_Calc_Unc$R_Measure_Door_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'R_Measure_Door_01') # <BG13> | m²K/W | Calc.Set.Building | Real | R_Measure_Door_01 | 223
 
@@ -2261,91 +2261,91 @@ UncEPCalc <- function (
   # <BN13> | U_Effective | Floor_02 | Calc.Set.Building | Real
 
   # Data_Calc_Unc$U_Actual_Window_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'U_Actual_Window_01') # <BO13> | Calc.Set.Building | Real | U_Actual_Window_01 | 300
   # Data_Calc_Unc$U_Actual_Window_02 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'U_Actual_Window_02') # <BP13> | Calc.Set.Building | Real | U_Actual_Window_02 | 301
   # Data_Calc_Unc$U_Actual_Door_01 <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'U_Actual_Door_01') # <BQ13> | Calc.Set.Building | Real | U_Actual_Door_01 | 302
 
   # Data_Calc_Unc$H_Transmission_Roof_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Roof_01'
   #     ) # <BR13> | heat transfer coefficient by transmission | element type roof 1 | W/K | Calc.Set.Building | Real | H_Transmission_Roof_01 | 306
   # Data_Calc_Unc$H_Transmission_Roof_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Roof_02'
   #     ) # <BS13> | heat transfer coefficient by transmission | element type roof 2 | W/K | Calc.Set.Building | Real | H_Transmission_Roof_02 | 307
   # Data_Calc_Unc$H_Transmission_Wall_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Wall_01'
   #     ) # <BT13> | heat transfer coefficient by transmission | element type wall 1 | W/K | Calc.Set.Building | Real | H_Transmission_Wall_01 | 308
   # Data_Calc_Unc$H_Transmission_Wall_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Wall_02'
   #     ) # <BU13> | heat transfer coefficient by transmission | element type wall 2 | W/K | Calc.Set.Building | Real | H_Transmission_Wall_02 | 309
   # Data_Calc_Unc$H_Transmission_Wall_03 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Wall_03'
   #     ) # <BV13> | heat transfer coefficient by transmission | element type wall 3 | W/K | Calc.Set.Building | Real | H_Transmission_Wall_03 | 310
   # Data_Calc_Unc$H_Transmission_Floor_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Floor_01'
   #     ) # <BW13> | heat transfer coefficient by transmission | element type floor 1 | W/K | Calc.Set.Building | Real | H_Transmission_Floor_01 | 311
   # Data_Calc_Unc$H_Transmission_Floor_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Floor_02'
   #     ) # <BX13> | heat transfer coefficient by transmission | element type floor 2 | W/K | Calc.Set.Building | Real | H_Transmission_Floor_02 | 312
   # Data_Calc_Unc$H_Transmission_Window_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Window_01'
   #     ) # <BY13> | heat transfer coefficient by transmission | element type window 1 | W/K | Calc.Set.Building | Real | H_Transmission_Window_01 | 313
   # Data_Calc_Unc$H_Transmission_Window_02 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Window_02'
   #     ) # <BZ13> | heat transfer coefficient by transmission | element type window 2 | W/K | Calc.Set.Building | Real | H_Transmission_Window_02 | 314
   # Data_Calc_Unc$H_Transmission_Door_01 <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_Door_01'
   #     ) # <CA13> | heat transfer coefficient by transmission | element type door 1 | W/K | Calc.Set.Building | Real | H_Transmission_Door_01 | 315
   # Data_Calc_Unc$H_Transmission_ThermalBridging <-
-  #     Value_ParTab (
+  #     AuxFunctions::Value_ParTab (
   #         'Calc.Set.Building',
   #         Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #         'H_Transmission_ThermalBridging'
   #     ) # <CB13> | heat transfer coefficient by transmission | supplemental heat loss due to thermal bridging  | W/K | Calc.Set.Building | Real | H_Transmission_ThermalBridging | 316
 
   # Data_Calc_Unc$q_ht_tr <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'q_ht_tr') # <CC13> | floor area related annual transmission losses | kWh/(m²a) | Calc.Set.Building | Real | q_ht_tr | 323
   # Data_Calc_Unc$q_ht_ve <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'q_ht_ve') # <CD13> | floor area related annual ventilation losses | kWh/(m²a) | Calc.Set.Building | Real | q_ht_ve | 324
 
@@ -2367,44 +2367,44 @@ UncEPCalc <- function (
   # <CF13> modified | Total heat transfer coefficient by transmission devided by envelope surface area | W/(m²K) | Calc.Set.Building | Real
 
   # Data_Calc_Unc$n_air_use <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'n_air_use') # <CG13> | average air change rate, due to use of the building | hygienical nessary air exchange rate by opening of windows, by ventilation systems, by parts of infiltration which are usable for necessary air exchange | 1/h | Calc.Set.Building | Real | n_air_use | 264
 
   # Data_Calc_Unc$theta_e <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'Theta_e') # <CH13> | average external air temperature during the heating season | if values are not available they can be determined from monthly climate data by use of the auxiliary calculation sheet "Tab.AuxCalc.Climate" | °C | Calc.Set.Building | Real | Theta_e | 250
   # Data_Calc_Unc$theta_i_calc <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'theta_i_calc') # <CI13> | internal temperature used for calculation | interpolation between theta_i_htr1 and theta_i_htr4 if theta_i is not available | °C | Calc.Set.Building | Real | theta_i_calc | 319
   # Data_Calc_Unc$I_Sol_South <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'I_Sol_South') # <CJ13> | average global irradiation on vertical surface oriented South during the heating season | kWh/a | Calc.Set.Building | Real | I_Sol_South | 253
   # Data_Calc_Unc$q_sol <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'q_sol') # <CK13> | floar area related solar heat load during heating season | kWh/(m²a) | Calc.Set.Building | Real | q_sol | 332
   # Data_Calc_Unc$q_int <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'q_int') # <CL13> | floar area related internal heat sources during heating season | kWh/(m²a) | Real | q_int | 333
   # Data_Calc_Unc$q_h_nd <-
-  #     Value_ParTab ('Calc.Set.Building',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.Building',
   #                   Data_Calc_Unc$Index_Row_SheetCalcBuilding,
   #                   'q_h_nd') # <CM13> | energy need for heating | kWh/(m²a) | Calc.Set.Building | Real | q_h_nd | 338
   # Data_Calc_Unc$q_s_w_h_usable <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_s_w_h_usable') # <CN13> | usable part of recoverable heat loss dhw storage | annual values in kWh per m² reference area  | kWh/(m²a) | Real | q_s_w_h_usable | 89
   # Data_Calc_Unc$q_d_w_h_usable <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_d_w_h_usable') # <CO13> | usable part of recoverable heat loss dhw distribution | annual values in kWh per m² reference area  | kWh/(m²a) | Real | q_d_w_h_usable | 90
   # Data_Calc_Unc$q_ve_rec_h_usable <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_ve_rec_h_usable') # <CP13> | usable contribution of ventilation heat recovery | annual values in kWh per m² reference area  | kWh/(m²a) | Real | q_ve_rec_h_usable | 91
 
@@ -2425,56 +2425,56 @@ UncEPCalc <- function (
   # <CQ13> | effective energy need for heating | to be covered by the space heating system: annual heat demand minus contribution by DHW heat loss and ventilation heat recovery | kWh/(m²a) | Real | q_h_nd_net_eff
 
   # Data_Calc_Unc$q_w_nd <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_w_nd') # <CR13> | contribution of ventilation heat recovery | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_w_nd | 33
 
   # Data_Calc_Unc$q_del_h_1 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_h_1') # <CS13> | delivered energy heat generator 1 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_h_1 | 94
   # Data_Calc_Unc$q_del_h_2 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_h_2') # <CT13> | delivered energy heat generator 2 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_h_2 | 95
   # Data_Calc_Unc$q_del_h_3 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_h_3') # <CU13> | delivered energy heat generator 3 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_h_3 | 96
   # Data_Calc_Unc$q_prod_el_h_1 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_h_1') # <CV13> | produced electricity heat generator 1 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_h_1 | 97
   # Data_Calc_Unc$q_prod_el_h_2 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_h_2') # <CW13> | produced electricity heat generator 2 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_h_2 | 98
   # Data_Calc_Unc$q_prod_el_h_3 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_h_3') # <CX13> | produced electricity heat generator 3 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_h_3 | 99
   # Data_Calc_Unc$q_del_w_1 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_w_1') # <CY13> | delivered energy heat generator 1 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_w_1 | 48
   # Data_Calc_Unc$q_del_w_2 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_w_2') # <CZ13> | delivered energy heat generator 2 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_w_2 | 49
   # Data_Calc_Unc$q_del_w_3 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_del_w_3') # <DA13> | delivered energy heat generator 3 | annual values in kWh per m² reference area  | kWh/(m²a) | Calc.Set.System | Real | q_del_w_3 | 50
   # Data_Calc_Unc$q_prod_el_w_1 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_w_1') # <DB13> | produced electricity heat generator 1 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_w_1 | 51
   # Data_Calc_Unc$q_prod_el_w_2 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_w_2') # <DC13> | produced electricity heat generator 2 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_w_2 | 52
   # Data_Calc_Unc$q_prod_el_w_3 <-
-  #     Value_ParTab ('Calc.Set.System',
+  #     AuxFunctions::Value_ParTab ('Calc.Set.System',
   #                   Data_Calc_Unc$Index_Row_SheetCalcSystem,
   #                   'q_prod_el_w_3') # <DD13> | produced electricity heat generator 3 | only in case of chp engines / annual values in kWh per m² reference area | kWh/(m²a) | Calc.Set.System | Real | q_prod_el_w_3 | 53
 
@@ -2500,7 +2500,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$Code_TypeInput_Envelope_SurfaceArea <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_TypeInput_Envelope_SurfaceArea'
@@ -2509,7 +2509,7 @@ UncEPCalc <- function (
   #     ) # <DG13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_TypeInput_Envelope_SurfaceArea | 35
   # Data_Calc_Unc$Code_TypeInput_Envelope_ThermalTransmittance <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_TypeInput_Envelope_ThermalTransmittance'
@@ -2518,7 +2518,7 @@ UncEPCalc <- function (
   #     ) # <DH13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_TypeInput_Envelope_ThermalTransmittance | 36
   # Data_Calc_Unc$Code_Uncertainty_A_Envelope <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_A_Envelope'
@@ -2527,7 +2527,7 @@ UncEPCalc <- function (
   #     ) # <DI13> | SurfaceEnvelope | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_A_Envelope | 1553
   # Data_Calc_Unc$Code_Uncertainty_InputManual_U_Top <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_InputManual_U_Top'
@@ -2536,7 +2536,7 @@ UncEPCalc <- function (
   #     ) # <DJ13> | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_InputManual_U_Top | 1555
   # Data_Calc_Unc$Code_Uncertainty_InputManual_U_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_InputManual_U_Wall'
@@ -2545,7 +2545,7 @@ UncEPCalc <- function (
   #     ) # <DK13> | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_InputManual_U_Wall | 1556
   # Data_Calc_Unc$Code_Uncertainty_InputManual_U_Window <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_InputManual_U_Window'
@@ -2554,7 +2554,7 @@ UncEPCalc <- function (
   #     ) # <DL13> | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_InputManual_U_Window | 1557
   # Data_Calc_Unc$Code_Uncertainty_InputManual_U_Bottom <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_InputManual_U_Bottom'
@@ -2563,7 +2563,7 @@ UncEPCalc <- function (
   #     ) # <DM13> | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_InputManual_U_Bottom | 1558
   # Data_Calc_Unc$RelativeUncertainty_U_Input_Top <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_Input_Top'
@@ -2572,7 +2572,7 @@ UncEPCalc <- function (
   #     ) # <DN13> | RelativeUncertainty | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | RelativeUncertainty_U_Input_Top | 1559
   # Data_Calc_Unc$RelativeUncertainty_U_Input_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_Input_Wall'
@@ -2581,7 +2581,7 @@ UncEPCalc <- function (
   #     ) # <DO13> | RelativeUncertainty | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | RelativeUncertainty_U_Input_Wall | 1560
   # Data_Calc_Unc$RelativeUncertainty_U_Input_Window <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_Input_Window'
@@ -2590,7 +2590,7 @@ UncEPCalc <- function (
   #     ) # <DP13> | RelativeUncertainty | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | RelativeUncertainty_U_Input_Window | 1561
   # Data_Calc_Unc$RelativeUncertainty_U_Input_Bottom <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_Input_Bottom'
@@ -2599,7 +2599,7 @@ UncEPCalc <- function (
   #     ) # <DQ13> | RelativeUncertainty | Used when CodeTypeInput="Manual" | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | RelativeUncertainty_U_Input_Bottom | 1562
   # Data_Calc_Unc$Code_Uncertainty_U_Original <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_U_Original'
@@ -2608,7 +2608,7 @@ UncEPCalc <- function (
   #     ) # <DR13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_U_Original | 1563
   # Data_Calc_Unc$Code_Uncertainty_f_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_f_Insulation_Roof'
@@ -2617,7 +2617,7 @@ UncEPCalc <- function (
   #     ) # <DS13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_f_Insulation_Roof | 1564
   # Data_Calc_Unc$Code_Uncertainty_f_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_f_Insulation_Ceiling'
@@ -2626,7 +2626,7 @@ UncEPCalc <- function (
   #     ) # <DT13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_f_Insulation_Ceiling | 1565
   # Data_Calc_Unc$Code_Uncertainty_f_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_f_Insulation_Wall'
@@ -2635,7 +2635,7 @@ UncEPCalc <- function (
   #     ) # <DU13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_f_Insulation_Wall | 1566
   # Data_Calc_Unc$Code_Uncertainty_f_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_f_Insulation_Floor'
@@ -2644,7 +2644,7 @@ UncEPCalc <- function (
   #     ) # <DV13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_f_Insulation_Floor | 1567
   # Data_Calc_Unc$Code_Uncertainty_d_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_d_Insulation_Roof'
@@ -2653,7 +2653,7 @@ UncEPCalc <- function (
   #     ) # <DW13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_d_Insulation_Roof | 1568
   # Data_Calc_Unc$Code_Uncertainty_d_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_d_Insulation_Ceiling'
@@ -2662,7 +2662,7 @@ UncEPCalc <- function (
   #     ) # <DX13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_d_Insulation_Ceiling | 1569
   # Data_Calc_Unc$Code_Uncertainty_d_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_d_Insulation_Wall'
@@ -2671,7 +2671,7 @@ UncEPCalc <- function (
   #     ) # <DY13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_d_Insulation_Wall | 1570
   # Data_Calc_Unc$Code_Uncertainty_d_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_d_Insulation_Floor'
@@ -2680,7 +2680,7 @@ UncEPCalc <- function (
   #     ) # <DZ13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_d_Insulation_Floor | 1571
   # Data_Calc_Unc$Code_Uncertainty_Lambda_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_Lambda_Insulation_Roof'
@@ -2689,7 +2689,7 @@ UncEPCalc <- function (
   #     ) # <EA13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_Lambda_Insulation_Roof | 1572
   # Data_Calc_Unc$Code_Uncertainty_Lambda_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_Lambda_Insulation_Ceiling'
@@ -2698,7 +2698,7 @@ UncEPCalc <- function (
   #     ) # <EB13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_Lambda_Insulation_Ceiling | 1573
   # Data_Calc_Unc$Code_Uncertainty_Lambda_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_Lambda_Insulation_Wall'
@@ -2707,7 +2707,7 @@ UncEPCalc <- function (
   #     ) # <EC13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_Lambda_Insulation_Wall | 1574
   # Data_Calc_Unc$Code_Uncertainty_Lambda_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_Lambda_Insulation_Floor'
@@ -2716,7 +2716,7 @@ UncEPCalc <- function (
   #     ) # <ED13> | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_Lambda_Insulation_Floor | 1575
   # Data_Calc_Unc$RelativeUncertainty_A_Envelope <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_A_Envelope'
@@ -2725,7 +2725,7 @@ UncEPCalc <- function (
   #     ) # <EE13> | RelativeUncertainty | A_Envelope | related to A_Envelope | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_A_Envelope | 1554
   # Data_Calc_Unc$RelativeUncertainty_U_Original <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_Original'
@@ -2734,7 +2734,7 @@ UncEPCalc <- function (
   #     ) # <EF13> | RelativeUncertainty | U_Original | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_U_Original | 1578
   # Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_f_Insulation_Roof'
@@ -2743,7 +2743,7 @@ UncEPCalc <- function (
   #     ) # <EG13> | AbsoluteUncertainty | f_Insulation_Roof | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_f_Insulation_Roof | 1579
   # Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_f_Insulation_Ceiling'
@@ -2752,7 +2752,7 @@ UncEPCalc <- function (
   #     ) # <EH13> | AbsoluteUncertainty | f_Insulation_Ceiling | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_f_Insulation_Ceiling | 1580
   # Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_f_Insulation_Wall'
@@ -2761,7 +2761,7 @@ UncEPCalc <- function (
   #     ) # <EI13> | AbsoluteUncertainty | f_Insulation_Wall | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_f_Insulation_Wall | 1581
   # Data_Calc_Unc$AbsoluteUncertainty_f_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_f_Insulation_Floor'
@@ -2770,7 +2770,7 @@ UncEPCalc <- function (
   #     ) # <EJ13> | AbsoluteUncertainty | f_Insulation_Floor | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_f_Insulation_Floor | 1582
   # Data_Calc_Unc$RelativeUncertainty_d_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_d_Insulation_Roof'
@@ -2779,7 +2779,7 @@ UncEPCalc <- function (
   #     ) # <EK13> | RelativeUncertainty | d_Insulation_Roof | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_d_Insulation_Roof | 1583
   # Data_Calc_Unc$RelativeUncertainty_d_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_d_Insulation_Ceiling'
@@ -2788,7 +2788,7 @@ UncEPCalc <- function (
   #     ) # <EL13> | RelativeUncertainty | d_Insulation_Ceiling | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_d_Insulation_Ceiling | 1584
   # Data_Calc_Unc$RelativeUncertainty_d_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_d_Insulation_Wall'
@@ -2797,7 +2797,7 @@ UncEPCalc <- function (
   #     ) # <EM13> | RelativeUncertainty | d_Insulation_Wall | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_d_Insulation_Wall | 1585
   # Data_Calc_Unc$RelativeUncertainty_d_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_d_Insulation_Floor'
@@ -2806,7 +2806,7 @@ UncEPCalc <- function (
   #     ) # <EN13> | RelativeUncertainty | d_Insulation_Floor | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_d_Insulation_Floor | 1586
   # Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_d_Insulation_Roof'
@@ -2815,7 +2815,7 @@ UncEPCalc <- function (
   #     ) # <EO13> | AbsoluteUncertainty | d_Insulation_Roof | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_d_Insulation_Roof | 1587
   # Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_d_Insulation_Ceiling'
@@ -2824,7 +2824,7 @@ UncEPCalc <- function (
   #     ) # <EP13> | AbsoluteUncertainty | d_Insulation_Ceiling | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_d_Insulation_Ceiling | 1588
   # Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_d_Insulation_Wall'
@@ -2833,7 +2833,7 @@ UncEPCalc <- function (
   #     ) # <EQ13> | AbsoluteUncertainty | d_Insulation_Wall | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_d_Insulation_Wall | 1589
   # Data_Calc_Unc$AbsoluteUncertainty_d_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_d_Insulation_Floor'
@@ -2842,7 +2842,7 @@ UncEPCalc <- function (
   #     ) # <ER13> | AbsoluteUncertainty | d_Insulation_Floor | [EnergyProfile.xlsm]Data.Out.TABULA | Real | AbsoluteUncertainty_d_Insulation_Floor | 1590
   # Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Roof <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_Lambda_Insulation_Roof'
@@ -2851,7 +2851,7 @@ UncEPCalc <- function (
   #     ) # <ES13> | RelativeUncertainty | Lambda_Insulation_Roof | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_Lambda_Insulation_Roof | 1591
   # Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Ceiling <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_Lambda_Insulation_Ceiling'
@@ -2860,7 +2860,7 @@ UncEPCalc <- function (
   #     ) # <ET13> | RelativeUncertainty | Lambda_Insulation_Ceiling | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_Lambda_Insulation_Ceiling | 1592
   # Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Wall <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_Lambda_Insulation_Wall'
@@ -2869,7 +2869,7 @@ UncEPCalc <- function (
   #     ) # <EU13> | RelativeUncertainty | Lambda_Insulation_Wall | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_Lambda_Insulation_Wall | 1593
   # Data_Calc_Unc$RelativeUncertainty_Lambda_Insulation_Floor <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_Lambda_Insulation_Floor'
@@ -3222,7 +3222,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$Code_Uncertainty_U_WindowType1 <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_U_WindowType1'
@@ -3231,7 +3231,7 @@ UncEPCalc <- function (
   #     ) # <GF13> | [EnergyProfile.xlsm]Data.Out.TABULA | Real | Code_Uncertainty_U_WindowType1 | 1576
   # Data_Calc_Unc$Code_Uncertainty_U_WindowType2 <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_U_WindowType2'
@@ -3240,7 +3240,7 @@ UncEPCalc <- function (
   #     ) # <GG13> | [EnergyProfile.xlsm]Data.Out.TABULA | Real | Code_Uncertainty_U_WindowType2 | 1577
   # Data_Calc_Unc$RelativeUncertainty_U_WindowType1 <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_WindowType1'
@@ -3249,7 +3249,7 @@ UncEPCalc <- function (
   #     ) # <GH13> | RelativeUncertainty | U_WindowType1 | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_U_WindowType1 | 1595
   # Data_Calc_Unc$RelativeUncertainty_U_WindowType2 <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_U_WindowType2'
@@ -3258,7 +3258,7 @@ UncEPCalc <- function (
   #     ) # <GI13> | RelativeUncertainty | U_WindowType2 | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_U_WindowType2 | 1596
   # Data_Calc_Unc$Code_Uncertainty_ThermalBridging <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_ThermalBridging'
@@ -3267,7 +3267,7 @@ UncEPCalc <- function (
   #     ) # <GJ13> | ThermalBridging | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_ThermalBridging | 1597
   # Data_Calc_Unc$AbsoluteUncertainty_DeltaU_ThermalBridging <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_DeltaU_ThermalBridging'
@@ -3381,7 +3381,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$Code_Uncertainty_n_Air_HeatLosses <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_n_Air_HeatLosses'
@@ -3390,7 +3390,7 @@ UncEPCalc <- function (
   #     ) # <GY13> | n_Air_HeatLosses | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_n_Air_HeatLosses | 1599
   # Data_Calc_Unc$AbsoluteUncertainty_n_Air_HeatLosses <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'AbsoluteUncertainty_n_Air_HeatLosses'
@@ -3418,7 +3418,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$Code_Uncertainty_HDD_Climate <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_HDD_Climate'
@@ -3428,7 +3428,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$Code_Uncertainty_A_Aperture_PassiveSolar_EquivalentSouth <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_A_Aperture_PassiveSolar_EquivalentSouth'
@@ -3437,7 +3437,7 @@ UncEPCalc <- function (
   #     ) # <HF13> | A_Aperture_PassiveSolar_EquivalentSouth | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_A_Aperture_PassiveSolar_EquivalentSouth | 1607
   # Data_Calc_Unc$Code_Uncertainty_I_Sol <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_I_Sol'
@@ -3446,7 +3446,7 @@ UncEPCalc <- function (
   #     ) # <HG13> | I_Sol | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_I_Sol | 1606
   # Data_Calc_Unc$Code_Uncertainty_phi_int <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_phi_int'
@@ -3455,7 +3455,7 @@ UncEPCalc <- function (
   #     ) # <HH13> | phi_int | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_phi_int | 1608
   # Data_Calc_Unc$Code_Uncertainty_eta_ve_rec <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_eta_ve_rec'
@@ -3464,7 +3464,7 @@ UncEPCalc <- function (
   #     ) # <HI13> | eta_ve_rec | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_eta_ve_rec | 1609
   # Data_Calc_Unc$Code_Uncertainty_q_w_nd <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_q_w_nd'
@@ -3473,7 +3473,7 @@ UncEPCalc <- function (
   #     ) # <HJ13> | q_w_nd | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_q_w_nd | 1610
   # Data_Calc_Unc$Code_Uncertainty_e_SysH <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_e_SysH'
@@ -3482,7 +3482,7 @@ UncEPCalc <- function (
   #     ) # <HK13> | e_SysH | [EnergyProfile.xlsm]Data.Out.TABULA | VarChar | Code_Uncertainty_e_SysH | 1611
   # Data_Calc_Unc$Code_Uncertainty_e_SysW <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'Code_Uncertainty_e_SysW'
@@ -3492,7 +3492,7 @@ UncEPCalc <- function (
 
   # Data_Calc_Unc$RelativeUncertainty_HDD_Climate <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_HDD_Climate'
@@ -3501,7 +3501,7 @@ UncEPCalc <- function (
   #     ) # <HM13> | HDD_Climate | related to total heat losses | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_HDD_Climate | 1613
   # Data_Calc_Unc$RelativeUncertainty_Aperture_PassiveSolar <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_Aperture_PassiveSolar'
@@ -3510,7 +3510,7 @@ UncEPCalc <- function (
   #     ) # <HN13> | A_Aperture_PassiveSolar_EquivalentSouth | related to solar heat load during heating season | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_Aperture_PassiveSolar | 1614
   # Data_Calc_Unc$RelativeUncertainty_SolarRadiation <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_SolarRadiation'
@@ -3519,7 +3519,7 @@ UncEPCalc <- function (
   #     ) # <HO13> | I_Sol | related to solar heat load during heating season | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_SolarRadiation | 1615
   # Data_Calc_Unc$RelativeUncertainty_phi_int <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_phi_int'
@@ -3528,7 +3528,7 @@ UncEPCalc <- function (
   #     ) # <HP13> | phi_int | related to internal heat load during heating season | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_phi_int | 1616
   # Data_Calc_Unc$RelativeUncertainty_eta_ve_rec <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_eta_ve_rec'
@@ -3537,7 +3537,7 @@ UncEPCalc <- function (
   #     ) # <HQ13> | eta_ve_rec | related to recovered heat loss | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_eta_ve_rec | 1617
   # Data_Calc_Unc$RelativeUncertainty_q_w_nd <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_q_w_nd'
@@ -3546,7 +3546,7 @@ UncEPCalc <- function (
   #     ) # <HR13> | q_w_nd | related to respective quantity | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_q_w_nd | 1618
   # Data_Calc_Unc$RelativeUncertainty_e_SysH <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_e_SysH'
@@ -3555,7 +3555,7 @@ UncEPCalc <- function (
   #     ) # <HS13> | e_SysH | related to the respective energy expenditure factor | [EnergyProfile.xlsm]Data.Out.TABULA | Real | RelativeUncertainty_e_SysH | 1619
   # Data_Calc_Unc$RelativeUncertainty_e_SysW <-
   #     AuxFunctions::Replace_NA (
-  #         Value_ParTab (
+  #         AuxFunctions::Value_ParTab (
   #             '[EnergyProfile.xlsm]Data.Out.TABULA',
   #             Data_Calc_Unc$Index_Row_SheetEnergyProfile,
   #             'RelativeUncertainty_e_SysW'
@@ -3860,7 +3860,7 @@ UncEPCalc <- function (
   #  4  OUTPUT   -----
   ###################################################################################X
 
-  Data_Calc_Unc$Date_Change <- TimeStampForDataset ()
+  Data_Calc_Unc$Date_Change <- AuxFunctions::TimeStampForDataset ()
 
   return (Data_Calc_Unc)
 

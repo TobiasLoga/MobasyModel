@@ -804,7 +804,7 @@ CalcBuilding <- function (
   ###################################################################################X
   ##  . Return dataframe "myCalcData" including new calculation variables   ------
 
-  myCalcData$Date_Change <- TimeStampForDataset ()
+  myCalcData$Date_Change <- AuxFunctions::TimeStampForDataset ()
 
   return (myCalcData)
 
