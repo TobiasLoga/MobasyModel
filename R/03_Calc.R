@@ -120,7 +120,8 @@ calc <- function (
         data_calc <-
           ClimateLibValues (
             myDataCalc_ClimLib = data_calc,
-            myParTab_Climate   = ParTab_Climate
+            myParTab_Climate   = ParTab_Climate,
+            myCode_Climate_Lib = data_input$Code_Climate
           )
         if (Indicator_Include_ClimateStationValues == 0) {
           data_calc <-

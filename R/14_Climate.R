@@ -169,7 +169,8 @@
 ClimateLibValues <- function (
 
   myDataCalc_ClimLib,
-  myParTab_Climate
+  myParTab_Climate,
+  myCode_Climate_Lib = "DE.N" # 2025-01-09 added
 
 ) {
 
@@ -189,6 +190,8 @@ ClimateLibValues <- function (
   ## After debugging: Comment this section
 
   # myDataCalc_ClimLib <- Data_Calc
+  # myCode_Climate_Lib <- "DE.N" # 2025-01-09 added
+
 
 
   ###################################################################################X
@@ -220,7 +223,13 @@ ClimateLibValues <- function (
 
   ## Get values from library table
 
-  myDataCalc_ClimLib$Code_Climate_Lib <- "DE.N"
+  myDataCalc_ClimLib$Code_Climate_Lib <- ifelse (
+                                            is.na (myCode_Climate_Lib),
+                                            "DE.N",
+                                            myCode_Climate_Lib
+                                          )
+  # 2025-01-09 changed. before it was fixed to one dataset
+  # myDataCalc_ClimLib$Code_Climate_Lib <- "DE.N"
 
   myDataCalc_ClimLib$theta_e_Base_Lib <-
     AuxFunctions::Value_ParTab_Vector (myParTab_Climate,
