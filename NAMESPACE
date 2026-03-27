@@ -2,6 +2,7 @@
 
 export(ApplyFilterBuildingDatasets)
 export(DetectDifferencesToPrecalculatedResult)
+export(EnergyProfile)
 export(EnergyProfileCalc)
 export(GetBuildingData_RDataPackage)
 export(GetDataMobasy)

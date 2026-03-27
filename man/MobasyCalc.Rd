@@ -4,7 +4,14 @@
 \alias{MobasyCalc}
 \title{Perform full MOBASY energy performance calculation  (including local climate, uncertainties and target/actual comparison)}
 \usage{
-MobasyCalc(TabulaTables, myBuildingDataTables, StationClimateTables = NA)
+MobasyCalc(
+  TabulaTables,
+  myBuildingDataTables,
+  StationClimateTables = NA,
+  Indicator_Include_ClimateStationValues = 1,
+  Indicator_Include_UncertaintyAssessment = 1,
+  Indicator_Include_CalcMeterComparison = 1
+)
 }
 \arguments{
 \item{TabulaTables}{a list of dataframes with parameters used for the calculation}
@@ -16,10 +23,15 @@ the dataframe "Data_Output_PreCalculated" providing data calculated by the Excel
 collect all variables and their values used in the different calculation functions.}
 
 \item{StationClimateTables}{a list of dataframes with climate data from local weather stations}
+
+\item{Indicator_Include_ClimateStationValues}{an indicator 0 or 1 (default = 1) indicating if the script module determining local climate station values should be used}
+
+\item{Indicator_Include_UncertaintyAssessment}{an indicator 0 or 1 (default = 1) indicating if the script module assessing the calculation uncertainty should be usd}
+
+\item{Indicator_Include_CalcMeterComparison}{an indicator 0 or 1 (default = 1) indicating if the script module comparing calculated and metered energy performance should be used}
 }
 \value{
-myOutputTables a list of two output dataframes Data_Output (main results in
-a predefined structure) and Data_Calc (values of all temporary variables)
+myOutputTables a list of two output dataframes 'Data_Output' (main results in a predefined structure), 'Data_Calc' (values of all temporary variables) and 'DF_Display_Energy' including the most important energy balance indicators
 }
 \description{
 MobasyCalc consists of a physical model for calculating the energy demand for heating and domestic hot water.

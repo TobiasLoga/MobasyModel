@@ -11,15 +11,15 @@
   "Packages": {
     "AuxFunctions": {
       "Package": "AuxFunctions",
-      "Version": "0.1.0",
+      "Version": "1.0.3",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "TobiasLoga",
       "RemoteRepo": "AuxFunctions",
       "RemoteRef": "main",
-      "RemoteSha": "10a97ce6c99aa02d8632bb8df2fb7058a3a16254",
-      "Hash": "c570c87834ec056398651f70dd2f0e57"
+      "RemoteSha": "53b5b739ada989bd0ea9262e966e0348f9aa0cb5",
+      "Hash": "5e88f02714a28a181229e355757de46c"
     },
     "CliDaMon": {
       "Package": "CliDaMon",
@@ -39,28 +39,28 @@
     },
     "MobasyBuildingData": {
       "Package": "MobasyBuildingData",
-      "Version": "0.1.4",
+      "Version": "0.1.6",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "MobasyBuildingData",
       "RemoteUsername": "TobiasLoga",
       "RemoteRef": "HEAD",
-      "RemoteSha": "54da61a39d3167624302b987499afe83423b8cea",
+      "RemoteSha": "402c26eebfa28af06b7ab7ea9632fe9d7aaec28c",
       "Requirements": [
         "R"
       ],
-      "Hash": "5bac447b8394d9dd4a80957da7033c37"
+      "Hash": "1b3366dfc18797b0e3b1963db26d3a4e"
     },
     "clidamonger": {
       "Package": "clidamonger",
-      "Version": "1.3.0",
+      "Version": "1.5.0",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "R"
       ],
-      "Hash": "36984d9e660e583e19cd51c18e4742fd"
+      "Hash": "881d111672f67b43607132205627298a"
     },
     "renv": {
       "Package": "renv",
@@ -74,15 +74,18 @@
     },
     "tabuladata": {
       "Package": "tabuladata",
-      "Version": "0.0.0.9000",
+      "Version": "0.1.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "IWUGERMANY",
       "RemoteRepo": "tabuladata",
-      "RemoteRef": "main",
-      "RemoteSha": "1af63fc09311afc13fc255380a6c5e9271a9c43b",
-      "Hash": "9e03050252f052d013c23157dee9843d"
+      "RemoteUsername": "IWUGERMANY",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "5860d085ba21ea3793fa38a896c044554b169814",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "d708cea9a39cd0e5ca642a4d95251cf7"
     }
   }
 }

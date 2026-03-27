@@ -31,6 +31,201 @@
 # renv::snapshot()
 
 
+#####################################################################################X
+##  Function: EnergyProfile ()   -----
+
+#' The function EnergyProfile () consists of a physical model for calculating the energy demand for heating and domestic hot water.
+#' The simple energy performance calculation based on the TABULA method can be optionally supplemented by the following methods:
+#' Options
+#' (1) Energy Profile calculation: Uses state indicators ("energy profile indicators") to estimate the input data of a physical model and calculate the energy demand for heating and DHW
+#' (2) Uncertainty assessment: Supplements an estimation of the uncertainties of the energy performance calculation depending of the origin, level of detail and completeness of input data
+#' (3) Local climate data: Supplements an estimation of the actual climate at the building location identified by the postcode and the years to be considered
+#' (4) Target/actual comparison: Supplements a comparison of measured energy consumption data with calculated values
+#'
+#' An overview of the method can be found in:
+#' Loga, Tobias; Stein, Britta; Behem, Guillaume: Use of Energy Profile Indicators to Determine
+#' the Expected Range of Heating Energy Consumption; Proceedings of the Conference
+#' "Central Europe towards Sustainable Building" 2022 (CESB22),
+#' 4 to 6 July 2022; Acta Polytechnica CTU Proceedings 38:470–477, 2022
+#' https://ojs.cvut.cz/ojs/index.php/APP/article/view/8299/6839
+#' https://doi.org/10.14311/APP.2022.38.0470
+#'
+#' @param DF_BuildingFeatures a dataframe containing datasets for building features to be used in the calculation, only column names identical to the MOBASY input building data structure are considered
+#' @param DF_Settings an optional dataframe of 1 row (or optionally of the same row number as the building features) containing additional columns that might be the same for all buildings (e.g. boundary conditions), these can be also defined by building
+#' @param ID_BuildingData_Template an optional character string indicating which dataset of the data package MobasyBuildingData should be used as template (default: "DE.Gen.Template.01"),
+#' @param List_BuildingData_Template_Input an optional list of two dataframes ('Data_Input' and 'Data_Output') used as a template (default: NA), if this is NA then the parameter ID_BuildingData_Template is used
+#' @param Indicator_Include_ClimateStationValues an indicator 0 or 1 (default = 0) indicating if the script module determining local climate station values should be used
+#' @param Indicator_Include_UncertaintyAssessment an indicator 0 or 1 (default = 1) indicating if the script module assessing the calculation uncertainty should be usd
+#' @param Indicator_Include_CalcMeterComparison an indicator 0 or 1 (default = 0) indicating if the script module comparing calculated and metered energy performance should be used
+#' @return myOutputTables a list of two output dataframes 'Data_Output' (main results in a predefined structure), 'Data_Calc' (values of all temporary variables) and 'DF_Display_Energy' including the most important energy balance indicators
+#' @examples
+#'
+#' ## Define building features
+#'
+#' To enable an energy performance calculation at least the reference floor area, the number of full storeys and the selection of a heat generator must be provided.
+#' If the other indicators are not included average and default values will be used for the calculation.
+#' Due to the undefined input (very little knowledgte of the building) the estimated uncertainty of the calculation will be large.
+#'
+#' DF_BuildingFeatures <-
+#'    data.frame (
+#'      ID_Dataset                     = c (1001, 1002, 1003),
+#'      A_C_Floor_Intake               = c (100, 500, 1000),
+#'      n_Storey                       = c (1, 2, 4),
+#'      Indicator_Boiler_OilGas        = c (1, 1, 1),
+#'      Indicator_Boiler_OilGas_SysH   = c (1, 1, 1),
+#'      Indicator_Boiler_OilGas_SysW   = c (1, 1, 1)
+#'    )
+#'
+#' DF_Settings_1 <-
+#'   data.frame (
+#'     ID_Settings       = c ("mySettings"),
+#'     Name_Settings     = c ("MOBASY.Standard"),
+#'     Code_BoundaryCond = c ("DE.MOBASY.Development.*"),
+#'     Code_Climate      = c ("DE.N")
+#'   )
+#'
+#' DF_Settings_2 <-
+#'   data.frame (
+#'     ID_Settings       = c (1,2,3),
+#'     Name_Settings     = c ("MOBASY.Standard", "TABULA.Flex", "TABULA.MUH"),
+#'     Code_BoundaryCond = c ("DE.MOBASY.Development.*", "EU.*", "EU.MUH"),
+#'     Code_Climate      = c ("DE.KR12-Mannheim", "DE.N",  "DE.N")
+#'   )
+#'
+#' DF_Settings <- DF_Settings_1
+#' #DF_Settings <- DF_Settings_2
+#'
+#'
+#' ## Calculate energy performance (Energy Profile procedure)
+#'
+#' myOutputTables <-
+#'   EnergyProfile (
+#'      DF_BuildingFeatures                     = DF_BuildingFeatures,
+#'      DF_Settings                             = DF_Settings,
+#'      ID_BuildingData_Template                = "DE.Gen.Template.01",
+#'      List_BuildingData_Template_Input        = NA,
+#'      Indicator_Include_UncertaintyAssessment = 1,
+#'      Indicator_Include_ClimateStationValues  = 0,
+#'      Indicator_Include_CalcMeterComparison   = 0
+#'    )
+#'
+#' ## Show exemplary result
+#'
+#' myOutputTables$DF_Display_Energy$q_h_nd
+#'
+#'
+#' ## Show structure and content of the two output dataframes
+#'
+#' str (myOutputTables$Data_Output)
+#' str (myOutputTables$Data_Calc)
+#' str (myOutputTables$DF_Display_Energy)
+#'
+#' View (myOutputTables$Data_Output)
+#' View (myOutputTables$Data_Calc)
+#' View (myOutputTables$DF_Display_Energy)
+#'
+#' @export
+EnergyProfile <- function (
+     DF_BuildingFeatures                     = DF_BuildingFeatures,
+     DF_Settings                             = NA,
+     ID_BuildingData_Template                = "DE.Gen.Template.01",
+     List_BuildingData_Template_Input        = NA,
+     Indicator_Include_ClimateStationValues  = 0,
+     Indicator_Include_UncertaintyAssessment = 1,
+     Indicator_Include_CalcMeterComparison   = 0
+) {
+
+  TabulaTables <- GetParameterTables_RDataPackage ()
+
+  if (is.na (List_BuildingData_Template_Input)) {
+
+    List_MOBASY_BuildingDataTables <- GetBuildingData_RDataPackage ()
+    #View (MobasyBuildingData::Data_Input)
+
+    DF_Template <- List_MOBASY_BuildingDataTables$Data_Input  [ID_BuildingData_Template, ]
+    Data_Output <- List_MOBASY_BuildingDataTables$Data_Output [ID_BuildingData_Template, ]
+
+  } else {
+
+    DF_Template <- List_BuildingData_Template_Input$Data_Input  [1, ]
+    Data_Output <- List_BuildingData_Template_Input$Data_Output [1, ]
+
+  }
+
+
+
+  n_Dataset <- nrow (DF_BuildingFeatures)
+  n_Col_BuildingFeatures <- ncol (DF_BuildingFeatures)
+  i_Col_Features_Use <- which ((colnames (DF_BuildingFeatures)) %in% colnames (DF_Template))
+
+  DF_Template [1:n_Dataset, ] <- DF_Template [1, ]
+
+  Data_Input <- DF_Template
+
+  Data_Input [ , colnames (DF_BuildingFeatures [ , i_Col_Features_Use])] <-
+    DF_BuildingFeatures [ ,i_Col_Features_Use]
+
+  ID_Dataset <- DF_BuildingFeatures [ ,1]
+
+  if (is.numeric (ID_Dataset)) {
+    ID_Dataset <- AuxFunctions::Format_Integer_LeadingZeros (
+      myInteger = ID_Dataset,
+      myWidth = nchar (as.character(abs(max (ID_Dataset)))),
+      myPrefix = "DS."
+    )
+  }
+  Data_Input [ ,1] <- ID_Dataset
+  rownames (Data_Input) <- ID_Dataset
+
+
+
+  if (!is.na (DF_Settings)[1]) {
+
+    n_Col_Settings <- ncol (DF_Settings)
+    i_Col_Settings_Use <- which ((colnames (DF_Settings)) %in% colnames (Data_Input))
+
+    Data_Input [ , colnames (DF_Settings [ , i_Col_Settings_Use])] <-
+      DF_Settings [ , i_Col_Settings_Use]
+
+    #n_Row_Settings <- nrow (DF_Settings)
+    # Data_Input [1:n_Dataset,   colnames (DF_Settings [ , i_Col_Settings_Use])] <-
+    #   DF_Settings [1:n_Row_Settings , i_Col_Settings_Use]
+
+  }
+
+
+
+
+
+  Data_Output [1:n_Dataset, ] <- Data_Output
+  Data_Output [ ,1] <- Data_Input [ ,1]
+  rownames (Data_Output) <- rownames (Data_Input)
+
+  myBuildingDataTables <-
+    list (
+      Data_Input  = Data_Input,
+      Data_Output = Data_Output
+    )
+
+  myOutputTables <-
+    MobasyCalc (
+      TabulaTables                            = TabulaTables,
+      myBuildingDataTables                    = myBuildingDataTables,
+      StationClimateTables                    = NA,
+      Indicator_Include_ClimateStationValues  = Indicator_Include_ClimateStationValues,
+      Indicator_Include_UncertaintyAssessment = Indicator_Include_UncertaintyAssessment,
+      Indicator_Include_CalcMeterComparison   = Indicator_Include_CalcMeterComparison
+    )
+
+
+  return (
+    myOutputTables
+  )
+
+
+}
+
+
 
 
 #####################################################################################X
@@ -58,8 +253,7 @@
 #' the dataframe "Data_Output_PreCalculated" providing data calculated by the Excel tool
 #' (useful for comparison by developers) and the dataframe "Data_Calc" which is used to
 #' collect all variables and their values used in the different calculation functions.
-#' @return myOutputTables a list of two output dataframes Data_Output (main results in
-#' a predefined structure) and Data_Calc (values of all temporary variables)
+#' @return myOutputTables a list of two output dataframes 'Data_Output' (main results in a predefined structure), 'Data_Calc' (values of all temporary variables) and 'DF_Display_Energy' including the most important energy balance indicators
 #' @examples
 #'
 #' ## Get local parameter tables
@@ -176,8 +370,10 @@ EnergyProfileCalc <- function (
 #' (useful for comparison by developers) and the dataframe "Data_Calc" which is used to
 #' collect all variables and their values used in the different calculation functions.
 #' @param StationClimateTables a list of dataframes with climate data from local weather stations
-#' @return myOutputTables a list of two output dataframes Data_Output (main results in
-#' a predefined structure) and Data_Calc (values of all temporary variables)
+#' @param Indicator_Include_ClimateStationValues an indicator 0 or 1 (default = 1) indicating if the script module determining local climate station values should be used
+#' @param Indicator_Include_UncertaintyAssessment an indicator 0 or 1 (default = 1) indicating if the script module assessing the calculation uncertainty should be usd
+#' @param Indicator_Include_CalcMeterComparison an indicator 0 or 1 (default = 1) indicating if the script module comparing calculated and metered energy performance should be used
+#' @return myOutputTables a list of two output dataframes 'Data_Output' (main results in a predefined structure), 'Data_Calc' (values of all temporary variables) and 'DF_Display_Energy' including the most important energy balance indicators
 #' @examples
 #'
 #' ## Get local parameter tables
@@ -226,7 +422,10 @@ EnergyProfileCalc <- function (
 MobasyCalc <- function (
     TabulaTables,
     myBuildingDataTables,
-    StationClimateTables = NA
+    StationClimateTables = NA,
+    Indicator_Include_ClimateStationValues  = 1,
+    Indicator_Include_UncertaintyAssessment = 1,
+    Indicator_Include_CalcMeterComparison   = 1
 ) {
 
   myOutputTables <-
@@ -273,9 +472,9 @@ MobasyCalc <- function (
         StationClimateTables$ClimateData_Sol, NA),
       ParTab_SolOrientEst    = AuxFunctions::Replace_NULL (
         StationClimateTables$ParTab_SolOrientEst, NA),
-      Indicator_Include_ClimateStationValues  = 1,
-      Indicator_Include_UncertaintyAssessment = 1,
-      Indicator_Include_CalcMeterComparison   = 1
+      Indicator_Include_ClimateStationValues  = Indicator_Include_ClimateStationValues,
+      Indicator_Include_UncertaintyAssessment = Indicator_Include_UncertaintyAssessment,
+      Indicator_Include_CalcMeterComparison   = Indicator_Include_CalcMeterComparison
     )
 
 

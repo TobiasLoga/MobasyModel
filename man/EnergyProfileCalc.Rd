@@ -20,8 +20,7 @@ the dataframe "Data_Output_PreCalculated" providing data calculated by the Excel
 collect all variables and their values used in the different calculation functions.}
 }
 \value{
-myOutputTables a list of two output dataframes Data_Output (main results in
-a predefined structure) and Data_Calc (values of all temporary variables)
+myOutputTables a list of two output dataframes 'Data_Output' (main results in a predefined structure), 'Data_Calc' (values of all temporary variables) and 'DF_Display_Energy' including the most important energy balance indicators
 }
 \description{
 EnergyProfileCalc consists of a physical model for calculating the energy demand for heating and domestic hot water.
