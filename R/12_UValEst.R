@@ -589,9 +589,11 @@ UValEst <- function (
 
   Data_Calc_UValEst$Code_U_Class_WindowType1_GasFilling <- "-" # <EU11>
   Data_Calc_UValEst$Code_U_Class_WindowType2_GasFilling <- "-" # <EV11>
+
   Data_Calc_UValEst$Code_U_Class_WindowType1_FrameMaterial <-
       ifelse (
-          AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType1, 0) * 1 == 1,
+        (Data_Calc_UValEst$Code_NumberPanes_WindowType1 == "_NA_" |         # 2026-04-10 additional condition
+         AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType1, 0) * 1 == 1),
           "-",
           ifelse (
               Data_Calc_UValEst$Code_Frame_WindowType1 == "_NA_",
@@ -599,10 +601,12 @@ UValEst <- function (
               Data_Calc_UValEst$Code_Frame_WindowType1
           )
       ) # <EW11>
+
   Data_Calc_UValEst$Code_U_Class_WindowType2_FrameMaterial <-
       ifelse (
-          AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType2, 0) * 1 == 1,
-          "-",
+        (Data_Calc_UValEst$Code_NumberPanes_WindowType2 == "_NA_" |         # 2026-04-10 additional condition
+        AuxFunctions::Replace_NA (Data_Calc_UValEst$Indicator_PassiveHouseWindow_WindowType2, 0) * 1 == 1),
+        "-",
           ifelse (
               Data_Calc_UValEst$Code_Frame_WindowType2 == "_NA_",
               "-",
