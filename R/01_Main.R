@@ -211,7 +211,12 @@ EnergyProfile <- function (
     MobasyCalc (
       TabulaTables                            = TabulaTables,
       myBuildingDataTables                    = myBuildingDataTables,
-      StationClimateTables                    = NA,
+      StationClimateTables                    =
+        if (Indicator_Include_ClimateStationValues == 1) {
+            GetStationClimate_RDataPackage ()
+        } else {
+          NA
+        }, # 2026-08-19 condition introduced, before it was only: = NA
       Indicator_Include_ClimateStationValues  = Indicator_Include_ClimateStationValues,
       Indicator_Include_UncertaintyAssessment = Indicator_Include_UncertaintyAssessment,
       Indicator_Include_CalcMeterComparison   = Indicator_Include_CalcMeterComparison
